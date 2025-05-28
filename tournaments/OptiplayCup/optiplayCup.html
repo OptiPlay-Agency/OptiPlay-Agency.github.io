@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nom du Tournoi - OptiPlay</title>
+  <link rel="stylesheet" href="../OptiplayCup/optiplayCup.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="../index.html"><img src="../../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <nav>
+        <ul>
+          <li><a href="../../HTML/index.html">Accueil</a></li>
+          <li><a href="../../HTML/tournaments.html">Tournois</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-tournoi">
+    <section class="intro">
+      <h1>Rocket League Cup</h1>
+      <p>Bienvenue dans notre tournoi compétitif de Rocket League !</p>
+      <a href="https://docs.google.com/forms/d/1nu3a9EBf8C5wNDvIdckQwHuyh8xbiE3bZhG6EFrge1o/edit?usp=forms_home&ouid=100319563275446442760&ths=true" class="btn">S'inscrire</a>
+    </section>
+
+    <section class="onglets">
+      <button onclick="afficherSection('participants')">Participants</button>
+      <button onclick="afficherSection('matchs')">Matchs</button>
+      <button onclick="afficherSection('stream')">Stream</button>
+      <button onclick="afficherSection('regles')">Règles</button>
+    </section>
+
+    <section class="contenu">
+      <div id="participants" class="contenu-section" style="display:none">
+        <h2>Participants</h2>
+        <p>Liste des équipes inscrites...</p>
+      </div>
+
+      <div id="matchs" class="contenu-section" style="display:none">
+        <h2>Matchs</h2>
+        <p>Planning des matchs à venir et en cours...</p>
+      </div>
+
+      <div id="stream" class="contenu-section" style="display:none">
+  <h2>Stream en direct</h2>
+  <div style="position:relative;padding-top:56.25%;">
+    <iframe
+      src="https://player.twitch.tv/?channel=optiplayy&parent=localhost"
+      allowfullscreen
+      frameborder="0"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;">
+    </iframe>
+  </div>
+</div>
+
+
+      <div id="regles" class="contenu-section" style="display:none">
+        <h2>Règlement</h2>
+        <p>Règles officielles du tournoi...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    function afficherSection(id) {
+      const sections = document.querySelectorAll('.contenu-section');
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+  </script>
+</body>
+</html>

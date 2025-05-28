@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournois - OptiPlay</title>
+  <link rel="stylesheet" href="../CSS/tournaments.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html"><img src="../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="tournois.html" class="active">Tournois</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="tournois-container">
+      <h1>Tournois à venir</h1>
+      <div id="tournois-list">
+        <!-- Tournois ajoutés dynamiquement via JS -->
+      </div>
+      <p id="no-tournament" style="display: none;">Aucun tournoi n'est prévu pour le moment.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simule une récupération de fichiers depuis le dossier "tournois"
+    // Remplace ça par une vraie récupération via API ou back-end si dispo
+    const tournois = [
+      {
+        titre: "OptiPlay Cup 3v3#1",
+        date: "7-8 juin 2025",
+        description: "Tournoi 3v3 avec 300€ de cashprize.",
+        lien: "../tournaments/OptiplayCup/optiplayCup.html"
+      }
+      
+    ];
+
+    const list = document.getElementById('tournois-list');
+    const noT = document.getElementById('no-tournament');
+
+    if (tournois.length === 0) {
+      noT.style.display = 'block';
+    } else {
+      tournois.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'tournoi';
+        div.innerHTML = `
+          <h3>${t.titre}</h3>
+          <p class="date">${t.date}</p>
+          <p class="desc">${t.description}</p>
+          <a href="${t.lien}" class="btn">Voir le tournoi</a>
+        `;
+        list.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>

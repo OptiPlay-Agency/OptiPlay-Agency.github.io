@@ -1,0 +1,121 @@
+/* ======== CSS Page À propos - OptiPlay ======== */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0e0e10;
+  color: #ffffff;
+}
+
+header {
+  background-color: #022759;
+  padding: 20px 0;
+  border-bottom: 2px solid #0038ff;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+  color: #0038ff;
+}
+
+.about-main {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #0038ff;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.equipe h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #0038ff;
+}
+
+.membres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.membre {
+  background-color: #141417;
+  border-radius: 10px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 0 15px rgba(0, 56, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.membre:hover {
+  transform: scale(1.05);
+}
+
+.membre img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.membre h3 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.membre p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+footer {
+  background-color: #022759;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 2px solid #0038ff;
+  font-size: 0.9rem;
+  margin-top: 60px;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - OptiPlay</title>
+  <link rel="stylesheet" href="../css/contact.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html"><img src="../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="tournaments.html">Tournois</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contact-main">
+    <h1>Contact & Partenariats</h1>
+    <p>Vous souhaitez nous contacter ou proposer un partenariat ? Remplissez le formulaire ci-dessous.</p>
+
+    <form action="mailto:optiplayy@gmail.com" method="POST" enctype="text/plain" class="contact-form">
+      <input type="text" name="nom" placeholder="Votre nom" required>
+      <input type="email" name="email" placeholder="Votre email" required>
+      <textarea name="message" placeholder="Votre message..." rows="6" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+    </div>
+  </footer>
+</body>
+</html>
