@@ -1,4 +1,4 @@
-/* ======== CSS Tournois Moderne - OptiPlay ======== */
+/* ======== CSS Services Page - OptiPlay ======== */
 
 /* Variables CSS */
 :root {
@@ -7,7 +7,6 @@
   --secondary-color: #00d4ff;
   --accent-color: #ff0080;
   --success-color: #00ff88;
-  --warning-color: #ffaa00;
   --bg-dark: #0a0a0f;
   --bg-darker: #070709;
   --bg-card: #141419;
@@ -19,7 +18,16 @@
   --shadow-primary: 0 10px 40px rgba(0, 56, 255, 0.3);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
   --border-radius: 12px;
-  --border-radius-lg: 20px;
+  }
+
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {order-radius-lg: 20px;
 }
 
 /* Reset et base */
@@ -60,22 +68,11 @@ body {
   50% { box-shadow: 0 0 30px rgba(0, 56, 255, 0.8); }
 }
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 .animate-in {
   animation: fadeInUp 0.8s ease-out;
 }
 
-/* ======== Header (même style que l'accueil) ======== */
+/* ======== Header ======== */
 header {
   background: rgba(7, 7, 9, 0.95);
   backdrop-filter: blur(20px);
@@ -204,52 +201,28 @@ nav ul {
 .page-subtitle {
   font-size: 1.2rem;
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
 }
 
-/* ======== Section Header ======== */
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-header h2 {
-  font-family: 'Orbitron', monospace;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-line {
-  width: 100px;
-  height: 3px;
-  background: var(--gradient-primary);
-  margin: 0 auto;
-  border-radius: 2px;
-}
-
-/* ======== Tournois Container ======== */
-.tournois-container {
-  padding: 60px 0 100px;
+/* ======== Services Section ======== */
+.services-section {
+  padding: 80px 0;
   background: var(--bg-dark);
 }
 
-.tournois-grid {
+.services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  margin-top: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* ======== Tournament Cards ======== */
-.tournoi-card {
+/* ======== Service Cards ======== */
+.service-card {
   background: var(--bg-card);
   border: 1px solid rgba(0, 56, 255, 0.2);
   border-radius: var(--border-radius-lg);
@@ -257,15 +230,18 @@ nav ul {
   transition: all 0.3s ease;
   position: relative;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.tournoi-card.animate-in {
+.service-card.animate-in {
   opacity: 1;
   transform: translateY(0);
 }
 
-.tournoi-card::before {
+.service-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -278,139 +254,250 @@ nav ul {
   z-index: 1;
 }
 
-.tournoi-card:hover::before {
+.service-card:hover::before {
   opacity: 1;
 }
 
-.tournoi-card:hover {
+.service-card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-card);
   border-color: var(--primary-color);
 }
 
-.card-header {
-  padding: 25px 25px 0;
+.service-card.featured {
+  border: 2px solid var(--accent-color);
+  background: linear-gradient(135deg, rgba(255, 0, 128, 0.05), rgba(20, 20, 25, 1));
+}
+
+.featured-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--gradient-secondary);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 5px;
+  z-index: 3;
+}
+
+.service-header {
+  padding: 30px 30px 20px;
+  text-align: center;
   position: relative;
   z-index: 2;
 }
 
-.card-icon {
-  width: 60px;
-  height: 60px;
+.service-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: white;
-  box-shadow: 0 5px 20px rgba(0, 56, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 56, 255, 0.3);
 }
 
-.card-status {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.service-card.featured .service-icon {
+  background: var(--gradient-secondary);
+  box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
 }
 
-.status-open {
-  background: rgba(0, 255, 136, 0.2);
-  color: var(--success-color);
-  border: 1px solid rgba(0, 255, 136, 0.3);
-}
-
-.status-closed {
-  background: rgba(255, 170, 0, 0.2);
-  color: var(--warning-color);
-  border: 1px solid rgba(255, 170, 0, 0.3);
-}
-
-.card-content {
-  padding: 25px;
-  position: relative;
-  z-index: 2;
-}
-
-.card-content h3 {
+.service-header h3 {
   font-family: 'Orbitron', monospace;
   font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 10px;
   color: var(--text-primary);
+  margin-bottom: 10px;
 }
 
-.game-name {
-  color: var(--primary-color);
-  font-weight: 600;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.service-content {
+  padding: 0 30px 20px;
+  flex-grow: 1;
+  position: relative;
+  z-index: 2;
 }
 
-.tournament-details {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: rgba(0, 56, 255, 0.05);
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 56, 255, 0.1);
-}
-
-.detail {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.service-description {
   color: var(--text-secondary);
+  margin-bottom: 25px;
+  line-height: 1.6;
+  text-align: center;
 }
 
-.detail i {
-  color: var(--primary-color);
+.service-features {
+  list-style: none;
+  padding: 0;
+}
+
+.service-features li {
+  padding: 8px 0;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.service-features li i {
+  color: var(--secondary-color);
+  font-size: 0.8rem;
   width: 16px;
 }
 
-.description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.card-footer {
-  padding: 0 25px 25px;
+.service-footer {
+  padding: 20px 30px 30px;
+  text-align: center;
   position: relative;
   z-index: 2;
+}
+
+.btn-service {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 25px;
+  background: var(--gradient-primary);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 56, 255, 0.3);
+}
+
+.btn-service:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 56, 255, 0.4);
+}
+
+.featured-btn {
+  background: var(--gradient-secondary);
+  box-shadow: 0 5px 20px rgba(255, 0, 128, 0.3);
+}
+
+.featured-btn:hover {
+  box-shadow: 0 8px 30px rgba(255, 0, 128, 0.4);
+}
+
+/* ======== CTA Section ======== */
+.cta-section {
+  padding: 100px 0;
+  background: 
+    linear-gradient(135deg, rgba(0, 56, 255, 0.1), rgba(255, 0, 128, 0.1)),
+    var(--bg-darker);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(0, 56, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(255, 0, 128, 0.2) 0%, transparent 50%);
+  animation: float 8s ease-in-out infinite;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-content h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-methods {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 25px;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 56, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.contact-item i {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.contact-item span {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.discord-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.discord-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: var(--border-radius);
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  width: 100%;
+  min-width: 180px;
   justify-content: center;
-}
-
-.btn-tournament {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: 0 5px 20px rgba(0, 56, 255, 0.3);
-}
-
-.btn-tournament:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 56, 255, 0.4);
 }
 
 .btn-primary {
@@ -424,46 +511,22 @@ nav ul {
   box-shadow: 0 15px 50px rgba(0, 56, 255, 0.4);
 }
 
-/* ======== No Tournament State ======== */
-.no-tournament {
-  text-align: center;
-  padding: 80px 20px;
-  background: var(--bg-card);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(0, 56, 255, 0.2);
-  max-width: 500px;
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+.btn-discord {
+  background: #5865f2;
+  color: white;
+  border: 2px solid #5865f2;
 }
 
-.no-tournament i {
-  font-size: 4rem;
-  color: var(--text-muted);
-  margin-bottom: 10px;
+.btn-discord:hover {
+  background: #4752c4;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
 }
 
-.no-tournament h3 {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-  margin-bottom: 10px;
-}
-
-.no-tournament p {
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  max-width: 300px;
-}
-
-/* ======== Footer (même style que l'accueil) ======== */
+/* ======== Footer ======== */
 footer {
   background: var(--bg-darker);
   border-top: 1px solid rgba(0, 56, 255, 0.2);
-  text-align: center;
-  padding: 40px 0;
 }
 
 .footer-content {
@@ -509,7 +572,6 @@ footer {
   display: flex;
   gap: 15px;
   margin-top: 20px;
-  justify-content: center;
 }
 
 .social-links a {
@@ -540,6 +602,13 @@ footer {
 }
 
 /* ======== Responsive Design ======== */
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     width: 95%;
@@ -558,17 +627,40 @@ footer {
     display: none;
   }
   
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    max-width: 500px;
+  }
+  
   .page-title {
     font-size: 2.5rem;
   }
   
-  .tournois-grid {
+  .services-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 25px;
   }
   
-  .tournament-details {
-    grid-template-columns: 1fr;
+  .service-card {
+    margin: 0 10px;
+  }
+  
+  .service-header,
+  .service-content,
+  .service-footer {
+    padding: 25px 20px 15px;
+  }
+  
+  .contact-methods {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
   }
   
   .footer-content {
@@ -578,17 +670,19 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .tournoi-card {
-    margin: 0 10px;
+  .service-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
   }
   
-  .card-header,
-  .card-content,
-  .card-footer {
-    padding: 20px;
+  .service-header h3 {
+    font-size: 1.2rem;
   }
   
-  .tournament-details {
-    padding: 15px;
+  .featured-badge {
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
   }
 }

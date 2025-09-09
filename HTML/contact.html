@@ -4,34 +4,381 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - OptiPlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/contact.css">
 </head>
 <body>
   <header>
     <div class="container">
-      <a href="../index.html"><img src="../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
       <nav>
         <ul>
-          <li><a href="../index.html">Accueil</a></li>
-          <li><a href="tournaments.html">Tournois</a></li>
-          <li><a href="about.html">À propos</a></li>
-          <li><a href="contact.html" class="active">Contact</a></li>
+          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
+          <li><a href="tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="contact.html" class="nav-link active"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="contact-main">
-    <h1>Contact & Partenariats</h1>
-    <p>Vous souhaitez nous contacter ou proposer un partenariat ? Remplissez le formulaire ci-dessous.</p>
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <h1 class="page-title">
+          <i class="fas fa-envelope"></i>
+          <span class="gradient-text">Contact</span> & <span class="gradient-text">Partenariats</span>
+        </h1>
+        <p class="page-subtitle">Vous souhaitez nous contacter ou proposer un partenariat ? Nous sommes là pour vous accompagner dans tous vos projets !</p>
+      </div>
+    </section>
 
-    <form action="mailto:optiplayy@gmail.com" method="POST" enctype="text/plain" class="contact-form">
-      <input type="text" name="nom" placeholder="Votre nom" required>
-      <input type="email" name="email" placeholder="Votre email" required>
-      <textarea name="message" placeholder="Votre message..." rows="6" required></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-    <script type="text/javascript">
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="section-header">
+              <h2>Parlons de votre <span class="gradient-text">projet</span></h2>
+              <div class="section-line"></div>
+            </div>
+            
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="method-content">
+                  <h3>Email</h3>
+                  <p>optiplayy@gmail.com</p>
+                  <span class="method-subtitle">Réponse sous 24h</span>
+                </div>
+              </div>
+              
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="fab fa-discord"></i>
+                </div>
+                <div class="method-content">
+                  <h3>Discord</h3>
+                  <p><a href="https://discord.gg/S6XB3thwnH" target="_blank" style="color: var(--secondary-color); text-decoration: none;">Rejoindre notre Discord</a></p>
+                  <span class="method-subtitle">Échange instantané</span>
+                </div>
+              </div>
+              
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="method-content">
+                  <h3>Disponibilité</h3>
+                  <p>Support 24/7</p>
+                  <span class="method-subtitle">Toujours là pour vous</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="benefits">
+              <h3>Pourquoi nous choisir ?</h3>
+              <ul>
+                <li><i class="fas fa-check"></i> Expertise reconnue dans l'eSport</li>
+                <li><i class="fas fa-check"></i> Solutions sur-mesure</li>
+                <li><i class="fas fa-check"></i> Accompagnement personnalisé</li>
+                <li><i class="fas fa-check"></i> Respect des délais</li>
+                <li><i class="fas fa-check"></i> Tarifs compétitifs</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="contact-form-container">
+            <div class="form-header">
+              <h3>Décrivez-nous votre projet</h3>
+              <p>Remplissez ce formulaire et nous vous recontacterons rapidement</p>
+            </div>
+            
+            <form class="contact-form" id="contactForm">
+              <div class="form-group">
+                <label for="name">
+                  <i class="fas fa-user"></i>
+                  Votre nom
+                </label>
+                <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required>
+                <div class="input-border"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">
+                  <i class="fas fa-envelope"></i>
+                  Votre email
+                </label>
+                <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com" required>
+                <div class="input-border"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="subject">
+                  <i class="fas fa-tag"></i>
+                  Sujet
+                </label>
+                <select id="subject" name="subject" required>
+                  <option value="">Choisissez un sujet</option>
+                  <option value="developpement">Développement Web</option>
+                  <option value="streaming">Setup Streaming</option>
+                  <option value="design">Design & Graphisme</option>
+                  <option value="tournois">Organisation Tournois</option>
+                  <option value="sponsors">Recherche Sponsors</option>
+                  <option value="materiel">Conseil Matériel</option>
+                  <option value="administratif">Aide Administrative</option>
+                  <option value="partenariat">Partenariat</option>
+                  <option value="autre">Autre demande</option>
+                </select>
+                <div class="input-border"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="budget">
+                  <i class="fas fa-euro-sign"></i>
+                  Budget estimé (optionnel)
+                </label>
+                <select id="budget" name="budget">
+                  <option value="">Sélectionnez votre budget</option>
+                  <option value="500-1000">500€ - 1 000€</option>
+                  <option value="1000-2500">1 000€ - 2 500€</option>
+                  <option value="2500-5000">2 500€ - 5 000€</option>
+                  <option value="5000+">Plus de 5 000€</option>
+                  <option value="a-discuter">À discuter</option>
+                </select>
+                <div class="input-border"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="message">
+                  <i class="fas fa-comment"></i>
+                  Décrivez votre projet
+                </label>
+                <textarea id="message" name="message" rows="5" placeholder="Décrivez-nous en détail votre projet, vos objectifs, vos contraintes..." required></textarea>
+                <div class="input-border"></div>
+              </div>
+              
+              <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i>
+                <span>Envoyer ma demande</span>
+                <div class="btn-glow"></div>
+              </button>
+              
+              <div class="form-note">
+                <i class="fas fa-shield-alt"></i>
+                Vos données sont protégées et ne seront jamais partagées
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="calendly-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Prendre <span class="gradient-text">rendez-vous</span></h2>
+          <div class="section-line"></div>
+          <p class="section-subtitle">Planifiez un appel pour discuter de votre projet en détail</p>
+        </div>
+        
+        <div class="calendly-container">
+          <div class="calendly-wrapper">
+            <iframe 
+              src="https://calendly.com/optiplay"
+              frameborder="0"
+              title="Calendly - OptiPlay">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Questions <span class="gradient-text">fréquentes</span></h2>
+          <div class="section-line"></div>
+        </div>
+        
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-clock"></i>
+              <span>Quel est le délai de réponse ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Nous nous engageons à répondre à toutes les demandes sous 24h maximum. Pour les demandes urgentes, contactez-nous sur Discord pour une réponse immédiate.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-euro-sign"></i>
+              <span>Comment sont calculés les tarifs ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Nos tarifs sont établis en fonction de la complexité du projet, du temps nécessaire et des technologies utilisées. Nous proposons toujours un devis personnalisé et transparent.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-handshake"></i>
+              <span>Proposez-vous des partenariats ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Oui ! Nous sommes toujours ouverts aux partenariats avec d'autres agences, streamers, équipes eSport ou entreprises. Contactez-nous pour discuter des modalités.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-cogs"></i>
+              <span>Quels services proposez-vous ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Nous proposons 7 services principaux : développement web, setup streaming, design graphique, organisation de tournois, recherche de sponsors, conseil matériel et aide administrative.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Développement web</a></li>
+            <li><a href="services.html">Setup streaming</a></li>
+            <li><a href="services.html">Design graphique</a></li>
+            <li><a href="services.html">Recherche sponsors</a></li>
+            <li><a href="services.html">Aide administrative</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
+          <p><i class="fab fa-discord"></i> Discord: S6XB3thwnH</p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animation au scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments à animer
+    document.querySelectorAll('.contact-method, .faq-item, .section-header, .contact-form-container').forEach(el => {
+      observer.observe(el);
+    });
+
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Fermer toutes les autres FAQ
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Ouvrir/fermer la FAQ cliquée
+        if (!isActive) {
+          faqItem.classList.add('active');
+        }
+      });
+    });
+
+    // Gestion du formulaire
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Animation du bouton
+      const submitBtn = this.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Envoi en cours...</span>';
+      submitBtn.disabled = true;
+      
+      // Simulation d'envoi (remplacer par vraie logique d'envoi)
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fas fa-check"></i><span>Message envoyé !</span>';
+        submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+        
+        // Reset après 3 secondes
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.background = '';
+          this.reset();
+        }, 3000);
+      }, 2000);
+    });
+
+    // Animation des inputs
+    document.querySelectorAll('.contact-form input, .contact-form select, .contact-form textarea').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        if (this.value === '') {
+          this.parentElement.classList.remove('focused');
+        }
+      });
+      
+      // Garder le focus si l'input a déjà une valeur
+      if (input.value !== '') {
+        input.parentElement.classList.add('focused');
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -42,13 +389,5 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
-    </div>
-  </footer>
-  
 </body>
 </html>

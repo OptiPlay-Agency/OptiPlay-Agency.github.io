@@ -4,46 +4,274 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>À propos - OptiPlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/about.css">
 </head>
 <body>
   <header>
     <div class="container">
-      <a href="../index.html"><img src="../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
       <nav>
         <ul>
-          <li><a href="../index.html">Accueil</a></li>
-          <li><a href="tournaments.html">Tournois</a></li>
-          <li><a href="about.html" class="active">À propos</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
+          <li><a href="tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="about-main">
-    <section class="intro">
-      <h1>Qui sommes-nous ?</h1>
-      <p>OptiPlay est une agence événementielle eSport dédiée à l'organisation de tournois en ligne professionnels, compétitifs et accessibles.</p>
-    </section>
-
-    <section class="equipe">
-      <h2>L'équipe</h2>
-      <div class="membres">
-        <div class="membre">
-          
-          <h3>Axel Guionnet</h3>
-          <p>Fondateur & Responsable projets</p>
-        </div>
-        <div class="membre">
-          
-          <h3>Anna Guionnet</h3>
-          <p>CO-Fondatrice & Responsable relationnel</p>
-        </div>
-        <!-- Tu peux rajouter d'autres membres ici -->
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <h1 class="page-title">
+          <i class="fas fa-info-circle"></i>
+          Qui sommes-<span class="gradient-text">nous</span> ?
+        </h1>
+        <p class="page-subtitle">OptiPlay est une agence événementielle eSport dédiée à l'organisation de tournois en ligne professionnels, compétitifs et accessibles.</p>
       </div>
     </section>
-    <script type="text/javascript">
+
+    <section class="about-content">
+      <div class="container">
+        <div class="section-header">
+          <h2>Notre <span class="gradient-text">Histoire</span></h2>
+          <div class="section-line"></div>
+        </div>
+        
+        <div class="story-content">
+          <div class="story-text">
+            <p>Née de la passion pour l'eSport et l'événementiel, OptiPlay s'est développée pour devenir une agence complète accompagnant structures et particuliers dans leurs projets numériques et événementiels.</p>
+            <p>Notre expertise s'étend du développement web à l'organisation de tournois, en passant par la création graphique et l'aide administrative, offrant des solutions sur-mesure pour chaque besoin.</p>
+          </div>
+          
+          <div class="story-stats">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <div class="stat-number">50+</div>
+              <div class="stat-label">Tournois organisés</div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-number">1000+</div>
+              <div class="stat-label">Participants</div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <div class="stat-number">25+</div>
+              <div class="stat-label">Projets web</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>L'<span class="gradient-text">équipe</span></h2>
+          <div class="section-line"></div>
+        </div>
+        
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="member-avatar">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="member-info">
+              <h3>Axel Guionnet</h3>
+              <p class="member-role">Fondateur & Responsable projets</p>
+              <p class="member-description">Expert en organisation d'événements eSport et développement web, Axel pilote les projets avec passion et professionnalisme.</p>
+            </div>
+          </div>
+          
+          <div class="team-member">
+            <div class="member-avatar">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="member-info">
+              <h3>Anna Guionnet</h3>
+              <p class="member-role">CO-Fondatrice & Responsable relationnel</p>
+              <p class="member-description">Spécialisée dans la gestion client et les partenariats, Anna assure le suivi personnalisé de chaque projet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="values-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Nos <span class="gradient-text">Valeurs</span></h2>
+          <div class="section-line"></div>
+        </div>
+        
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Excellence</h3>
+            <p>Nous visons l'excellence dans chaque projet, offrant des solutions de qualité supérieure.</p>
+          </div>
+          
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Partenariat</h3>
+            <p>Nous construisons des relations durables basées sur la confiance et la collaboration.</p>
+          </div>
+          
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Innovation</h3>
+            <p>Nous adoptons les dernières technologies pour proposer des solutions innovantes.</p>
+          </div>
+          
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3>Passion</h3>
+            <p>Notre passion pour l'eSport et le numérique guide chacune de nos actions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Prêt à travailler avec nous ?</h2>
+          <p>Découvrez comment OptiPlay peut vous accompagner dans vos projets !</p>
+          <div class="cta-buttons">
+            <a href="services.html" class="btn btn-primary">
+              <i class="fas fa-cogs"></i>
+              Nos Services
+            </a>
+            <a href="contact.html" class="btn btn-secondary">
+              <i class="fas fa-envelope"></i>
+              Nous Contacter
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Développement web</a></li>
+            <li><a href="services.html">Setup streaming</a></li>
+            <li><a href="services.html">Design graphique</a></li>
+            <li><a href="services.html">Recherche sponsors</a></li>
+            <li><a href="services.html">Aide administrative</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animation au scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments à animer
+    document.querySelectorAll('.team-member, .value-card, .stat-card, .section-header').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Animation des compteurs
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.textContent.replace(/\D/g, ''));
+        const suffix = counter.textContent.replace(/\d/g, '');
+        let current = 0;
+        const increment = target / 60;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target + suffix;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(current) + suffix;
+          }
+        }, 25);
+      });
+    }
+
+    // Déclencher l'animation des compteurs quand la section est visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    });
+
+    if (document.querySelector('.story-stats')) {
+      statsObserver.observe(document.querySelector('.story-stats'));
+    }
+  </script>
+
+  <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -54,12 +282,5 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
-    </div>
-  </footer>
 </body>
 </html>

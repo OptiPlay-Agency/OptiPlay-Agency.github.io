@@ -4,70 +4,188 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tournois - OptiPlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/tournaments.css">
 </head>
 <body>
   <header>
     <div class="container">
-      <a href="../index.html"><img src="../assets/logo.png" alt="Logo OptiPlay" class="logo"></a>
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
       <nav>
         <ul>
-          <li><a href="../index.html">Accueil</a></li>
-          <li><a href="tournois.html" class="active">Tournois</a></li>
-          <li><a href="about.html">À propos</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
+          <li><a href="tournaments.html" class="nav-link active"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="tournois-container">
-      <h1>Tournois à venir</h1>
-      <div id="tournois-list">
-        <!-- Tournois ajoutés dynamiquement via JS -->
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <h1 class="page-title">
+          <i class="fas fa-trophy"></i>
+          Tournois <span class="gradient-text">eSport</span>
+        </h1>
+        <p class="page-subtitle">Découvrez nos compétitions exceptionnelles et rejoignez la communauté OptiPlay</p>
       </div>
-      <p id="no-tournament" style="display: none;">Aucun tournoi n'est prévu pour le moment.</p>
+    </section>
+
+    <section class="tournois-container">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tournois à venir</h2>
+          <div class="section-line"></div>
+        </div>
+        <div id="tournois-list" class="tournois-grid">
+          <!-- Tournois ajoutés dynamiquement via JS -->
+        </div>
+        <div id="no-tournament" class="no-tournament" style="display: none;">
+          <i class="fas fa-calendar-times"></i>
+          <h3>Aucun tournoi programmé</h3>
+          <p>Restez connectés, de nouveaux tournois arrivent bientôt !</p>
+          <a href="../HTML/contact.html" class="btn btn-primary">
+            <i class="fas fa-bell"></i>
+            Être notifié
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>L'agence eSport de référence pour des compétitions exceptionnelles.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="tournaments.html">Tournois</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> contact@optiplay.fr</p>
+          <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
     </div>
   </footer>
 
   <script>
     // Simule une récupération de fichiers depuis le dossier "tournois"
-    // Remplace ça par une vraie récupération via API ou back-end si dispo
     const tournois = [
       {
         titre: "OptiPlay Cup 3v3#1",
         date: "7-8 juin 2025",
         description: "Tournoi 3v3 avec 300€ de cashprize.",
-        lien: "../tournaments/OptiplayCup/optiplayCup.html"
+        lien: "../tournaments/OptiplayCup/optiplayCup.html",
+        participants: "24 équipes",
+        statut: "Inscriptions ouvertes",
+        prix: "300€",
+        jeu: "Rocket League"
       }
-      
     ];
 
     const list = document.getElementById('tournois-list');
     const noT = document.getElementById('no-tournament');
 
     if (tournois.length === 0) {
-      noT.style.display = 'block';
+      noT.style.display = 'flex';
+      list.style.display = 'none';
     } else {
-      tournois.forEach(t => {
+      tournois.forEach((t, index) => {
         const div = document.createElement('div');
-        div.className = 'tournoi';
+        div.className = 'tournoi-card';
         div.innerHTML = `
-          <h3>${t.titre}</h3>
-          <p class="date">${t.date}</p>
-          <p class="desc">${t.description}</p>
-          <a href="${t.lien}" class="btn">Voir le tournoi</a>
+          <div class="card-header">
+            <div class="card-icon">
+              <i class="fas fa-gamepad"></i>
+            </div>
+            <div class="card-status ${t.statut.includes('ouverte') ? 'status-open' : 'status-closed'}">
+              ${t.statut}
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>${t.titre}</h3>
+            <p class="game-name"><i class="fas fa-play-circle"></i> ${t.jeu}</p>
+            <div class="tournament-details">
+              <div class="detail">
+                <i class="fas fa-calendar"></i>
+                <span>${t.date}</span>
+              </div>
+              <div class="detail">
+                <i class="fas fa-users"></i>
+                <span>${t.participants}</span>
+              </div>
+              <div class="detail">
+                <i class="fas fa-trophy"></i>
+                <span>${t.prix}</span>
+              </div>
+            </div>
+            <p class="description">${t.description}</p>
+          </div>
+          <div class="card-footer">
+            <a href="${t.lien}" class="btn btn-tournament">
+              <i class="fas fa-rocket"></i>
+              Voir le tournoi
+            </a>
+          </div>
         `;
+        
+        // Animation d'apparition décalée
+        setTimeout(() => {
+          div.classList.add('animate-in');
+        }, index * 200);
+        
         list.appendChild(div);
       });
     }
+
+    // Animation au scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments à animer
+    document.querySelectorAll('.tournoi-card, .section-header').forEach(el => {
+      observer.observe(el);
+    });
   </script>
   <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
