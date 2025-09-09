@@ -442,31 +442,16 @@ nav ul {
 
 .services-showcase {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 30px;
-  margin-top: 40px;
-  max-width: 1400px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+  margin-top: 50px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   justify-items: center;
 }
 
-/* Positionnement spécifique pour 4+3 layout */
-.service-preview:nth-child(5) {
-  grid-column: 1 / 2;
-  grid-row: 2;
-}
 
-.service-preview:nth-child(6) {
-  grid-column: 2 / 3;
-  grid-row: 2;
-}
-
-.service-preview:nth-child(7) {
-  grid-column: 3 / 4;
-  grid-row: 2;
-}
 
 .services-showcase::-webkit-scrollbar {
   height: 8px;
@@ -488,7 +473,7 @@ nav ul {
 
 .service-preview {
   text-align: center;
-  padding: 25px 15px;
+  padding: 35px 25px;
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
   border: 1px solid rgba(0, 56, 255, 0.2);
@@ -496,7 +481,8 @@ nav ul {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 280px;
+  max-width: 320px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .service-preview::before {
@@ -516,24 +502,30 @@ nav ul {
 }
 
 .service-preview:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 56, 255, 0.15);
   border-color: var(--primary-color);
 }
 
+.service-preview:hover .service-icon-small {
+  transform: scale(1.1);
+}
+
 .service-icon-small {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 20px;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 25px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: white;
   position: relative;
   z-index: 2;
+  box-shadow: 0 5px 15px rgba(0, 56, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
 .service-preview h4 {
@@ -806,6 +798,22 @@ nav ul {
   z-index: 2;
 }
 
+/* ======== Mission Section ======== */
+.mission-section {
+  padding: 100px 0;
+  background: var(--bg-dark);
+}
+
+.mission-section .container {
+  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.mission-section .section-header {
+  margin-bottom: 40px;
+}
+
 .mission-content {
   display: grid;
   grid-template-columns: 1fr;
@@ -825,21 +833,28 @@ nav ul {
 .mission-features {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1200px;
+  gap: 30px;
+  max-width: 1400px;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 60px;
+  align-items: start;
 }
 
 .feature {
   text-align: center;
-  padding: 40px 30px;
+  padding: 30px 20px;
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
   border: 1px solid rgba(0, 56, 255, 0.1);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  max-width: 350px;
+  margin: 0 auto;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .feature::before {
@@ -865,24 +880,24 @@ nav ul {
 }
 
 .feature-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 25px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
   position: relative;
   z-index: 2;
 }
 
 .feature h3 {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   color: var(--text-primary);
   position: relative;
   z-index: 2;
@@ -893,6 +908,7 @@ nav ul {
   line-height: 1.6;
   position: relative;
   z-index: 2;
+  font-size: 0.95rem;
 }
 
 /* ======== CTA Section ======== */
@@ -922,6 +938,9 @@ nav ul {
 .cta-content {
   position: relative;
   z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .cta-content h2 {
@@ -929,6 +948,7 @@ nav ul {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .cta-content p {
@@ -938,14 +958,17 @@ nav ul {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 .contact-info {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  align-items: center;
+  gap: 30px;
   margin-bottom: 40px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .contact-item {

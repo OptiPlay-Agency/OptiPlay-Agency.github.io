@@ -27,8 +27,7 @@
   }
 }
 
-@media (max-width: 768px) {order-radius-lg: 20px;
-}
+/* Removed invalid @media rule causing syntax error */
 
 /* Reset et base */
 * {
