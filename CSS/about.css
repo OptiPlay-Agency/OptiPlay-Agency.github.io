@@ -96,8 +96,22 @@ header {
 }
 
 .logo {
-  height: 40px;
-  width: auto;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(0, 56, 255, 0.4);
+}
+
+.logo-text {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .logo-text {
@@ -147,7 +161,9 @@ nav ul {
   justify-content: center;
   position: relative;
   margin-top: 70px;
+  padding: 60px 20px;
   overflow: hidden;
+  text-align: center;
 }
 
 .hero-bg {
@@ -172,18 +188,19 @@ nav ul {
 
 .page-title {
   font-family: 'Orbitron', monospace;
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 900;
   text-align: center;
   margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 2;
 }
 
 .page-title i {
-  color: var(--secondary-color);
+  color: var(--primary-color);
+  margin-right: 15px;
+  font-size: 0.8em;
 }
 
 .gradient-text {
@@ -224,16 +241,29 @@ nav ul {
 
 /* ======== About Content ======== */
 .about-content {
-  padding: 100px 0;
+  padding: 80px 20px;
   background: var(--bg-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.about-content .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .story-content {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 50px;
   align-items: center;
   text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .story-text {
@@ -250,14 +280,16 @@ nav ul {
 .story-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 25px;
   width: 100%;
-  max-width: 900px;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .stat-card {
   background: var(--bg-card);
-  padding: 40px 30px;
+  padding: 30px 20px;
   border-radius: var(--border-radius-lg);
   border: 1px solid rgba(0, 56, 255, 0.2);
   text-align: center;
@@ -323,27 +355,37 @@ nav ul {
 
 /* ======== Team Section ======== */
 .team-section {
-  padding: 100px 0;
+  padding: 80px 20px;
   background: var(--bg-darker);
+  text-align: center;
+}
+
+.team-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 50px;
-  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 900px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .team-member {
   background: var(--bg-card);
-  padding: 50px 40px;
+  padding: 40px 30px;
   border-radius: var(--border-radius-lg);
   border: 1px solid rgba(0, 56, 255, 0.2);
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 400px;
+  max-width: 100%;
 }
 
 .team-member::before {
@@ -489,9 +531,34 @@ nav ul {
 
 /* ======== CTA Section ======== */
 .cta-section {
-  padding: 100px 0;
-  background: var(--bg-darker);
+  padding: 100px 20px;
+  background: 
+    linear-gradient(135deg, rgba(0, 56, 255, 0.1), rgba(255, 0, 128, 0.1)),
+    var(--bg-darker);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(0, 56, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(255, 0, 128, 0.2) 0%, transparent 50%);
+  animation: float 8s ease-in-out infinite;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .cta-content h2 {
@@ -506,7 +573,7 @@ nav ul {
   font-size: 1.2rem;
   color: var(--text-secondary);
   margin-bottom: 40px;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -515,7 +582,9 @@ nav ul {
   display: flex;
   gap: 20px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 /* ======== Boutons ======== */
@@ -662,12 +731,18 @@ footer {
   }
 
   .story-content {
-    grid-template-columns: 1fr;
     gap: 40px;
   }
 
-  .team-grid {
+  .story-stats {
     grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 20px;
+  }
+
+  .team-grid {
+    flex-direction: column;
+    align-items: center;
   }
 
   .team-member {

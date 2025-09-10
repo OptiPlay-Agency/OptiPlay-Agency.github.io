@@ -414,6 +414,9 @@ nav ul {
 .cta-content {
   position: relative;
   z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .cta-content h2 {
@@ -435,9 +438,11 @@ nav ul {
 .contact-methods {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 30px;
   margin-bottom: 40px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .contact-item {
@@ -482,7 +487,9 @@ nav ul {
   display: flex;
   gap: 20px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 .btn {
