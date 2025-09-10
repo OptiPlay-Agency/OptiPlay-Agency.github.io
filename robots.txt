@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://optiplay-agency.github.io/sitemap.xml
