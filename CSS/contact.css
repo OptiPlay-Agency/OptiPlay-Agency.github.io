@@ -116,14 +116,18 @@ header {
 }
 
 .logo {
-  height: 40px;
-  width: auto;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(0, 56, 255, 0.4);
 }
 
 .logo-text {
   font-family: 'Orbitron', monospace;
-  font-size: 1.4rem;
   font-weight: 700;
+  font-size: 1.5rem;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
