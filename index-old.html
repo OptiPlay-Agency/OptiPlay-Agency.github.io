@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OptiPlay - Agence eSport</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/navbar.css">
+  <link rel="stylesheet" href="CSS/index.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+        <a href="index.html" class="logo-link">
+          <img src="assets/logo.png" alt="Logo OptiPlay" class="logo">
+          <span class="logo-text">OptiPlay</span>
+        </a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Accueil</a></li>
+          <li class="services-dropdown">
+            <a href="#" class="nav-link dropdown-toggle">
+              <i class="fas fa-cogs"></i> Services
+              <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </a>
+            <div class="dropdown-menu">
+              <div class="dropdown-section">
+                <h4>Applications</h4>
+                <div class="submenu-items">
+                  <a href="HTML/services/applications.html" class="submenu-item">
+                    <i class="fas fa-desktop"></i>
+                    <div>
+                      <span>Applications Web</span>
+                      <small>Sites & applications personnalisées</small>
+                    </div>
+                  </a>
+                  <a href="HTML/services/applications.html" class="submenu-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <div>
+                      <span>Applications Mobile</span>
+                      <small>Apps iOS & Android</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Automatisations</h4>
+                <div class="submenu-items">
+                  <a href="HTML/services/automatisations.html" class="submenu-item">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                      <span>Scripts Automatisés</span>
+                      <small>Automatisation de tâches</small>
+                    </div>
+                  </a>
+                  <a href="HTML/services/automatisations.html" class="submenu-item">
+                    <i class="fas fa-cogs"></i>
+                    <div>
+                      <span>Workflows</span>
+                      <small>Optimisation des processus</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Bots Discord</h4>
+                <div class="submenu-items">
+                  <a href="HTML/services/bots-discord.html" class="submenu-item">
+                    <i class="fab fa-discord"></i>
+                    <div>
+                      <span>Bots Personnalisés</span>
+                      <small>Fonctionnalités sur-mesure</small>
+                    </div>
+                  </a>
+                  <a href="HTML/services/bots-discord.html" class="submenu-item">
+                    <i class="fas fa-gamepad"></i>
+                    <div>
+                      <span>Bots Gaming</span>
+                      <small>Tournois & communauté</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Divers</h4>
+                <div class="submenu-items">
+                  <a href="HTML/services/divers.html" class="submenu-item">
+                    <i class="fas fa-palette"></i>
+                    <div>
+                      <span>Design & Graphisme</span>
+                      <small>Identité visuelle complète</small>
+                    </div>
+                  </a>
+                  <a href="HTML/services/divers.html" class="submenu-item">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                      <span>Conseil & Accompagnement</span>
+                      <small>Expertise professionnelle</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li><a href="HTML/tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="HTML/about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="HTML/contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        
+        <!-- Boutons d'authentification -->
+        <div class="auth-section">
+          <div id="auth-buttons" class="auth-buttons">
+            <a href="HTML/login.html" class="btn-login">
+              <i class="fas fa-sign-in-alt"></i>
+              Connexion
+            </a>
+            <a href="HTML/register.html" class="btn-register">
+              <i class="fas fa-user-plus"></i>
+              Inscription
+            </a>
+          </div>
+          
+          <div id="user-menu" class="user-menu" style="display: none;">
+            <div class="user-info">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="user-details">
+                <span class="user-email">user@example.com</span>
+                <small>Membre</small>
+              </div>
+            </div>
+            <div class="user-dropdown">
+              <a href="HTML/profile.html" class="dropdown-item">
+                <i class="fas fa-user-cog"></i> Profil
+              </a>
+              <a href="HTML/dashboard.html" class="dropdown-item">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Bienvenue chez <span class="gradient-text">OptiPlay</span></h1>
+      <p class="hero-subtitle">Agence spécialisée dans l'accompagnement des structures et particuliers dans leurs projets numériques, événementiels et administratifs.</p>
+      <div class="hero-buttons">
+        <a href="HTML/services.html" class="btn btn-primary">
+          <i class="fas fa-cogs"></i>
+          Découvrir nos services
+        </a>
+        <a href="HTML/contact.html" class="btn btn-secondary">
+          <i class="fas fa-paper-plane"></i>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Projets réalisés</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Clients satisfaits</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Services experts</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24.7</div>
+          <div class="stat-label">Support client</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-preview">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nos <span class="gradient-text">Services</span></h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">7 domaines d'expertise pour accompagner tous vos projets</p>
+        <div class="services-header-btn">
+          <a href="HTML/services.html" class="btn btn-services-header">
+            <i class="fas fa-cogs"></i>
+            Découvrir tous nos services
+          </a>
+        </div>
+      </div>
+      
+      <div class="services-showcase">
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-code"></i>
+          </div>
+          <h4>Développement</h4>
+          <p>Sites web, bots Discord, applications</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-video"></i>
+          </div>
+          <h4>Setup Streaming</h4>
+          <p>OBS, overlays, identité visuelle</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h4>Design & Graphisme</h4>
+          <p>Logos, branding, créations visuelles</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h4>Tournois eSport</h4>
+          <p>Organisation, gestion, diffusion</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h4>Recherche Sponsors</h4>
+          <p>Dossiers, partenariats, négociation</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h4>Conseil Matériel</h4>
+          <p>PC gaming, configurations pro</p>
+        </div>
+        
+        <div class="service-preview">
+          <div class="service-icon-small">
+            <i class="fas fa-file-contract"></i>
+          </div>
+          <h4>Aide Administrative</h4>
+          <p>Statuts, structuration, loi 1901</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Notre <span class="gradient-text">Mission</span></h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">Accompagner les structures et particuliers dans leurs projets numériques et événementiels</p>
+      </div>
+      
+      <div class="mission-features">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Solutions sur-mesure</h3>
+          <p>Chaque projet est unique, nos solutions s'adaptent à vos besoins spécifiques</p>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-users-cog"></i>
+          </div>
+          <h3>Expertise technique</h3>
+          <p>Une équipe polyvalente maîtrisant tous les aspects du numérique</p>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Accompagnement complet</h3>
+          <p>Du conseil à la réalisation, nous vous suivons à chaque étape</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à concrétiser votre projet ?</h2>
+        <p>Contactez-nous dès maintenant pour un accompagnement personnalisé et des solutions sur-mesure !</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>optiplayy@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a>
+          </div>
+        </div>
+        <a href="HTML/contact.html" class="btn btn-glow">
+          <i class="fas fa-rocket"></i>
+          Commencer maintenant
+        </a>
+      </div>
+    </div>
+  </section>
+  <!--Start of Tawk.to Script.-->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/68c0269393f9a019254a952b/1j4n9dc57';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+<!--End of Tawk.to Script.-->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="HTML/services.html">Développement web</a></li>
+            <li><a href="HTML/services.html">Setup streaming</a></li>
+            <li><a href="HTML/services.html">Design graphique</a></li>
+            <li><a href="HTML/services.html">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html">Aide administrative</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animation au scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments à animer
+    document.querySelectorAll('.stat-item, .service-preview, .advantage-item, .feature, .section-header').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Animation du scroll indicator
+    document.querySelector('.scroll-indicator').addEventListener('click', () => {
+      document.querySelector('.stats').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    });
+
+    // Smooth scroll pour les liens internes
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Animation des compteurs
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.textContent.replace(/\D/g, ''));
+        const suffix = counter.textContent.replace(/\d/g, '');
+        let current = 0;
+        const increment = target / 60;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target + suffix;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(current) + suffix;
+          }
+        }, 25);
+      });
+    }
+
+    // Déclencher l'animation des compteurs quand la section est visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    });
+
+    statsObserver.observe(document.querySelector('.stats'));
+  </script>
+  
+  <!-- Scripts d'authentification et menu -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Configuration Supabase inline pour éviter les erreurs
+    const SUPABASE_URL = 'https://kunvgegumrfpizjvikbk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_JvhADIxqhOqai0c-UyslRA_AnSPC0iS';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialisation du menu Services
+      initServicesDropdown();
+      
+      // Attendre un peu pour l'authentification si Supabase est disponible
+      setTimeout(() => {
+        if (window.supabase) {
+          try {
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            initAuth(supabase);
+          } catch (error) {
+            console.log('Supabase non disponible sur cette page');
+          }
+        }
+      }, 500);
+    });
+
+    function initServicesDropdown() {
+      const servicesDropdown = document.querySelector('.services-dropdown');
+      if (!servicesDropdown) return;
+
+      const dropdownToggle = servicesDropdown.querySelector('.dropdown-toggle');
+      const dropdownMenu = servicesDropdown.querySelector('.dropdown-menu');
+
+      if (!dropdownToggle || !dropdownMenu) return;
+
+      // Toggle du menu au clic
+      dropdownToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isOpen = servicesDropdown.classList.contains('open');
+        
+        // Fermer tous les autres dropdowns
+        closeAllDropdowns();
+        
+        if (!isOpen) {
+          servicesDropdown.classList.add('open');
+          dropdownMenu.style.maxHeight = dropdownMenu.scrollHeight + 'px';
+        }
+      });
+
+      // Fermer le menu en cliquant ailleurs
+      document.addEventListener('click', function(e) {
+        if (!servicesDropdown.contains(e.target)) {
+          closeAllDropdowns();
+        }
+      });
+
+      // Empêcher la fermeture quand on clique dans le menu
+      dropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+
+      // Gestion du clavier
+      dropdownToggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dropdownToggle.click();
+        } else if (e.key === 'Escape') {
+          closeAllDropdowns();
+        }
+      });
+
+      // Animation d'hover sur les sous-menus
+      const submenus = dropdownMenu.querySelectorAll('.submenu-item');
+      submenus.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(5px)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(0)';
+        });
+      });
+    }
+
+    function closeAllDropdowns() {
+      const dropdowns = document.querySelectorAll('.services-dropdown');
+      dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('open');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (menu) {
+          menu.style.maxHeight = '0';
+        }
+      });
+    }
+
+    function initAuth(supabase) {
+      // Vérifier l'état d'authentification
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        updateAuthUI(user);
+      });
+
+      // Écouter les changements d'auth
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        await updateAuthUI(session?.user || null);
+      });
+    }
+
+    async function updateAuthUI(user) {
+      const authButtons = document.getElementById('auth-buttons');
+      const userMenu = document.getElementById('user-menu');
+      
+      if (user) {
+        // Utilisateur connecté
+        if (authButtons) authButtons.style.display = 'none';
+        if (userMenu) {
+          userMenu.style.display = 'flex';
+          const userEmail = userMenu.querySelector('.user-email');
+          
+          if (userEmail) {
+            // Essayer de récupérer le pseudo depuis la base de données
+            try {
+              const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('pseudo, first_name, last_name')
+                .eq('id', user.id)
+                .single();
+              
+              if (profile && profile.pseudo) {
+                userEmail.textContent = profile.pseudo;
+              } else if (profile && profile.first_name) {
+                userEmail.textContent = `${profile.first_name} ${profile.last_name || ''}`.trim();
+              } else {
+                userEmail.textContent = user.email;
+              }
+            } catch (error) {
+              console.error('Erreur lors de la récupération du profil:', error);
+              userEmail.textContent = user.email;
+            }
+          }
+        }
+      } else {
+        // Utilisateur non connecté
+        if (authButtons) authButtons.style.display = 'flex';
+        if (userMenu) userMenu.style.display = 'none';
+      }
+    }
+
+    // Fonction pour gérer la déconnexion
+    async function handleLogout() {
+      if (window.supabase) {
+        try {
+          const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          await supabase.auth.signOut();
+          window.location.reload();
+        } catch (error) {
+          console.error('Erreur déconnexion:', error);
+        }
+      }
+    }
+
+    // Animation de la navbar au scroll
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (!header) return;
+      
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+      
+      lastScrollTop = scrollTop;
+      
+      if (scrollTop > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>

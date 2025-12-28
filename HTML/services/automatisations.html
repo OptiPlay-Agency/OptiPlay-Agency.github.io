@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatisations - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../CSS/services-sub.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="../../index.html" class="logo-link">
+        <img src="../../assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li class="services-dropdown">
+            <a href="#" class="nav-link dropdown-toggle active">
+              <i class="fas fa-cogs"></i> Services
+              <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </a>
+            <div class="dropdown-menu">
+              <div class="dropdown-section">
+                <h4>Applications</h4>
+                <div class="submenu-items">
+                  <a href="applications.html" class="submenu-item">
+                    <i class="fas fa-desktop"></i>
+                    <div>
+                      <span>Applications Web</span>
+                      <small>Sites & applications personnalisées</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Automatisations</h4>
+                <div class="submenu-items">
+                  <a href="automatisations.html" class="submenu-item active">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                      <span>Scripts Automatisés</span>
+                      <small>Automatisation de tâches</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Bots Discord</h4>
+                <div class="submenu-items">
+                  <a href="bots-discord.html" class="submenu-item">
+                    <i class="fab fa-discord"></i>
+                    <div>
+                      <span>Bots Personnalisés</span>
+                      <small>Fonctionnalités sur-mesure</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Divers</h4>
+                <div class="submenu-items">
+                  <a href="divers.html" class="submenu-item">
+                    <i class="fas fa-palette"></i>
+                    <div>
+                      <span>Design & Graphisme</span>
+                      <small>Identité visuelle complète</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li><a href="../tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="../about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="../contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        
+        <div class="auth-section">
+          <div id="auth-buttons" class="auth-buttons">
+            <a href="../login.html" class="btn-login">
+              <i class="fas fa-sign-in-alt"></i>
+              Connexion
+            </a>
+            <a href="../register.html" class="btn-register">
+              <i class="fas fa-user-plus"></i>
+              Inscription
+            </a>
+          </div>
+          
+          <div id="user-menu" class="user-menu" style="display: none;">
+            <div class="user-info">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="user-details">
+                <span class="user-email">user@example.com</span>
+                <small>Membre</small>
+              </div>
+            </div>
+            <div class="user-dropdown">
+              <a href="../profile.html" class="dropdown-item">
+                <i class="fas fa-user-cog"></i> Profil
+              </a>
+              <a href="../dashboard.html" class="dropdown-item">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="../../index.html"><i class="fas fa-home"></i> Accueil</a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="../services.html">Services</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>Automatisations</span>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h1 class="page-title">
+            Solutions d'<span class="gradient-text">Automatisation</span>
+          </h1>
+          <p class="page-subtitle">
+            Optimisez vos processus et gagnez du temps avec nos outils d'automatisation sur-mesure
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>15+</strong>
+              <span>Automatisations créées</span>
+            </div>
+            <div class="stat">
+              <strong>80%</strong>
+              <span>Temps économisé</span>
+            </div>
+            <div class="stat">
+              <strong>∞</strong>
+              <span>Possibilités</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-grid-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Nos <span class="gradient-text">Automatisations</span></h2>
+          <div class="section-line"></div>
+          <p class="section-subtitle">Des solutions intelligentes pour automatiser vos tâches répétitives</p>
+        </div>
+
+        <div class="services-grid">
+          <!-- Scripts Python -->
+          <div class="service-card featured">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fab fa-python"></i>
+              </div>
+              <div class="service-badge">Populaire</div>
+            </div>
+            <h3>Scripts Python</h3>
+            <p class="service-description">
+              Scripts personnalisés pour automatiser vos tâches : scraping, traitement de données, notifications...
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Web scraping & extraction de données</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Traitement automatique de fichiers</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Notifications & alertes personnalisées</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Intégration APIs</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Planification & exécution automatique</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>300€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-code"></i>
+                Commander
+              </a>
+            </div>
+          </div>
+
+          <!-- Workflows -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-project-diagram"></i>
+              </div>
+            </div>
+            <h3>Workflows Métier</h3>
+            <p class="service-description">
+              Automatisation de processus métier complexes avec intégrations multi-plateformes
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Conception de workflows personnalisés</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Intégration CRM, ERP, outils métier</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Validation & approbation automatiques</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Reporting & analytics</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Interface de gestion intuitive</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>800€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-cogs"></i>
+                Découvrir
+              </a>
+            </div>
+          </div>
+
+          <!-- Chatbots -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-comments"></i>
+              </div>
+            </div>
+            <h3>Chatbots Intelligents</h3>
+            <p class="service-description">
+              Assistants conversationnels pour automatiser votre support client et vos interactions
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>IA conversationnelle avancée</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Intégration multicanal</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Apprentissage continu</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Analytics & optimisation</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Escalade vers humains</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>600€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-robot"></i>
+                Créer le mien
+              </a>
+            </div>
+          </div>
+
+          <!-- Monitoring -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <h3>Monitoring & Alertes</h3>
+            <p class="service-description">
+              Surveillance automatisée de vos systèmes avec notifications en temps réel
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Monitoring serveurs & applications</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Alertes multi-canaux</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Tableaux de bord en temps réel</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Historique & tendances</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Actions correctives automatiques</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>400€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-eye"></i>
+                Surveiller
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Prêt à automatiser vos processus ?</h2>
+          <p>Libérez-vous des tâches répétitives et concentrez-vous sur l'essentiel avec nos solutions d'automatisation.</p>
+          <div class="cta-buttons">
+            <a href="../../HTML/contact.html" class="btn btn-primary">
+              <i class="fas fa-rocket"></i>
+              Automatiser maintenant
+            </a>
+            <a href="../../HTML/contact.html" class="btn btn-secondary">
+              <i class="fas fa-comments"></i>
+              Discuter de mon besoin
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Automatisations</h4>
+          <ul>
+            <li><a href="automatisations.html">Scripts Python</a></li>
+            <li><a href="automatisations.html">Workflows Métier</a></li>
+            <li><a href="automatisations.html">Chatbots</a></li>
+            <li><a href="automatisations.html">Monitoring</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../JS/supabase-config.js"></script>
+  <script src="../../JS/main.js"></script>
+</body>
+</html>

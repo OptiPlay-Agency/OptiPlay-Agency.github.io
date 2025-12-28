@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres - OptiPlay Agency</title>
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/settings.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Contenu principal -->
+  <main class="settings-main">
+    <div class="settings-container">
+      
+      <!-- En-tête -->
+      <div class="settings-header">
+        <h1>
+          <i class="fas fa-cog"></i>
+          Paramètres du compte
+        </h1>
+        <p>Gérez vos informations personnelles et vos préférences</p>
+      </div>
+
+      <!-- Navigation par onglets -->
+      <div class="settings-tabs">
+        <button class="tab-btn active" data-tab="account">
+          <i class="fas fa-user"></i>
+          Compte
+        </button>
+        <button class="tab-btn" data-tab="security">
+          <i class="fas fa-shield-alt"></i>
+          Sécurité
+        </button>
+        <button class="tab-btn" data-tab="notifications">
+          <i class="fas fa-bell"></i>
+          Notifications
+        </button>
+        <button class="tab-btn" data-tab="preferences">
+          <i class="fas fa-sliders-h"></i>
+          Préférences
+        </button>
+      </div>
+
+      <!-- Contenu des onglets -->
+      <div class="settings-content">
+        
+        <!-- Onglet Compte -->
+        <div class="tab-content active" id="account-tab">
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-user-circle"></i>
+              Informations personnelles
+            </h2>
+            
+            <form class="settings-form" id="accountForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="pseudo">
+                    <i class="fas fa-at"></i>
+                    Pseudo
+                  </label>
+                  <input type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo">
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">
+                    <i class="fas fa-envelope"></i>
+                    Email
+                  </label>
+                  <input type="email" id="email" name="email" placeholder="votre@email.com" disabled>
+                  <small class="form-hint">L'email ne peut pas être modifié</small>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">
+                    <i class="fas fa-user"></i>
+                    Prénom
+                  </label>
+                  <input type="text" id="firstName" name="first_name" placeholder="Votre prénom">
+                </div>
+                
+                <div class="form-group">
+                  <label for="lastName">
+                    <i class="fas fa-user"></i>
+                    Nom
+                  </label>
+                  <input type="text" id="lastName" name="last_name" placeholder="Votre nom">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bio">
+                  <i class="fas fa-comment"></i>
+                  Biographie
+                </label>
+                <textarea id="bio" name="bio" rows="4" placeholder="Parlez-nous de vous..."></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  Enregistrer les modifications
+                </button>
+                <button type="button" class="btn btn-secondary" id="cancelAccountBtn">
+                  <i class="fas fa-times"></i>
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="settings-section danger-zone">
+            <h2>
+              <i class="fas fa-exclamation-triangle"></i>
+              Zone dangereuse
+            </h2>
+            <div class="danger-card">
+              <div class="danger-info">
+                <h3>Supprimer mon compte</h3>
+                <p>Cette action est irréversible. Toutes vos données seront définitivement supprimées.</p>
+              </div>
+              <button class="btn btn-danger" id="deleteAccountBtn">
+                <i class="fas fa-trash"></i>
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Sécurité -->
+        <div class="tab-content" id="security-tab">
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-key"></i>
+              Changer le mot de passe
+            </h2>
+            
+            <form class="settings-form" id="passwordForm">
+              <div class="form-group">
+                <label for="currentPassword">
+                  <i class="fas fa-lock"></i>
+                  Mot de passe actuel
+                </label>
+                <div class="password-input">
+                  <input type="password" id="currentPassword" name="current_password" placeholder="••••••••">
+                  <button type="button" class="toggle-password" data-target="currentPassword">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword">
+                  <i class="fas fa-lock"></i>
+                  Nouveau mot de passe
+                </label>
+                <div class="password-input">
+                  <input type="password" id="newPassword" name="new_password" placeholder="••••••••">
+                  <button type="button" class="toggle-password" data-target="newPassword">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <div class="password-strength" id="passwordStrength"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">
+                  <i class="fas fa-lock"></i>
+                  Confirmer le mot de passe
+                </label>
+                <div class="password-input">
+                  <input type="password" id="confirmPassword" name="confirm_password" placeholder="••••••••">
+                  <button type="button" class="toggle-password" data-target="confirmPassword">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  Changer le mot de passe
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-shield-alt"></i>
+              Authentification à deux facteurs
+            </h2>
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div class="info-content">
+                <h3>2FA non activée</h3>
+                <p>Ajoutez une couche de sécurité supplémentaire à votre compte</p>
+                <button class="btn btn-primary" id="enable2FABtn">
+                  <i class="fas fa-shield-alt"></i>
+                  Activer 2FA
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-link"></i>
+              Comptes liés
+            </h2>
+            <div class="linked-accounts">
+              <div class="account-card" id="googleAccount">
+                <div class="account-info">
+                  <i class="fab fa-google" style="color: #DB4437;"></i>
+                  <div>
+                    <h3>Google</h3>
+                    <p class="account-status" data-provider="google">Non lié</p>
+                  </div>
+                </div>
+                <button class="btn btn-secondary link-account-btn" data-provider="google">
+                  <i class="fas fa-link"></i>
+                  Lier
+                </button>
+              </div>
+
+              <div class="account-card" id="discordAccount">
+                <div class="account-info">
+                  <i class="fab fa-discord" style="color: #5865F2;"></i>
+                  <div>
+                    <h3>Discord</h3>
+                    <p class="account-status" data-provider="discord">Non lié</p>
+                  </div>
+                </div>
+                <button class="btn btn-secondary link-account-btn" data-provider="discord">
+                  <i class="fas fa-link"></i>
+                  Lier
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Notifications -->
+        <div class="tab-content" id="notifications-tab">
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-envelope"></i>
+              Notifications par email
+            </h2>
+            
+            <div class="toggle-list">
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h3>Nouveaux produits</h3>
+                  <p>Recevez un email lors de la sortie de nouveaux produits</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-new-products" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h3>Mises à jour</h3>
+                  <p>Notifications lorsqu'un produit acheté est mis à jour</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-updates" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h3>Promotions</h3>
+                  <p>Soyez informé des offres spéciales et réductions</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-promotions">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h3>Newsletter</h3>
+                  <p>Recevez notre newsletter mensuelle</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-newsletter">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Préférences -->
+        <div class="tab-content" id="preferences-tab">
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-paint-brush"></i>
+              Apparence
+            </h2>
+            
+            <div class="preference-group">
+              <label>Thème</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="dark" checked>
+                  <span class="radio-label">
+                    <i class="fas fa-moon"></i>
+                    Sombre
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="light">
+                  <span class="radio-label">
+                    <i class="fas fa-sun"></i>
+                    Clair
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="auto">
+                  <span class="radio-label">
+                    <i class="fas fa-adjust"></i>
+                    Automatique
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="preference-group">
+              <label>Langue</label>
+              <select class="settings-select" id="language">
+                <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+
+            <div class="preference-group">
+              <label>Format de date</label>
+              <select class="settings-select" id="dateFormat">
+                <option value="dd/mm/yyyy" selected>JJ/MM/AAAA</option>
+                <option value="mm/dd/yyyy">MM/JJ/AAAA</option>
+                <option value="yyyy-mm-dd">AAAA-MM-JJ</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-database"></i>
+              Données et confidentialité
+            </h2>
+            
+            <div class="data-actions">
+              <button class="btn btn-secondary">
+                <i class="fas fa-download"></i>
+                Télécharger mes données
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-file-export"></i>
+                Exporter l'historique
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="../JS/navbar.js"></script>
+  <script type="module" src="../JS/settings.js"></script>
+</body>
+</html>

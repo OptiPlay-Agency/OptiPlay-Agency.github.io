@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Profil - OptiPlay Agency</title>
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Contenu principal -->
+  <main class="profile-main">
+    <div class="profile-container">
+      
+      <!-- En-tête du profil -->
+      <section class="profile-header">
+        <div class="profile-header-content">
+          <div class="profile-avatar-section">
+            <div class="profile-avatar" id="profileAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <button class="btn-change-avatar" id="changeAvatarBtn">
+              <i class="fas fa-camera"></i>
+              Changer l'avatar
+            </button>
+          </div>
+          
+          <div class="profile-info">
+            <h1 class="profile-name" id="profileName">Chargement...</h1>
+            <p class="profile-email" id="profileEmail">email@example.com</p>
+            <div class="profile-badges">
+              <span class="badge badge-member">
+                <i class="fas fa-crown"></i>
+                Membre
+              </span>
+              <span class="badge badge-date" id="memberSince">
+                <i class="fas fa-calendar"></i>
+                Membre depuis
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Statistiques -->
+      <section class="profile-stats">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Achats totaux</p>
+            <p class="stat-value" id="totalPurchases">0</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-download"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Téléchargements</p>
+            <p class="stat-value" id="totalDownloads">0</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-euro-sign"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Dépenses totales</p>
+            <p class="stat-value" id="totalSpent">0€</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Produits favoris</p>
+            <p class="stat-value" id="totalFavorites">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mes achats -->
+      <section class="my-purchases">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-box"></i>
+            Mes Achats
+          </h2>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+              <i class="fas fa-th"></i>
+              Tous
+            </button>
+            <button class="filter-btn" data-filter="applications">
+              <i class="fas fa-laptop-code"></i>
+              Applications
+            </button>
+            <button class="filter-btn" data-filter="bots">
+              <i class="fab fa-discord"></i>
+              Bots
+            </button>
+            <button class="filter-btn" data-filter="scripts">
+              <i class="fas fa-robot"></i>
+              Scripts
+            </button>
+          </div>
+        </div>
+
+        <div class="purchases-grid" id="purchasesGrid">
+          <!-- Les produits seront chargés dynamiquement ici -->
+          <div class="no-purchases" id="noPurchases">
+            <i class="fas fa-inbox"></i>
+            <h3>Aucun achat pour le moment</h3>
+            <p>Explorez notre catalogue de produits pour commencer !</p>
+            <a href="../HTML/services.html" class="btn btn-primary">
+              <i class="fas fa-store"></i>
+              Découvrir les produits
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Historique des téléchargements -->
+      <section class="download-history">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-history"></i>
+            Historique des téléchargements
+          </h2>
+        </div>
+        
+        <div class="history-list" id="downloadHistory">
+          <!-- L'historique sera chargé dynamiquement -->
+          <div class="no-history">
+            <i class="fas fa-clock"></i>
+            <p>Aucun téléchargement récent</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/navbar.js"></script>
+  <script src="../JS/profile.js"></script>
+</body>
+</html>

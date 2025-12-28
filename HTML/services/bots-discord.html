@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bots Discord | OptiPlay Agency</title>
+  <meta name="description" content="Création de bots Discord personnalisés pour votre serveur gaming. Modération, gestion, divertissement - Solutions complètes par OptiPlay Agency.">
+  <link rel="stylesheet" href="../../CSS/services-sub.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="../../index.html">
+          <img src="../../assets/logo.png" alt="OptiPlay Agency" class="logo">
+          <span>OptiPlay</span>
+        </a>
+      </div>
+      
+      <div class="nav-links">
+        <a href="../../HTML/about.html">À propos</a>
+        <a href="../../HTML/services.html">Services</a>
+        <a href="../../HTML/tournaments.html">Tournois</a>
+        <a href="../../HTML/contact.html">Contact</a>
+      </div>
+      
+      <div class="nav-auth">
+        <div id="auth-buttons" style="display: flex;">
+          <a href="../../HTML/login.html" class="btn btn-outline">Connexion</a>
+          <a href="../../HTML/register.html" class="btn btn-primary">Inscription</a>
+        </div>
+        
+        <div id="user-menu" class="user-menu" style="display: none;">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="user-email">user@example.com</span>
+          <div class="user-dropdown">
+            <a href="#profile">Mon Profil</a>
+            <a href="#settings">Paramètres</a>
+            <a href="#" onclick="handleLogout()">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Bots Discord <span class="highlight">Personnalisés</span></h1>
+          <p>Automatisez et enrichissez votre serveur Discord avec nos bots sur mesure. Modération intelligente, gestion avancée, divertissement interactif.</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="number">50+</span>
+              <span class="label">Bots créés</span>
+            </div>
+            <div class="stat">
+              <span class="number">200k+</span>
+              <span class="label">Utilisateurs actifs</span>
+            </div>
+            <div class="stat">
+              <span class="number">99.9%</span>
+              <span class="label">Uptime</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="bot-preview">
+            <i class="fab fa-discord"></i>
+            <div class="code-lines">
+              <div class="line">client.on('ready', () => {</div>
+              <div class="line">  console.log('Bot en ligne!');</div>
+              <div class="line">});</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="services-grid">
+    <div class="container">
+      <h2>Nos <span class="highlight">Solutions Discord</span></h2>
+      
+      <div class="grid">
+        <!-- Bot de Modération -->
+        <div class="service-card featured">
+          <div class="card-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Bot de Modération</h3>
+          <ul class="features">
+            <li>Auto-modération intelligente</li>
+            <li>Système d'avertissements</li>
+            <li>Filtres anti-spam avancés</li>
+            <li>Logs détaillés</li>
+            <li>Sanctions automatisées</li>
+          </ul>
+          <div class="price">À partir de <span>299€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Bot de Gestion -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3>Bot de Gestion</h3>
+          <ul class="features">
+            <li>Système de tickets</li>
+            <li>Gestion des rôles</li>
+            <li>Auto-assignement</li>
+            <li>Commandes personnalisées</li>
+            <li>Statistiques serveur</li>
+          </ul>
+          <div class="price">À partir de <span>399€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Bot Gaming -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <h3>Bot Gaming</h3>
+          <ul class="features">
+            <li>Statistiques de jeu</li>
+            <li>Classements automatiques</li>
+            <li>Système de matchmaking</li>
+            <li>Intégration APIs gaming</li>
+            <li>Événements automatisés</li>
+          </ul>
+          <div class="price">À partir de <span>499€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Bot Économie -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <h3>Bot Économie</h3>
+          <ul class="features">
+            <li>Système de monnaie virtuelle</li>
+            <li>Boutique intégrée</li>
+            <li>Mini-jeux économiques</li>
+            <li>Récompenses automatiques</li>
+            <li>Classements richesse</li>
+          </ul>
+          <div class="price">À partir de <span>349€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Bot Musique -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-music"></i>
+          </div>
+          <h3>Bot Musique</h3>
+          <ul class="features">
+            <li>Lecture multi-sources</li>
+            <li>Files d'attente avancées</li>
+            <li>Contrôles vocaux</li>
+            <li>Playlists personnalisées</li>
+            <li>Qualité haute définition</li>
+          </ul>
+          <div class="price">À partir de <span>249€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Bot Custom -->
+        <div class="service-card special">
+          <div class="card-icon">
+            <i class="fas fa-magic"></i>
+          </div>
+          <h3>Bot Sur Mesure</h3>
+          <ul class="features">
+            <li>Fonctionnalités uniques</li>
+            <li>Intégrations spéciales</li>
+            <li>Design personnalisé</li>
+            <li>Support dédié</li>
+            <li>Évolutions futures</li>
+          </ul>
+          <div class="price">Devis <span>personnalisé</span></div>
+          <a href="#contact" class="btn btn-special">Discuter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technos -->
+  <section class="tech-stack">
+    <div class="container">
+      <h2>Technologies <span class="highlight">Discord</span></h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <i class="fab fa-js-square"></i>
+          <span>Discord.js</span>
+        </div>
+        <div class="tech-item">
+          <i class="fab fa-python"></i>
+          <span>Discord.py</span>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-database"></i>
+          <span>MongoDB</span>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-server"></i>
+          <span>Node.js</span>
+        </div>
+        <div class="tech-item">
+          <i class="fab fa-aws"></i>
+          <span>AWS</span>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-cloud"></i>
+          <span>Redis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process">
+    <div class="container">
+      <h2>Notre <span class="highlight">Processus</span></h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Analyse des Besoins</h3>
+            <p>Étude complète de votre serveur et définition des fonctionnalités requises.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Développement</h3>
+            <p>Création du bot avec tests continus et optimisations de performance.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Intégration</h3>
+            <p>Déploiement sur votre serveur avec formation et documentation complète.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Support</h3>
+            <p>Maintenance continue, mises à jour et support technique dédié.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à Automatiser votre <span class="highlight">Discord</span> ?</h2>
+        <p>Discutons de votre projet de bot Discord personnalisé</p>
+        <div class="cta-buttons">
+          <a href="../../HTML/contact.html" class="btn btn-primary">
+            <i class="fas fa-rocket"></i>
+            Demander un Devis
+          </a>
+          <a href="#" class="btn btn-outline">
+            <i class="fab fa-discord"></i>
+            Rejoindre Discord
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Configuration Supabase
+    const SUPABASE_URL = 'https://kunvgegumrfpizjvikbk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_JvhADIxqhOqai0c-UyslRA_AnSPC0iS';
+
+    // Initialisation au chargement de la page
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (window.supabase) {
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        initAuth(supabase);
+      }
+    });
+
+    function initAuth(supabase) {
+      // Vérifier l'état d'authentification
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        updateAuthUI(user);
+      });
+
+      // Écouter les changements d'auth
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        await updateAuthUI(session?.user || null);
+      });
+    }
+
+    async function updateAuthUI(user) {
+      const authButtons = document.getElementById('auth-buttons');
+      const userMenu = document.getElementById('user-menu');
+      
+      if (user) {
+        // Utilisateur connecté
+        if (authButtons) authButtons.style.display = 'none';
+        if (userMenu) {
+          userMenu.style.display = 'flex';
+          const userEmail = userMenu.querySelector('.user-email');
+          
+          if (userEmail) {
+            // Essayer de récupérer le pseudo depuis la base de données
+            try {
+              const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('pseudo, first_name, last_name')
+                .eq('id', user.id)
+                .single();
+              
+              if (profile && profile.pseudo) {
+                userEmail.textContent = profile.pseudo;
+              } else if (profile && profile.first_name) {
+                userEmail.textContent = `${profile.first_name} ${profile.last_name || ''}`.trim();
+              } else {
+                userEmail.textContent = user.email;
+              }
+            } catch (error) {
+              console.error('Erreur lors de la récupération du profil:', error);
+              userEmail.textContent = user.email;
+            }
+          }
+        }
+      } else {
+        // Utilisateur non connecté
+        if (authButtons) authButtons.style.display = 'flex';
+        if (userMenu) userMenu.style.display = 'none';
+      }
+    }
+
+    // Fonction pour gérer la déconnexion
+    async function handleLogout() {
+      if (window.supabase) {
+        try {
+          const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          await supabase.auth.signOut();
+          window.location.reload();
+        } catch (error) {
+          console.error('Erreur lors de la déconnexion:', error);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../CSS/services-sub.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="../../index.html" class="logo-link">
+        <img src="../../assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li class="services-dropdown">
+            <a href="#" class="nav-link dropdown-toggle active">
+              <i class="fas fa-cogs"></i> Services
+              <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </a>
+            <div class="dropdown-menu">
+              <div class="dropdown-section">
+                <h4>Applications</h4>
+                <div class="submenu-items">
+                  <a href="applications.html" class="submenu-item active">
+                    <i class="fas fa-desktop"></i>
+                    <div>
+                      <span>Applications Web</span>
+                      <small>Sites & applications personnalisées</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Automatisations</h4>
+                <div class="submenu-items">
+                  <a href="automatisations.html" class="submenu-item">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                      <span>Scripts Automatisés</span>
+                      <small>Automatisation de tâches</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Bots Discord</h4>
+                <div class="submenu-items">
+                  <a href="bots-discord.html" class="submenu-item">
+                    <i class="fab fa-discord"></i>
+                    <div>
+                      <span>Bots Personnalisés</span>
+                      <small>Fonctionnalités sur-mesure</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="dropdown-section">
+                <h4>Divers</h4>
+                <div class="submenu-items">
+                  <a href="divers.html" class="submenu-item">
+                    <i class="fas fa-palette"></i>
+                    <div>
+                      <span>Design & Graphisme</span>
+                      <small>Identité visuelle complète</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li><a href="../tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
+          <li><a href="../about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="../contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        
+        <div class="auth-section">
+          <div id="auth-buttons" class="auth-buttons">
+            <a href="../login.html" class="btn-login">
+              <i class="fas fa-sign-in-alt"></i>
+              Connexion
+            </a>
+            <a href="../register.html" class="btn-register">
+              <i class="fas fa-user-plus"></i>
+              Inscription
+            </a>
+          </div>
+          
+          <div id="user-menu" class="user-menu" style="display: none;">
+            <div class="user-info">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="user-details">
+                <span class="user-email">user@example.com</span>
+                <small>Membre</small>
+              </div>
+            </div>
+            <div class="user-dropdown">
+              <a href="../profile.html" class="dropdown-item">
+                <i class="fas fa-user-cog"></i> Profil
+              </a>
+              <a href="../dashboard.html" class="dropdown-item">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="../../index.html"><i class="fas fa-home"></i> Accueil</a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="../services.html">Services</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>Applications</span>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-icon">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h1 class="page-title">
+            Développement d'<span class="gradient-text">Applications</span>
+          </h1>
+          <p class="page-subtitle">
+            Des applications web et mobiles sur-mesure pour répondre à tous vos besoins numériques
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>25+</strong>
+              <span>Apps développées</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Sur-mesure</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>Support inclus</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-grid-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Nos <span class="gradient-text">Applications</span></h2>
+          <div class="section-line"></div>
+          <p class="section-subtitle">Solutions technologiques avancées pour votre réussite digitale</p>
+        </div>
+
+        <div class="services-grid">
+          <!-- Application Web -->
+          <div class="service-card featured">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <div class="service-badge">Populaire</div>
+            </div>
+            <h3>Applications Web</h3>
+            <p class="service-description">
+              Sites web dynamiques, plateformes e-commerce, applications SaaS, dashboards administratifs
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Design responsive & moderne</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Technologies récentes (React, Vue, Node.js)</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Base de données optimisée</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Sécurité & performances</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>SEO & Analytics intégrés</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>1 500€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-rocket"></i>
+                Demander un devis
+              </a>
+            </div>
+          </div>
+
+          <!-- Application Mobile -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+            </div>
+            <h3>Applications Mobile</h3>
+            <p class="service-description">
+              Applications natives iOS/Android ou cross-platform pour toucher votre audience mobile
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Applications natives ou hybrides</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Interface utilisateur intuitive</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Intégration API & services cloud</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Push notifications</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Publication sur les stores</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>2 500€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-mobile-alt"></i>
+                Commander
+              </a>
+            </div>
+          </div>
+
+          <!-- Progressive Web App -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-window-restore"></i>
+              </div>
+            </div>
+            <h3>Progressive Web Apps</h3>
+            <p class="service-description">
+              Le meilleur des deux mondes : l'expérience mobile avec la simplicité du web
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Installation comme une app native</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Fonctionnement hors-ligne</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Notifications push</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Performances optimales</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Compatible tous appareils</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>1 800€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-code"></i>
+                En savoir plus
+              </a>
+            </div>
+          </div>
+
+          <!-- API & Backend -->
+          <div class="service-card">
+            <div class="service-header">
+              <div class="service-icon">
+                <i class="fas fa-server"></i>
+              </div>
+            </div>
+            <h3>API & Backend</h3>
+            <p class="service-description">
+              Solutions backend robustes, APIs REST/GraphQL pour alimenter vos applications
+            </p>
+            <div class="service-features">
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>APIs RESTful ou GraphQL</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Architecture microservices</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Authentification & sécurité</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Base de données optimisée</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>Documentation complète</span>
+              </div>
+            </div>
+            <div class="service-footer">
+              <div class="price-range">À partir de <strong>1 200€</strong></div>
+              <a href="../../HTML/contact.html" class="btn-service">
+                <i class="fas fa-cogs"></i>
+                Découvrir
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="technologies-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Technologies <span class="gradient-text">Maîtrisées</span></h2>
+          <div class="section-line"></div>
+          <p class="section-subtitle">Stack technologique moderne pour des solutions pérennes</p>
+        </div>
+
+        <div class="tech-categories">
+          <div class="tech-category">
+            <h3><i class="fas fa-palette"></i> Frontend</h3>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <i class="fab fa-react"></i>
+                <span>React</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-vuejs"></i>
+                <span>Vue.js</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-angular"></i>
+                <span>Angular</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-js-square"></i>
+                <span>TypeScript</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech-category">
+            <h3><i class="fas fa-server"></i> Backend</h3>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <i class="fab fa-node-js"></i>
+                <span>Node.js</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-python"></i>
+                <span>Python</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-gem"></i>
+                <span>Ruby</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-php"></i>
+                <span>PHP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech-category">
+            <h3><i class="fas fa-database"></i> Base de données</h3>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <i class="fas fa-database"></i>
+                <span>PostgreSQL</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-leaf"></i>
+                <span>MongoDB</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-fire"></i>
+                <span>Firebase</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-cloud"></i>
+                <span>Supabase</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Prêt à développer votre application ?</h2>
+          <p>Discutons de votre projet et créons ensemble une solution sur-mesure qui répond parfaitement à vos besoins.</p>
+          <div class="cta-buttons">
+            <a href="../../HTML/contact.html" class="btn btn-primary">
+              <i class="fas fa-rocket"></i>
+              Démarrer mon projet
+            </a>
+            <a href="../../HTML/contact.html" class="btn btn-secondary">
+              <i class="fas fa-comments"></i>
+              Discuter en direct
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Applications</h4>
+          <ul>
+            <li><a href="applications.html">Applications Web</a></li>
+            <li><a href="applications.html">Applications Mobile</a></li>
+            <li><a href="applications.html">Progressive Web Apps</a></li>
+            <li><a href="applications.html">APIs & Backend</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../JS/supabase-config.js"></script>
+  <script src="../../JS/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - OptiPlay Agency</title>
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    .dashboard-placeholder {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    
+    .dashboard-placeholder i {
+      font-size: 5rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+    
+    .dashboard-placeholder h2 {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary-color), #ffffff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .dashboard-placeholder p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Contenu principal -->
+  <main class="profile-main">
+    <div class="profile-container">
+      
+      <!-- Placeholder Dashboard -->
+      <section class="settings-content">
+        <div class="dashboard-placeholder">
+          <i class="fas fa-chart-line"></i>
+          <h2>Dashboard</h2>
+          <p>
+            Le tableau de bord est en cours de développement.<br>
+            Vous pourrez bientôt suivre vos statistiques, analyser vos ventes et gérer vos produits depuis cette interface.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/navbar.js"></script>
+  <script>
+    // Vérifier l'authentification
+    document.addEventListener('DOMContentLoaded', async () => {
+      const supabase = window.supabase.createClient(
+        'https://kunvgegumrfpizjvikbk.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1bnZnZWd1bXJmcGl6anZpa2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUxNTE3NDIsImV4cCI6MjA1MDcyNzc0Mn0.fL8wP-Rt59oPdVYPZBBVZXxZ-OW8t7XBTDX7z9VUCdA'
+      );
+
+      const { data: { user }, error } = await supabase.auth.getUser();
+      
+      if (error || !user) {
+        window.location.href = '../HTML/login.html';
+      }
+    });
+  </script>
+</body>
+</html>

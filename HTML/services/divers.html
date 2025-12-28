@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services Divers | OptiPlay Agency</title>
+  <meta name="description" content="Services spécialisés gaming et esport : streaming, coaching, consulting, formations. Solutions complètes par OptiPlay Agency.">
+  <link rel="stylesheet" href="../../CSS/services-sub.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="../../index.html">
+          <img src="../../assets/logo.png" alt="OptiPlay Agency" class="logo">
+          <span>OptiPlay</span>
+        </a>
+      </div>
+      
+      <div class="nav-links">
+        <a href="../../HTML/about.html">À propos</a>
+        <a href="../../HTML/services.html">Services</a>
+        <a href="../../HTML/tournaments.html">Tournois</a>
+        <a href="../../HTML/contact.html">Contact</a>
+      </div>
+      
+      <div class="nav-auth">
+        <div id="auth-buttons" style="display: flex;">
+          <a href="../../HTML/login.html" class="btn btn-outline">Connexion</a>
+          <a href="../../HTML/register.html" class="btn btn-primary">Inscription</a>
+        </div>
+        
+        <div id="user-menu" class="user-menu" style="display: none;">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="user-email">user@example.com</span>
+          <div class="user-dropdown">
+            <a href="#profile">Mon Profil</a>
+            <a href="#settings">Paramètres</a>
+            <a href="#" onclick="handleLogout()">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Services <span class="highlight">Spécialisés</span></h1>
+          <p>Solutions expertes pour l'écosystème gaming et esport. De la formation au consulting, nous accompagnons votre croissance digitale.</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="number">100+</span>
+              <span class="label">Projets réalisés</span>
+            </div>
+            <div class="stat">
+              <span class="number">50+</span>
+              <span class="label">Clients satisfaits</span>
+            </div>
+            <div class="stat">
+              <span class="number">24/7</span>
+              <span class="label">Support disponible</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="services-preview">
+            <div class="service-icon"><i class="fas fa-video"></i></div>
+            <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="service-icon"><i class="fas fa-headset"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="services-grid">
+    <div class="container">
+      <h2>Nos <span class="highlight">Expertises</span></h2>
+      
+      <div class="grid">
+        <!-- Streaming & Production -->
+        <div class="service-card featured">
+          <div class="card-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Streaming & Production</h3>
+          <ul class="features">
+            <li>Configuration studio streaming</li>
+            <li>Overlays personnalisés</li>
+            <li>Montage vidéo pro</li>
+            <li>Formation streaming</li>
+            <li>Optimisation qualité</li>
+          </ul>
+          <div class="price">À partir de <span>199€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Coaching Esport -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3>Coaching Esport</h3>
+          <ul class="features">
+            <li>Coaching individuel</li>
+            <li>Formation équipe</li>
+            <li>Analyse gameplay</li>
+            <li>Stratégies avancées</li>
+            <li>Mental et performance</li>
+          </ul>
+          <div class="price">À partir de <span>49€/h</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Consulting Gaming -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Consulting Gaming</h3>
+          <ul class="features">
+            <li>Audit écosystème gaming</li>
+            <li>Stratégies de croissance</li>
+            <li>Monétisation optimisée</li>
+            <li>Analytics avancés</li>
+            <li>ROI et KPIs gaming</li>
+          </ul>
+          <div class="price">À partir de <span>299€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Support Technique -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>Support Technique</h3>
+          <ul class="features">
+            <li>Support 24/7 premium</li>
+            <li>Maintenance préventive</li>
+            <li>Résolution incidents</li>
+            <li>Optimisation systèmes</li>
+            <li>Formation utilisateurs</li>
+          </ul>
+          <div class="price">À partir de <span>99€/mois</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Formation Gaming -->
+        <div class="service-card">
+          <div class="card-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Formation Gaming</h3>
+          <ul class="features">
+            <li>Formations sur mesure</li>
+            <li>Certifications gaming</li>
+            <li>Workshops pratiques</li>
+            <li>Mentorat personnalisé</li>
+            <li>Ressources exclusives</li>
+          </ul>
+          <div class="price">À partir de <span>149€</span></div>
+          <a href="#contact" class="btn btn-primary">Commander</a>
+        </div>
+
+        <!-- Projet Sur Mesure -->
+        <div class="service-card special">
+          <div class="card-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Projet Sur Mesure</h3>
+          <ul class="features">
+            <li>Solutions uniques</li>
+            <li>Innovation gaming</li>
+            <li>Accompagnement complet</li>
+            <li>Équipe dédiée</li>
+            <li>Scalabilité garantie</li>
+          </ul>
+          <div class="price">Devis <span>personnalisé</span></div>
+          <a href="#contact" class="btn btn-special">Discuter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specializations -->
+  <section class="specializations">
+    <div class="container">
+      <h2>Nos <span class="highlight">Spécialisations</span></h2>
+      <div class="spec-grid">
+        <div class="spec-card">
+          <i class="fas fa-trophy"></i>
+          <h3>Tournois Esport</h3>
+          <p>Organisation complète d'événements esport compétitifs</p>
+        </div>
+        
+        <div class="spec-card">
+          <i class="fas fa-users"></i>
+          <h3>Community Management</h3>
+          <p>Gestion et animation de communautés gaming</p>
+        </div>
+        
+        <div class="spec-card">
+          <i class="fas fa-bullhorn"></i>
+          <h3>Marketing Gaming</h3>
+          <p>Stratégies marketing spécialisées gaming et esport</p>
+        </div>
+        
+        <div class="spec-card">
+          <i class="fas fa-code"></i>
+          <h3>Développement Gaming</h3>
+          <p>Solutions techniques avancées pour l'écosystème gaming</p>
+        </div>
+        
+        <div class="spec-card">
+          <i class="fas fa-palette"></i>
+          <h3>Design Gaming</h3>
+          <p>Identité visuelle et assets graphiques gaming</p>
+        </div>
+        
+        <div class="spec-card">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Sécurité Gaming</h3>
+          <p>Protection et sécurisation des environnements gaming</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process">
+    <div class="container">
+      <h2>Notre <span class="highlight">Approche</span></h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Analyse Approfondie</h3>
+            <p>Étude complète de vos besoins et objectifs gaming spécifiques.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Stratégie Personnalisée</h3>
+            <p>Définition d'une roadmap adaptée à votre écosystème gaming.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Implémentation Expert</h3>
+            <p>Mise en œuvre par nos spécialistes gaming expérimentés.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Suivi Continu</h3>
+            <p>Accompagnement long terme et optimisations permanentes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>Ce que disent nos <span class="highlight">Clients</span></h2>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"OptiPlay a transformé notre approche du streaming. Leur expertise technique et leur connaissance du gaming sont exceptionnelles."</p>
+          <div class="author">
+            <strong>Alex Chen</strong> - Streamer Pro
+          </div>
+        </div>
+        
+        <div class="testimonial">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"Le coaching d'OptiPlay nous a permis de passer de niveau amateur à semi-pro. Résultats mesurables et méthodes efficaces."</p>
+          <div class="author">
+            <strong>Team Phoenix</strong> - Équipe Esport
+          </div>
+        </div>
+        
+        <div class="testimonial">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"Solutions sur mesure parfaitement adaptées à nos besoins. Support réactif et expertise gaming indéniable."</p>
+          <div class="author">
+            <strong>GameHub Studios</strong> - Studio Gaming
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à Booster votre <span class="highlight">Gaming</span> ?</h2>
+        <p>Discutons de votre projet et trouvons la solution parfaite ensemble</p>
+        <div class="cta-buttons">
+          <a href="../../HTML/contact.html" class="btn btn-primary">
+            <i class="fas fa-rocket"></i>
+            Démarrer un Projet
+          </a>
+          <a href="#" class="btn btn-outline">
+            <i class="fas fa-comments"></i>
+            Consultation Gratuite
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Configuration Supabase
+    const SUPABASE_URL = 'https://kunvgegumrfpizjvikbk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_JvhADIxqhOqai0c-UyslRA_AnSPC0iS';
+
+    // Initialisation au chargement de la page
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (window.supabase) {
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        initAuth(supabase);
+      }
+    });
+
+    function initAuth(supabase) {
+      // Vérifier l'état d'authentification
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        updateAuthUI(user);
+      });
+
+      // Écouter les changements d'auth
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        await updateAuthUI(session?.user || null);
+      });
+    }
+
+    async function updateAuthUI(user) {
+      const authButtons = document.getElementById('auth-buttons');
+      const userMenu = document.getElementById('user-menu');
+      
+      if (user) {
+        // Utilisateur connecté
+        if (authButtons) authButtons.style.display = 'none';
+        if (userMenu) {
+          userMenu.style.display = 'flex';
+          const userEmail = userMenu.querySelector('.user-email');
+          
+          if (userEmail) {
+            // Essayer de récupérer le pseudo depuis la base de données
+            try {
+              const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('pseudo, first_name, last_name')
+                .eq('id', user.id)
+                .single();
+              
+              if (profile && profile.pseudo) {
+                userEmail.textContent = profile.pseudo;
+              } else if (profile && profile.first_name) {
+                userEmail.textContent = `${profile.first_name} ${profile.last_name || ''}`.trim();
+              } else {
+                userEmail.textContent = user.email;
+              }
+            } catch (error) {
+              console.error('Erreur lors de la récupération du profil:', error);
+              userEmail.textContent = user.email;
+            }
+          }
+        }
+      } else {
+        // Utilisateur non connecté
+        if (authButtons) authButtons.style.display = 'flex';
+        if (userMenu) userMenu.style.display = 'none';
+      }
+    }
+
+    // Fonction pour gérer la déconnexion
+    async function handleLogout() {
+      if (window.supabase) {
+        try {
+          const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          await supabase.auth.signOut();
+          window.location.reload();
+        } catch (error) {
+          console.error('Erreur lors de la déconnexion:', error);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
