@@ -299,12 +299,14 @@ class OptiPlayNavbar {
       if (userMenu) userMenu.style.display = 'flex';
       
       // Récupérer le pseudo et les infos du profil
-      let displayName = user.email;
+      const metadata = user.user_metadata || {};
+      let displayName = metadata.pseudo || user.email.split('@')[0];
+      let avatarUrl = metadata.avatar_url;
       
       try {
         const { data: profile } = await this.supabase
           .from('profiles')
-          .select('pseudo, first_name, last_name')
+          .select('pseudo, first_name, last_name, avatar_url')
           .eq('id', user.id)
           .single();
         
@@ -313,12 +315,20 @@ class OptiPlayNavbar {
         } else if (profile?.first_name) {
           displayName = `${profile.first_name} ${profile.last_name || ''}`.trim();
         }
+        
+        // Utiliser l'avatar du profil si disponible
+        if (profile?.avatar_url && !avatarUrl) {
+          avatarUrl = profile.avatar_url;
+        }
       } catch (error) {
-        console.log('Profil non trouvé, utilisation de l\'email');
+        console.log('Profil non trouvé, utilisation des user_metadata');
       }
       
       if (userName) userName.textContent = displayName;
       if (userDisplayName) userDisplayName.textContent = displayName;
+      
+      // Mettre à jour les avatars
+      this.updateAvatars(avatarUrl, displayName);
       
       this.currentUser = user;
     } else {
@@ -327,6 +337,62 @@ class OptiPlayNavbar {
       if (userMenu) userMenu.style.display = 'none';
       
       this.currentUser = null;
+    }
+  }
+
+  // Mettre à jour les avatars dans la navbar
+  updateAvatars(avatarUrl, displayName) {
+    const userAvatar = document.querySelector('.user-avatar');
+    const userAvatarLarge = document.querySelector('.user-avatar-large');
+    
+    if (avatarUrl) {
+      // Si c'est un chemin Supabase Storage (avatars/UUID.ext)
+      if (avatarUrl.startsWith('avatars/')) {
+        const fileName = avatarUrl.replace('avatars/', '');
+        const { data } = this.supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+        
+        if (data?.publicUrl) {
+          const imgUrl = `${data.publicUrl}?t=${Date.now()}`;
+          
+          if (userAvatar) {
+            userAvatar.innerHTML = `<img src="${imgUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          }
+          if (userAvatarLarge) {
+            userAvatarLarge.innerHTML = `<img src="${imgUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          }
+          return;
+        }
+      }
+      
+      // URL complète
+      if (userAvatar) {
+        userAvatar.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+      }
+      if (userAvatarLarge) {
+        userAvatarLarge.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+      }
+    } else {
+      // Initiales par défaut
+      const initials = displayName.substring(0, 2).toUpperCase();
+      
+      if (userAvatar) {
+        userAvatar.innerHTML = initials;
+        userAvatar.style.display = 'flex';
+        userAvatar.style.alignItems = 'center';
+        userAvatar.style.justifyContent = 'center';
+        userAvatar.style.fontSize = '0.9rem';
+        userAvatar.style.fontWeight = 'bold';
+      }
+      if (userAvatarLarge) {
+        userAvatarLarge.innerHTML = initials;
+        userAvatarLarge.style.display = 'flex';
+        userAvatarLarge.style.alignItems = 'center';
+        userAvatarLarge.style.justifyContent = 'center';
+        userAvatarLarge.style.fontSize = '1.5rem';
+        userAvatarLarge.style.fontWeight = 'bold';
+      }
     }
   }
 

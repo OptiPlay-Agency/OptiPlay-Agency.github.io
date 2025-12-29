@@ -2,20 +2,35 @@
 // PROFILE PAGE - OPTIPLAY
 // ========================================
 
-import { getSupabaseClient } from './navbar.js';
-
 class ProfileManager {
   constructor() {
-    this.supabase = getSupabaseClient();
+    this.supabase = null;
     this.currentUser = null;
     this.purchases = [];
+    this.isUploading = false;
     this.init();
   }
 
   async init() {
+    await this.waitForSupabase();
     await this.loadUserData();
     await this.loadPurchases();
     this.attachEventListeners();
+  }
+
+  // Attendre que Supabase soit disponible
+  async waitForSupabase() {
+    return new Promise((resolve) => {
+      const checkSupabase = () => {
+        if (window.OptiPlayConfig?.supabaseClient) {
+          this.supabase = window.OptiPlayConfig.supabaseClient;
+          resolve();
+        } else {
+          setTimeout(checkSupabase, 100);
+        }
+      };
+      checkSupabase();
+    });
   }
 
   // Charger les données de l'utilisateur
@@ -40,7 +55,7 @@ class ProfileManager {
           .single();
         profile = data;
       } catch (profileError) {
-        console.log('Profil non trouvé, utilisation des données de base');
+        console.log('Profil non trouvé, utilisation des données user_metadata');
       }
 
       this.updateProfileUI(user, profile);
@@ -56,17 +71,20 @@ class ProfileManager {
   // Mettre à jour l'interface avec les données du profil
   updateProfileUI(user, profile) {
     try {
-      // Nom d'utilisateur
-      const displayName = profile?.pseudo || profile?.first_name || user.email.split('@')[0];
+      // Récupérer le pseudo depuis user_metadata ou profile
+      const metadata = user.user_metadata || {};
+      const pseudo = metadata.pseudo || profile?.pseudo || user.email.split('@')[0];
+      
+      // Nom d'utilisateur (afficher le pseudo)
       const nameElement = document.getElementById('profileName');
       if (nameElement) {
-        nameElement.textContent = displayName;
+        nameElement.textContent = pseudo;
       }
       
-      // Email
+      // Afficher le pseudo au lieu de l'email
       const emailElement = document.getElementById('profileEmail');
       if (emailElement) {
-        emailElement.textContent = user.email;
+        emailElement.textContent = `@${pseudo}`;
       }
       
       // Date d'inscription
@@ -82,23 +100,110 @@ class ProfileManager {
         `;
       }
 
-      // Avatar (initiales si pas d'image)
+      // Avatar - Charger depuis Supabase Storage ou user_metadata
       const avatar = document.getElementById('profileAvatar');
       if (avatar) {
-        if (profile?.avatar_url) {
-          avatar.innerHTML = `<img src="${profile.avatar_url}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+        // Essayer de charger l'avatar depuis Supabase Storage
+        const avatarUrl = metadata.avatar_url || profile?.avatar_url;
+        
+        if (avatarUrl) {
+          // Si c'est un chemin Supabase Storage (avatars/UUID.ext)
+          if (avatarUrl.startsWith('avatars/')) {
+            // Extraire juste le nom du fichier
+            const fileName = avatarUrl.replace('avatars/', '');
+            const { data } = this.supabase.storage
+              .from('avatars')
+              .getPublicUrl(fileName);
+            
+            if (data?.publicUrl) {
+              avatar.innerHTML = `<img src="${data.publicUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+            } else {
+              this.setDefaultAvatar(avatar, pseudo);
+            }
+          } else {
+            // URL complète
+            avatar.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          }
         } else {
-          const initials = displayName.substring(0, 2).toUpperCase();
-          avatar.innerHTML = initials;
-          avatar.style.display = 'flex';
-          avatar.style.alignItems = 'center';
-          avatar.style.justifyContent = 'center';
-          avatar.style.fontSize = '2rem';
-          avatar.style.fontWeight = 'bold';
+          this.setDefaultAvatar(avatar, pseudo);
         }
       }
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'UI:', error);
+    }
+  }
+
+  // Définir l'avatar par défaut avec les initiales
+  setDefaultAvatar(avatarElement, pseudo) {
+    const initials = pseudo.substring(0, 2).toUpperCase();
+    avatarElement.innerHTML = initials;
+    avatarElement.style.display = 'flex';
+    avatarElement.style.alignItems = 'center';
+    avatarElement.style.justifyContent = 'center';
+    avatarElement.style.fontSize = '2rem';
+    avatarElement.style.fontWeight = 'bold';
+  }
+
+  // Upload avatar vers Supabase Storage
+  async uploadAvatar(file) {
+    if (this.isUploading) return false;
+    
+    this.isUploading = true;
+    
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${this.currentUser.id}.${fileExt}`;
+      const filePath = fileName; // Pas de préfixe, le bucket est déjà 'avatars'
+
+      // Upload vers Supabase Storage
+      const { data, error } = await this.supabase.storage
+        .from('avatars')
+        .upload(filePath, file, {
+          upsert: true,
+          contentType: file.type
+        });
+
+      if (error) throw error;
+
+      // Mettre à jour user_metadata avec le chemin complet
+      const { error: updateError } = await this.supabase.auth.updateUser({
+        data: {
+          avatar_url: `avatars/${filePath}`
+        }
+      });
+
+      if (updateError) throw updateError;
+
+      // Attendre un peu que le fichier soit bien disponible
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Mettre à jour l'avatar directement sans recharger toute la page
+      const { data: publicUrlData } = this.supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+      
+      if (publicUrlData?.publicUrl) {
+        const avatar = document.getElementById('profileAvatar');
+        if (avatar) {
+          // Créer une nouvelle image pour forcer le rechargement
+          const img = new Image();
+          img.onload = () => {
+            avatar.innerHTML = `<img src="${publicUrlData.publicUrl}?t=${Date.now()}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          };
+          img.onerror = () => {
+            console.error('Erreur chargement image');
+            avatar.innerHTML = `<img src="${publicUrlData.publicUrl}?t=${Date.now()}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          };
+          img.src = `${publicUrlData.publicUrl}?t=${Date.now()}`;
+        }
+      }
+      
+      this.isUploading = false;
+      return true;
+    } catch (error) {
+      console.error('Erreur upload avatar:', error);
+      this.isUploading = false;
+      return false;
     }
   }
 
@@ -253,7 +358,35 @@ class ProfileManager {
     const changeAvatarBtn = document.getElementById('changeAvatarBtn');
     if (changeAvatarBtn) {
       changeAvatarBtn.addEventListener('click', () => {
-        alert('Fonctionnalité de changement d\'avatar à venir !');
+        // Créer un input file caché
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            // Vérifier la taille (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+              alert('L\'image est trop grande. Maximum 2MB.');
+              return;
+            }
+            
+            changeAvatarBtn.disabled = true;
+            changeAvatarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Upload...';
+            
+            const success = await this.uploadAvatar(file);
+            
+            if (success) {
+              alert('Avatar mis à jour avec succès !');
+            } else {
+              alert('Erreur lors de l\'upload de l\'avatar');
+            }
+            
+            changeAvatarBtn.disabled = false;
+            changeAvatarBtn.innerHTML = '<i class="fas fa-camera"></i> Changer l\'avatar';
+          }
+        };
+        input.click();
       });
     }
   }

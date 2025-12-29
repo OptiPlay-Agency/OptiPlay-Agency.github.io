@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OptiPlay Manager - Gestion d'équipe esport</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/teamPlanner/CSS/manager.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loader">
+      <i class="fas fa-gamepad fa-spin"></i>
+      <p>Chargement d'OptiPlay Manager...</p>
+    </div>
+  </div>
+
+  <!-- Authentication Required Screen -->
+  <div id="auth-required-screen" style="display: none;">
+    <div class="auth-container">
+      <div class="auth-content">
+        <img src="/assets/logo.png" alt="OptiPlay Logo" class="auth-logo">
+        <h1>Bienvenue sur <span class="gradient-text">OptiPlay Manager</span></h1>
+        <p>Connectez-vous pour accéder à la gestion de vos équipes esport</p>
+        <div class="auth-buttons">
+          <a href="/teamPlanner/HTML/login-manager.html" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i>
+            Se connecter
+          </a>
+          <a href="/teamPlanner/HTML/register-manager.html" class="btn btn-secondary">
+            <i class="fas fa-user-plus"></i>
+            Créer un compte
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="app-container" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Logo & Back -->
+      <div class="sidebar-header">
+        <a href="/index.html" class="back-link" title="Retour au site">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="logo-container">
+          <img src="/assets/logo.png" alt="OptiPlay" class="logo">
+          <span class="logo-text">Manager</span>
+        </div>
+      </div>
+
+      <!-- Team Selector -->
+      <div class="team-selector">
+        <button class="team-selector-btn" id="team-selector-btn">
+          <div class="team-info">
+            <i class="fas fa-users"></i>
+            <span id="current-team-name">Sélectionner une équipe</span>
+          </div>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="team-dropdown" id="team-dropdown" style="display: none;">
+          <div class="team-list" id="team-list">
+            <!-- Teams will be loaded here -->
+          </div>
+          <div class="team-actions">
+            <button class="team-action-btn" id="create-team-btn">
+              <i class="fas fa-plus"></i>
+              Créer une équipe
+            </button>
+            <button class="team-action-btn" id="join-team-btn">
+              <i class="fas fa-link"></i>
+              Rejoindre via lien
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Common tabs (always visible) -->
+        <a href="#home" class="nav-item active" data-tab="home">
+          <i class="fas fa-home"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="#planning" class="nav-item" data-tab="planning">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Planning</span>
+        </a>
+        <a href="#availabilities" class="nav-item" data-tab="availabilities">
+          <i class="fas fa-clock"></i>
+          <span>Disponibilités</span>
+        </a>
+        <a href="#notes" class="nav-item" data-tab="notes">
+          <i class="fas fa-sticky-note"></i>
+          <span>Notes</span>
+        </a>
+        <a href="#members" class="nav-item" data-tab="members">
+          <i class="fas fa-users"></i>
+          <span>Membres</span>
+        </a>
+        <a href="#scrims" class="nav-item" data-tab="scrims">
+          <i class="fas fa-trophy"></i>
+          <span>Résultats de Scrim</span>
+        </a>
+        
+        <!-- Game-specific tabs (shown based on team game type) -->
+        <div id="game-specific-tabs" style="display: none;">
+          <div class="nav-separator"></div>
+          <div class="nav-section-title">Spécifique au jeu</div>
+          
+          <!-- League of Legends tabs -->
+          <div class="game-tabs lol-tabs" style="display: none;">
+            <a href="#champion-pool" class="nav-item" data-tab="champion-pool">
+              <i class="fas fa-chess-queen"></i>
+              <span>Champion Pool</span>
+            </a>
+            <a href="#drafts" class="nav-item" data-tab="drafts">
+              <i class="fas fa-exchange-alt"></i>
+              <span>Drafts</span>
+            </a>
+            <a href="#strategies" class="nav-item" data-tab="strategies-lol">
+              <i class="fas fa-brain"></i>
+              <span>Stratégies</span>
+            </a>
+          </div>
+          
+          <!-- Valorant tabs -->
+          <div class="game-tabs valorant-tabs" style="display: none;">
+            <a href="#agents" class="nav-item" data-tab="agents">
+              <i class="fas fa-user-secret"></i>
+              <span>Agents</span>
+            </a>
+            <a href="#compositions" class="nav-item" data-tab="compositions">
+              <i class="fas fa-layer-group"></i>
+              <span>Compositions</span>
+            </a>
+            <a href="#strategies" class="nav-item" data-tab="strategies-valorant">
+              <i class="fas fa-brain"></i>
+              <span>Stratégies</span>
+            </a>
+          </div>
+          
+          <!-- Rocket League tabs -->
+          <div class="game-tabs rocketleague-tabs" style="display: none;">
+            <a href="#roles" class="nav-item" data-tab="roles">
+              <i class="fas fa-rocket"></i>
+              <span>Rôles</span>
+            </a>
+            <a href="#rotations" class="nav-item" data-tab="rotations">
+              <i class="fas fa-sync-alt"></i>
+              <span>Rotations</span>
+            </a>
+            <a href="#strategies" class="nav-item" data-tab="strategies-rl">
+              <i class="fas fa-brain"></i>
+              <span>Stratégies</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="nav-separator"></div>
+        
+        <!-- Settings -->
+        <a href="#settings" class="nav-item" data-tab="settings">
+          <i class="fas fa-cog"></i>
+          <span>Paramètres</span>
+        </a>
+      </nav>
+
+      <!-- User Info -->
+      <div class="sidebar-footer">
+        <div class="user-info" id="user-info">
+          <div class="user-avatar" id="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name" id="user-name">Utilisateur</span>
+            <span class="user-email" id="user-email">email@exemple.com</span>
+          </div>
+          <button class="logout-btn" id="logout-btn" title="Déconnexion">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Content will be dynamically loaded here -->
+      <div id="content-area">
+        <!-- Default: No team selected -->
+        <div class="content-section active" id="no-team-view">
+          <div class="empty-state">
+            <i class="fas fa-users fa-4x"></i>
+            <h2>Aucune équipe sélectionnée</h2>
+            <p>Créez une nouvelle équipe ou rejoignez-en une existante pour commencer</p>
+            <div class="empty-state-actions">
+              <button class="btn btn-primary" onclick="document.getElementById('create-team-btn').click()">
+                <i class="fas fa-plus"></i>
+                Créer une équipe
+              </button>
+              <button class="btn btn-secondary" onclick="document.getElementById('join-team-btn').click()">
+                <i class="fas fa-link"></i>
+                Rejoindre une équipe
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Tab -->
+        <div class="content-section" id="home-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-home"></i> Accueil</h1>
+          </div>
+          <div class="home-grid">
+            <div class="home-card">
+              <h3><i class="fas fa-calendar-check"></i> Prochains événements</h3>
+              <div id="upcoming-events" class="upcoming-events">
+                <!-- Events will be loaded here -->
+              </div>
+            </div>
+            <div class="home-card">
+              <h3><i class="fas fa-users"></i> Membres actifs</h3>
+              <div id="active-members" class="active-members">
+                <!-- Members will be loaded here -->
+              </div>
+            </div>
+            <div class="home-card">
+              <h3><i class="fas fa-clock"></i> Disponibilités communes</h3>
+              <div id="common-availabilities" class="common-availabilities">
+                <!-- Availabilities will be loaded here -->
+              </div>
+            </div>
+            <div class="home-card">
+              <h3><i class="fas fa-sticky-note"></i> Notes importantes</h3>
+              <div id="pinned-notes" class="pinned-notes">
+                <!-- Pinned notes will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Planning Tab -->
+        <div class="content-section" id="planning-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-calendar-alt"></i> Planning</h1>
+            <button class="btn btn-primary" id="add-event-btn">
+              <i class="fas fa-plus"></i>
+              Ajouter un événement
+            </button>
+          </div>
+          <div class="calendar-container" id="calendar-container">
+            <!-- Calendar will be rendered here -->
+          </div>
+        </div>
+
+        <!-- Availabilities Tab -->
+        <div class="content-section" id="availabilities-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-clock"></i> Disponibilités</h1>
+          </div>
+          <div id="availability-grid-container">
+            <!-- Availability grid will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Notes Tab -->
+        <div class="content-section" id="notes-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-sticky-note"></i> Notes</h1>
+            <button class="btn btn-primary" id="add-note-btn">
+              <i class="fas fa-plus"></i>
+              Nouvelle note
+            </button>
+          </div>
+          <div class="notes-container" id="notes-container">
+            <!-- Notes will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Members Tab -->
+        <div class="content-section" id="members-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-users"></i> Membres</h1>
+            <button class="btn btn-primary" id="invite-member-btn">
+              <i class="fas fa-user-plus"></i>
+              Inviter un membre
+            </button>
+          </div>
+          <div class="members-grid" id="members-grid">
+            <!-- Members will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Scrims Tab -->
+        <div class="content-section" id="scrims-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-trophy"></i> Résultats de Scrim</h1>
+            <button class="btn btn-primary" id="add-scrim-btn">
+              <i class="fas fa-plus"></i>
+              Ajouter un scrim
+            </button>
+          </div>
+          <div class="scrims-container" id="scrims-container">
+            <!-- Scrims will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="content-section" id="settings-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-cog"></i> Paramètres</h1>
+          </div>
+          <div class="settings-container">
+            <div class="settings-section">
+              <h3><i class="fas fa-info-circle"></i> Informations de l'équipe</h3>
+              <div id="team-settings-form">
+                <!-- Team settings form will be loaded here -->
+              </div>
+            </div>
+            <div class="settings-section">
+              <h3><i class="fab fa-discord"></i> Intégration Discord</h3>
+              <div id="discord-settings">
+                <!-- Discord settings will be loaded here -->
+              </div>
+            </div>
+            <div class="settings-section danger-zone">
+              <h3><i class="fas fa-exclamation-triangle"></i> Zone dangereuse</h3>
+              <div id="danger-zone">
+                <button class="btn btn-danger" id="leave-team-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Quitter l'équipe
+                </button>
+                <button class="btn btn-danger" id="delete-team-btn" style="display: none;">
+                  <i class="fas fa-trash"></i>
+                  Supprimer l'équipe
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game-specific content sections will be added dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <!-- Create Team Modal -->
+  <div class="modal" id="create-team-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-plus"></i> Créer une équipe</h2>
+        <button class="modal-close" data-modal="create-team-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="create-team-form">
+          <div class="form-group">
+            <label for="team-name">Nom de l'équipe *</label>
+            <input type="text" id="team-name" name="team-name" required maxlength="100" placeholder="Ex: Phoenix Gaming">
+          </div>
+          <div class="form-group">
+            <label for="team-game">Jeu *</label>
+            <select id="team-game" name="team-game" required>
+              <option value="">Sélectionner un jeu</option>
+              <option value="lol">League of Legends</option>
+              <option value="valorant">Valorant</option>
+              <option value="rocketleague">Rocket League</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="team-description">Description (optionnel)</label>
+            <textarea id="team-description" name="team-description" rows="4" placeholder="Décrivez votre équipe..."></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" data-modal="create-team-modal">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              Créer l'équipe
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join Team Modal -->
+  <div class="modal" id="join-team-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-link"></i> Rejoindre une équipe</h2>
+        <button class="modal-close" data-modal="join-team-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="join-team-form">
+          <div class="form-group">
+            <label for="invite-code">Code d'invitation</label>
+            <input type="text" id="invite-code" name="invite-code" required placeholder="Entrez le code d'invitation">
+            <p class="form-hint">Collez le code d'invitation fourni par votre équipe</p>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" data-modal="join-team-modal">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              Rejoindre
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Note Modal -->
+  <div class="modal" id="create-note-modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-sticky-note"></i> Nouvelle note</h2>
+        <button class="modal-close" onclick="NotesManager.hideCreateNoteModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="create-note-form" onsubmit="event.preventDefault(); NotesManager.createNote();">
+          <div class="form-group">
+            <label for="note-title-input">Titre de la note</label>
+            <input type="text" id="note-title-input" required placeholder="Entrez un titre..." autofocus>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="NotesManager.hideCreateNoteModal()">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              Créer et éditer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Editor Full Screen -->
+  <div id="note-editor-fullscreen" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-primary);z-index:10000;overflow:auto;">
+    <div style="max-width:1200px;margin:0 auto;padding:2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--border-color);">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="btn btn-secondary" onclick="NotesManager.closeNoteEditor()">
+            <i class="fas fa-arrow-left"></i> Retour
+          </button>
+          <h2 id="editor-note-title" style="margin:0;">Note</h2>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <span id="editor-last-saved" style="font-size:0.85rem;color:var(--text-muted);">Chargement...</span>
+          <button class="btn btn-secondary" onclick="NotesManager.togglePin()">
+            <i class="far fa-thumbtack"></i>
+          </button>
+          <button class="btn btn-danger" onclick="NotesManager.deleteNoteFromEditor()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <textarea id="editor-note-content" style="width:100%;min-height:calc(100vh - 200px);padding:1.5rem;background:var(--bg-darker);border:1px solid var(--border-color);border-radius:var(--border-radius);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:1rem;line-height:1.6;resize:vertical;" placeholder="Écrivez votre note ici..."></textarea>
+    </div>
+  </div>
+
+  <!-- Create/Edit Event Modal -->
+  <div class="modal" id="event-modal" style="display:none;">
+    <div class="modal-content" style="max-width:600px;">
+      <div class="modal-header">
+        <h2><i class="fas fa-calendar-plus"></i> <span id="event-modal-title">Nouvel événement</span></h2>
+        <button class="modal-close" onclick="CalendarManager.hideEventModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="event-form" onsubmit="event.preventDefault(); CalendarManager.saveEvent();">
+          <input type="hidden" id="event-id" value="">
+          
+          <div class="form-group">
+            <label for="event-title">
+              <i class="fas fa-heading"></i>
+              Titre *
+            </label>
+            <input type="text" id="event-title" required placeholder="Ex: Entraînement d'équipe">
+          </div>
+
+          <div class="form-group">
+            <label for="event-type">
+              <i class="fas fa-tag"></i>
+              Type d'événement *
+            </label>
+            <select id="event-type" required>
+              <option value="training">Entraînement</option>
+              <option value="scrim">Scrim</option>
+              <option value="match">Match</option>
+              <option value="meeting">Réunion</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label for="event-date">
+                <i class="fas fa-calendar"></i>
+                Date *
+              </label>
+              <input type="date" id="event-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="event-start-time">
+                <i class="fas fa-clock"></i>
+                Heure de début *
+              </label>
+              <input type="time" id="event-start-time" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="event-end-time">
+              <i class="fas fa-clock"></i>
+              Heure de fin *
+            </label>
+            <input type="time" id="event-end-time" required>
+          </div>
+
+          <div class="form-group">
+            <label for="event-location">
+              <i class="fas fa-map-marker-alt"></i>
+              Lieu
+            </label>
+            <input type="text" id="event-location" placeholder="Ex: Discord, Salle de réunion, Online">
+          </div>
+
+          <div class="form-group">
+            <label for="event-description">
+              <i class="fas fa-align-left"></i>
+              Description
+            </label>
+            <textarea id="event-description" rows="4" placeholder="Détails de l'événement..."></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="CalendarManager.hideEventModal()">
+              <i class="fas fa-times"></i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              <span id="event-submit-btn-text">Créer l'événement</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast-container"></div>
+
+  <!-- Scrim Modal -->
+  <div id="scrim-modal" class="modal" style="display: none;">
+    <div class="modal-backdrop" onclick="ScrimManager.hideScrimModal()"></div>
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="scrim-modal-title">
+          <i class="fas fa-trophy"></i>
+          Ajouter un scrim
+        </h2>
+        <button class="modal-close" onclick="ScrimManager.hideScrimModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="scrim-form">
+          <input type="hidden" id="scrim-id">
+          
+          <div class="form-group">
+            <label for="scrim-title">
+              <i class="fas fa-heading"></i>
+              Titre du scrim *
+            </label>
+            <input type="text" id="scrim-title" required placeholder="Ex: Scrim préparation tournoi">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="scrim-opponent">
+                <i class="fas fa-shield-alt"></i>
+                Équipe adverse *
+              </label>
+              <input type="text" id="scrim-opponent" required placeholder="Nom de l'équipe adverse">
+            </div>
+
+            <div class="form-group">
+              <label for="scrim-date">
+                <i class="fas fa-calendar"></i>
+                Date *
+              </label>
+              <input type="date" id="scrim-date" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="scrim-time">
+                <i class="fas fa-clock"></i>
+                Heure *
+              </label>
+              <input type="time" id="scrim-time" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="scrim-format">
+                <i class="fas fa-list-ol"></i>
+                Format *
+              </label>
+              <select id="scrim-format" required>
+                <option value="">Sélectionner...</option>
+                <option value="BO1">BO1 (Best of 1)</option>
+                <option value="BO3">BO3 (Best of 3)</option>
+                <option value="BO5">BO5 (Best of 5)</option>
+                <option value="BO7">BO7 (Best of 7)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="scrim-result">
+                <i class="fas fa-star"></i>
+                Résultat *
+              </label>
+              <select id="scrim-result" required>
+                <option value="">Sélectionner...</option>
+                <option value="win">Victoire 🏆</option>
+                <option value="loss">Défaite 😔</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Matches Container -->
+          <div class="matches-section">
+            <div class="matches-header">
+              <h3><i class="fas fa-gamepad"></i> Détails des matchs</h3>
+              <span class="matches-info" id="matches-info">Format non sélectionné</span>
+            </div>
+            <div id="matches-container">
+              <!-- Match inputs will be dynamically added here -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="scrim-notes">
+              <i class="fas fa-sticky-note"></i>
+              Notes
+            </label>
+            <textarea id="scrim-notes" rows="3" placeholder="Notes sur le scrim (points forts, points faibles, observations...)"></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="ScrimManager.hideScrimModal()">
+              <i class="fas fa-times"></i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              <span id="scrim-submit-btn-text">Enregistrer le scrim</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/teamPlanner/JS/supabase-config.js"></script>
+  <script src="/teamPlanner/JS/auth.js"></script>
+  <script src="/teamPlanner/JS/teams.js"></script>
+  <script src="/teamPlanner/JS/calendar.js"></script>
+  <script src="/teamPlanner/JS/availability.js"></script>
+  <script src="/teamPlanner/JS/notes.js"></script>
+  <script src="/teamPlanner/JS/members.js"></script>
+  <script src="/teamPlanner/JS/discord.js"></script>
+  <script src="/teamPlanner/JS/scrims.js"></script>
+  <script src="/teamPlanner/JS/manager.js"></script>
+</body>
+</html>

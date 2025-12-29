@@ -42,7 +42,6 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  padding-top: 80px;
 }
 
 /* Animations */
@@ -157,7 +156,7 @@ nav ul {
 
 /* ======== Page Hero ======== */
 .page-hero {
-  padding: 120px 0 80px;
+  padding: 140px 0 80px;
   text-align: center;
   position: relative;
   overflow: hidden;

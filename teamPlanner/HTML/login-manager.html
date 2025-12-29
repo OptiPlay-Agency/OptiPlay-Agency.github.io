@@ -3,28 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion - OptiPlay</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <title>Connexion - OptiPlay Manager</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="../CSS/auth.css">
+  <link rel="stylesheet" href="/CSS/auth.css">
 </head>
 <body>
   <header>
     <div class="container">
-      <a href="../index.html" class="logo-link">
-        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
-        <span class="logo-text">OptiPlay</span>
+      <a href="/teamPlanner/HTML/manager.html" class="logo-link">
+        <img src="/assets/logo.png" alt="Logo OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay Manager</span>
       </a>
       <nav>
         <ul>
-          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
-          <li><a href="tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
-          <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+          <li><a href="/index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+          <li><a href="/HTML/services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
         </ul>
       </nav>
     </div>
@@ -35,10 +32,10 @@
       <div class="auth-card">
         <div class="auth-header">
           <div class="auth-logo">
-            <img src="../assets/logo.png" alt="Logo OptiPlay">
+            <img src="/assets/logo.png" alt="Logo OptiPlay">
           </div>
-          <h1>Se connecter</h1>
-          <p>Connectez-vous à votre compte OptiPlay</p>
+          <h1>Se connecter au Manager</h1>
+          <p>Accédez à votre espace de gestion d'équipe</p>
         </div>
 
         <form class="auth-form" id="loginForm">
@@ -80,7 +77,7 @@
 
         <div class="auth-footer">
           <p>Pas encore de compte ?</p>
-          <a href="register.html" class="auth-switch">S'inscrire</a>
+          <a href="/teamPlanner/HTML/register-manager.html" class="auth-switch">S'inscrire</a>
         </div>
 
         <div class="divider">
@@ -132,34 +129,34 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Configuration Supabase (inline pour éviter les erreurs de chargement)
+    // Configuration Supabase
     const SUPABASE_URL = 'https://kunvgegumrfpizjvikbk.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_JvhADIxqhOqai0c-UyslRA_AnSPC0iS';
 
-    // Attendre que la page soit chargée
     document.addEventListener('DOMContentLoaded', async function() {
-      console.log('Page de connexion chargée');
+      console.log('Page de connexion Manager chargée');
       
-      // Vérifier que Supabase est disponible
       if (!window.supabase) {
         console.error('Supabase non disponible');
         return;
       }
-      
-      console.log('Supabase disponible');
 
-      // Initialiser le client Supabase
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      console.log('Client Supabase créé');
 
-      // Classe AuthManager directement ici
+      // Vérifier si déjà connecté
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        console.log('Utilisateur déjà connecté, redirection...');
+        window.location.href = '/teamPlanner/HTML/manager.html';
+        return;
+      }
+
+      // Classe AuthManager
       class AuthManager {
         constructor() {
-          this.currentUser = null;
           this.supabaseClient = supabase;
         }
 
-        // Connexion
         async signIn(email, password) {
           try {
             const { data, error } = await this.supabaseClient.auth.signInWithPassword({
@@ -168,7 +165,6 @@
             });
 
             if (error) throw error;
-            
             return { success: true, data };
           } catch (error) {
             console.error('Erreur lors de la connexion:', error);
@@ -177,7 +173,6 @@
           }
         }
 
-        // Réinitialisation du mot de passe
         async resetPassword(email) {
           try {
             const { data, error } = await this.supabaseClient.auth.resetPasswordForEmail(email);
@@ -192,7 +187,6 @@
           }
         }
 
-        // Afficher une notification
         showNotification(message, type = 'info') {
           const notification = document.createElement('div');
           notification.className = `notification notification-${type}`;
@@ -215,11 +209,7 @@
         }
       }
 
-      // Créer l'instance AuthManager
       const authManager = new AuthManager();
-      console.log('AuthManager créé');
-
-      // Initialiser les scripts de la page
       initPageScripts(authManager);
     });
 
@@ -248,7 +238,6 @@
         const loginBtn = document.getElementById('loginBtn');
         const originalText = loginBtn.innerHTML;
         
-        // Bouton en état de chargement
         loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
         loginBtn.disabled = true;
 
@@ -259,17 +248,9 @@
         const result = await authManager.signIn(email, password);
         
         if (result.success) {
-          // Vérifier si on doit rediriger vers le manager
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirect = urlParams.get('redirect');
-          
-          if (redirect === 'manager') {
-            window.location.href = '/teamPlanner/HTML/manager.html';
-          } else {
-            window.location.href = '../index.html';
-          }
+          // Toujours rediriger vers le manager
+          window.location.href = '/teamPlanner/HTML/manager.html';
         } else {
-          // Restaurer le bouton
           loginBtn.innerHTML = originalText;
           loginBtn.disabled = false;
         }
@@ -309,17 +290,10 @@
       // Authentification Google
       document.getElementById('googleAuth').addEventListener('click', async function() {
         try {
-          // Vérifier si on doit rediriger vers le manager
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirect = urlParams.get('redirect');
-          const redirectUrl = redirect === 'manager' 
-            ? window.location.origin + '/teamPlanner/HTML/manager.html'
-            : window.location.origin + '/index.html';
-          
           const { data, error } = await authManager.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-              redirectTo: redirectUrl
+              redirectTo: window.location.origin + '/teamPlanner/HTML/manager.html'
             }
           });
           
@@ -333,17 +307,10 @@
       // Authentification Discord
       document.getElementById('discordAuth').addEventListener('click', async function() {
         try {
-          // Vérifier si on doit rediriger vers le manager
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirect = urlParams.get('redirect');
-          const redirectUrl = redirect === 'manager' 
-            ? window.location.origin + '/teamPlanner/HTML/manager.html'
-            : window.location.origin + '/index.html';
-          
           const { data, error } = await authManager.supabaseClient.auth.signInWithOAuth({
             provider: 'discord',
             options: {
-              redirectTo: redirectUrl
+              redirectTo: window.location.origin + '/teamPlanner/HTML/manager.html'
             }
           });
           

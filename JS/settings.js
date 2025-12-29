@@ -2,20 +2,35 @@
 // SETTINGS PAGE - OPTIPLAY
 // ========================================
 
-import { getSupabaseClient } from './navbar.js';
-
 class SettingsManager {
   constructor() {
-    this.supabase = getSupabaseClient();
+    this.supabase = null;
     this.currentUser = null;
     this.init();
   }
 
   async init() {
+    // Attendre que Supabase soit initialisé
+    await this.waitForSupabase();
     await this.loadUserData();
     this.setupTabs();
     this.setupForms();
     this.attachEventListeners();
+  }
+
+  // Attendre que Supabase soit disponible
+  async waitForSupabase() {
+    return new Promise((resolve) => {
+      const checkSupabase = () => {
+        if (window.OptiPlayConfig?.supabaseClient) {
+          this.supabase = window.OptiPlayConfig.supabaseClient;
+          resolve();
+        } else {
+          setTimeout(checkSupabase, 100);
+        }
+      };
+      checkSupabase();
+    });
   }
 
   // Charger les données de l'utilisateur
@@ -48,28 +63,29 @@ class SettingsManager {
     // Email
     document.getElementById('email').value = user.email;
 
-    if (profile) {
-      // Informations personnelles
-      if (profile.pseudo) document.getElementById('pseudo').value = profile.pseudo;
-      if (profile.first_name) document.getElementById('firstName').value = profile.first_name;
-      if (profile.last_name) document.getElementById('lastName').value = profile.last_name;
-      if (profile.bio) document.getElementById('bio').value = profile.bio;
+    // Charger depuis user_metadata en priorité, puis profile
+    const metadata = user.user_metadata || {};
+    
+    // Informations personnelles
+    document.getElementById('pseudo').value = metadata.pseudo || profile?.pseudo || '';
+    document.getElementById('firstName').value = metadata.first_name || profile?.first_name || '';
+    document.getElementById('lastName').value = metadata.last_name || profile?.last_name || '';
+    document.getElementById('bio').value = metadata.bio || profile?.bio || '';
 
-      // Préférences de notifications (si elles existent)
-      if (profile.notifications) {
-        const notifs = profile.notifications;
-        if (notifs.new_products !== undefined) {
-          document.getElementById('notif-new-products').checked = notifs.new_products;
-        }
-        if (notifs.updates !== undefined) {
-          document.getElementById('notif-updates').checked = notifs.updates;
-        }
-        if (notifs.promotions !== undefined) {
-          document.getElementById('notif-promotions').checked = notifs.promotions;
-        }
-        if (notifs.newsletter !== undefined) {
-          document.getElementById('notif-newsletter').checked = notifs.newsletter;
-        }
+    // Préférences de notifications
+    if (profile?.notifications) {
+      const notifs = profile.notifications;
+      if (notifs.new_products !== undefined) {
+        document.getElementById('notif-new-products').checked = notifs.new_products;
+      }
+      if (notifs.updates !== undefined) {
+        document.getElementById('notif-updates').checked = notifs.updates;
+      }
+      if (notifs.promotions !== undefined) {
+        document.getElementById('notif-promotions').checked = notifs.promotions;
+      }
+      if (notifs.newsletter !== undefined) {
+        document.getElementById('notif-newsletter').checked = notifs.newsletter;
       }
     }
   }
@@ -302,14 +318,31 @@ class SettingsManager {
     };
 
     try {
-      const { error } = await this.supabase
-        .from('profiles')
-        .update(updates)
-        .eq('id', this.currentUser.id);
+      // Mettre à jour user_metadata dans auth.users
+      const { error: authError } = await this.supabase.auth.updateUser({
+        data: updates
+      });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // Mettre à jour aussi la table profiles si elle existe
+      const { error: profileError } = await this.supabase
+        .from('profiles')
+        .upsert({
+          id: this.currentUser.id,
+          ...updates,
+          updated_at: new Date().toISOString()
+        });
+
+      // Ignorer l'erreur si la table n'existe pas
+      if (profileError && !profileError.message.includes('relation "public.profiles" does not exist')) {
+        throw profileError;
+      }
 
       this.showNotification('Informations mises à jour avec succès !', 'success');
+      
+      // Recharger les données
+      await this.loadUserData();
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
       this.showNotification('Erreur lors de la mise à jour', 'error');
