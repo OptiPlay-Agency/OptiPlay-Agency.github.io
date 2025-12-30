@@ -58,12 +58,71 @@ class ProfileManager {
         console.log('Profil non trouvé, utilisation des données user_metadata');
       }
 
+      // Charger le plan d'abonnement
+      await this.loadUserSubscription();
+
       this.updateProfileUI(user, profile);
     } catch (error) {
       console.error('Erreur lors du chargement des données:', error);
       // Charger quand même avec les données de base
       if (this.currentUser) {
         this.updateProfileUI(this.currentUser, null);
+      }
+    }
+  }
+
+  // Charger l'abonnement de l'utilisateur
+  async loadUserSubscription() {
+    try {
+      const { data, error } = await this.supabase
+        .from('subscriptions')
+        .select('plan_type, billing_type, status, current_period_end')
+        .eq('user_id', this.currentUser.id)
+        .eq('status', 'active')
+        .gte('current_period_end', new Date().toISOString())
+        .single();
+
+      if (error || !data) {
+        this.updateSubscriptionUI('free');
+        return;
+      }
+
+      this.updateSubscriptionUI(data.plan_type);
+    } catch (error) {
+      console.error('Erreur chargement abonnement:', error);
+      this.updateSubscriptionUI('free');
+    }
+  }
+
+  // Mettre à jour l'UI de l'abonnement
+  updateSubscriptionUI(planType) {
+    const planNames = {
+      'free': 'Gratuit',
+      'beginner': 'Débutant',
+      'advanced': 'Avancé',
+      'premium': 'Premium'
+    };
+
+    const planColors = {
+      'free': '#10b981',
+      'beginner': '#3b82f6',
+      'advanced': '#8b5cf6',
+      'premium': '#f59e0b'
+    };
+
+    const currentPlanElement = document.getElementById('currentPlan');
+    const subscriptionCard = document.getElementById('subscriptionCard');
+    
+    if (currentPlanElement) {
+      currentPlanElement.textContent = planNames[planType] || 'Gratuit';
+    }
+
+    if (subscriptionCard) {
+      subscriptionCard.setAttribute('data-plan', planType);
+      const icon = subscriptionCard.querySelector('.stat-icon-plan');
+      if (icon) {
+        icon.style.background = `linear-gradient(135deg, ${planColors[planType]}22, ${planColors[planType]}44)`;
+        icon.style.color = planColors[planType];
       }
     }
   }
@@ -216,22 +275,19 @@ class ProfileManager {
     }
 
     try {
-      // Vérifier si la table purchases existe
-      const { data: purchases, error } = await this.supabase
-        .from('purchases')
-        .select(`
-          *,
-          products (*)
-        `)
+      // Charger depuis la bibliothèque utilisateur (user_library)
+      const { data: library, error } = await this.supabase
+        .from('user_library')
+        .select('*')
         .eq('user_id', this.currentUser.id)
-        .order('purchased_at', { ascending: false });
+        .order('added_at', { ascending: false });
 
       if (error) {
-        console.log('Erreur de chargement des achats, utilisation de données de démo:', error.message);
+        console.log('Erreur de chargement de la bibliothèque:', error.message);
         throw error;
       }
 
-      this.purchases = purchases || [];
+      this.purchases = library || [];
       this.updatePurchasesUI();
       this.updateStats();
     } catch (error) {
@@ -269,49 +325,40 @@ class ProfileManager {
 
   // Créer une carte d'achat
   createPurchaseCard(purchase) {
-    const date = new Date(purchase.purchased_at).toLocaleDateString('fr-FR', {
+    const date = new Date(purchase.added_at).toLocaleDateString('fr-FR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
 
-    const productName = purchase.product_name || purchase.products?.name;
-    const icon = purchase.icon || purchase.products?.icon || 'fas fa-box';
-    const price = purchase.price || purchase.products?.price || 0;
-    const version = purchase.version || purchase.products?.version || '1.0.0';
+    const productName = purchase.product_name;
+    const productImage = purchase.product_image || '../assets/manager-screenshot-1.svg';
+    const productUrl = purchase.product_url;
 
     return `
-      <div class="purchase-card" data-category="${purchase.category}">
-        <div class="purchase-image">
-          <i class="${icon}"></i>
+      <div class="purchase-card" data-category="misc">
+        <div class="purchase-image" style="background-image: url('${productImage}'); background-size: cover; background-position: center; height: 200px; border-radius: 12px 12px 0 0;">
         </div>
         <div class="purchase-content">
           <div class="purchase-header">
             <div>
-              <div class="purchase-category">${this.getCategoryLabel(purchase.category)}</div>
+              <div class="purchase-category">Application</div>
               <h3 class="purchase-title">${productName}</h3>
             </div>
-            <div class="purchase-price">${price.toFixed(2)}€</div>
+            <div class="purchase-price">Gratuit</div>
           </div>
           
           <div class="purchase-date">
             <i class="fas fa-calendar"></i>
-            Acheté le ${date}
-          </div>
-          
-          <div class="purchase-info">
-            <span class="version-badge">
-              <i class="fas fa-tag"></i>
-              Version ${version}
-            </span>
+            Ajouté le ${date}
           </div>
           
           <div class="purchase-actions">
-            <button class="btn btn-primary download-btn" data-purchase-id="${purchase.id}">
-              <i class="fas fa-download"></i>
-              Télécharger
+            <button class="btn btn-primary" onclick="window.location.href='${productUrl}'">
+              <i class="fas fa-rocket"></i>
+              Accéder
             </button>
-            <button class="btn btn-secondary" onclick="window.open('${purchase.download_url}', '_blank')">
+            <button class="btn btn-secondary" onclick="openProduct('${purchase.product_id}')">
               <i class="fas fa-info-circle"></i>
             </button>
           </div>

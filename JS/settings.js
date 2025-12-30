@@ -513,9 +513,109 @@ class SettingsManager {
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
+
+  // ========================================
+  // GESTION DISCORD
+  // ========================================
+
+  async checkDiscordConnection() {
+    try {
+      // Vérifier si Discord est lié
+      const identities = this.currentUser?.identities || [];
+      const discordIdentity = identities.find(identity => identity.provider === 'discord');
+
+      const discordStatus = document.getElementById('discordStatus');
+      const discordUsername = document.getElementById('discordUsername');
+      const discordBtn = document.getElementById('discordLinkBtn');
+      const discordCard = document.getElementById('discordAccount');
+
+      if (discordIdentity) {
+        // Discord est lié
+        const discordName = discordIdentity.identity_data?.full_name || 
+                           discordIdentity.identity_data?.name || 
+                           'Utilisateur Discord';
+        
+        discordStatus.textContent = 'Lié';
+        discordStatus.classList.add('linked');
+        discordUsername.textContent = `@${discordName}`;
+        discordUsername.style.display = 'block';
+        discordCard.classList.add('linked');
+        
+        discordBtn.innerHTML = '<i class="fas fa-unlink"></i> Délier';
+        discordBtn.classList.add('unlink');
+        discordBtn.onclick = () => this.unlinkDiscord();
+      } else {
+        // Discord non lié
+        discordBtn.onclick = () => this.linkDiscord();
+      }
+    } catch (error) {
+      console.error('Erreur vérification Discord:', error);
+    }
+  }
+
+  async linkDiscord() {
+    try {
+      // Rediriger vers l'authentification Discord
+      const { data, error } = await this.supabase.auth.linkIdentity({
+        provider: 'discord',
+        options: {
+          redirectTo: `${window.location.origin}/HTML/settings.html?tab=connections`
+        }
+      });
+
+      if (error) throw error;
+
+      // La redirection se fera automatiquement
+      console.log('Redirection vers Discord...');
+    } catch (error) {
+      console.error('Erreur liaison Discord:', error);
+      this.showNotification('Erreur lors de la liaison avec Discord', 'error');
+    }
+  }
+
+  async unlinkDiscord() {
+    if (!confirm('Êtes-vous sûr de vouloir délier votre compte Discord ?')) {
+      return;
+    }
+
+    try {
+      const identities = this.currentUser?.identities || [];
+      const discordIdentity = identities.find(identity => identity.provider === 'discord');
+
+      if (!discordIdentity) {
+        throw new Error('Compte Discord non trouvé');
+      }
+
+      const { error } = await this.supabase.auth.unlinkIdentity(discordIdentity);
+
+      if (error) throw error;
+
+      this.showNotification('Compte Discord délié avec succès', 'success');
+      
+      // Recharger la page après 1 seconde
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Erreur déliaison Discord:', error);
+      this.showNotification('Erreur lors de la déliaison avec Discord', 'error');
+    }
+  }
 }
 
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
-  new SettingsManager();
+  const settingsManager = new SettingsManager();
+  
+  // Vérifier la connexion Discord après le chargement
+  setTimeout(() => {
+    settingsManager.checkDiscordConnection();
+  }, 1000);
+  
+  // Vérifier si on revient de Discord OAuth
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('tab') === 'connections') {
+    // Activer l'onglet Connexions
+    document.querySelector('[data-tab="connections"]')?.click();
+  }
 });

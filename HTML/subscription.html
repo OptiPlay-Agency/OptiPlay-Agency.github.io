@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abonnements - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/subscription.css">
+  <link rel="stylesheet" href="../CSS/index.css">
+</head>
+<body>
+
+  
+    <section class="subscription-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <h1 class="page-title">
+          <i class="fas fa-crown"></i>
+          <span data-i18n="subscriptionPage.title">Nos</span> <span class="gradient-text" data-i18n="subscriptionPage.titleHighlight">Abonnements</span>
+        </h1>
+        <p class="page-subtitle" data-i18n="subscriptionPage.subtitle">Choisissez l'abonnement qui correspond à vos besoins et accédez à nos ressources exclusives</p>
+        
+        <!-- Toggle annuel/mensuel -->
+        <div class="billing-toggle">
+          <span class="toggle-label" data-i18n="subscriptionPage.monthly">Mensuel</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="billingToggle">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" data-i18n="subscriptionPage.annual">Annuel</span>
+          <span class="save-badge" data-i18n="subscriptionPage.save20">Économisez 20%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="plans-section">
+      <div class="container">
+        <div class="plans-grid">
+          
+          <!-- Plan Gratuit -->
+          <div class="plan-card free">
+            <div class="plan-badge">
+              <i class="fas fa-gift"></i>
+              <span data-i18n="subscriptionPage.freeLabel">Gratuit</span>
+            </div>
+            <h2 class="plan-name" data-i18n="subscriptionPage.freeName">Gratuit</h2>
+            <div class="plan-price">
+              <span class="price-amount">0</span>
+              <span class="price-currency">€</span>
+              <span class="price-period">/<span data-i18n="subscriptionPage.month">mois</span></span>
+            </div>
+            <p class="plan-description" data-i18n="subscriptionPage.freeDesc">Parfait pour découvrir nos services et ressources de base</p>
+            
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.freeFeature1">Accès aux ressources gratuites</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.freeFeature2">OptiPlay Manager</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.freeFeature3">Support communautaire</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.freeFeature4">Mises à jour de base</span></li>
+              <li class="disabled"><i class="fas fa-times"></i> <span data-i18n="subscriptionPage.freeFeature5">Produits premium</span></li>
+              <li class="disabled"><i class="fas fa-times"></i> <span data-i18n="subscriptionPage.freeFeature6">Support prioritaire</span></li>
+            </ul>
+            
+            <button class="plan-btn current" data-plan="free">
+              <i class="fas fa-check"></i>
+              <span data-i18n="subscriptionPage.currentPlan">Plan actuel</span>
+            </button>
+          </div>
+
+          <!-- Plan Beginner -->
+          <div class="plan-card beginner">
+            <div class="plan-badge">
+              <i class="fas fa-star"></i>
+              <span data-i18n="subscriptionPage.beginnerLabel">Beginner</span>
+            </div>
+            <h2 class="plan-name" data-i18n="subscriptionPage.beginnerName">Beginner</h2>
+            <div class="plan-price">
+              <span class="price-amount monthly">9.99</span>
+              <span class="price-amount annual hidden">7.99</span>
+              <span class="price-currency">€</span>
+              <span class="price-period">/<span data-i18n="subscriptionPage.month">mois</span></span>
+            </div>
+            <p class="plan-description" data-i18n="subscriptionPage.beginnerDesc">Pour les créateurs qui débutent leur aventure numérique</p>
+            
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.beginnerFeature1">Tout du plan Gratuit</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.beginnerFeature2">3 produits premium</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.beginnerFeature3">Bots Discord basiques</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.beginnerFeature4">Templates et ressources</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.beginnerFeature5">Support email 48h</span></li>
+              <li class="disabled"><i class="fas fa-times"></i> <span data-i18n="subscriptionPage.beginnerFeature6">Projets personnalisés</span></li>
+            </ul>
+            
+            <button class="plan-btn" data-plan="beginner">
+              <i class="fas fa-rocket"></i>
+              <span data-i18n="subscriptionPage.choosePlan">Choisir ce plan</span>
+            </button>
+          </div>
+
+          <!-- Plan Advanced -->
+          <div class="plan-card advanced popular">
+            <div class="popular-badge">
+              <i class="fas fa-fire"></i>
+              <span data-i18n="subscriptionPage.popularLabel">Plus populaire</span>
+            </div>
+            <div class="plan-badge">
+              <i class="fas fa-bolt"></i>
+              <span data-i18n="subscriptionPage.advancedLabel">Advanced</span>
+            </div>
+            <h2 class="plan-name" data-i18n="subscriptionPage.advancedName">Advanced</h2>
+            <div class="plan-price">
+              <span class="price-amount monthly">19.99</span>
+              <span class="price-amount annual hidden">15.99</span>
+              <span class="price-currency">€</span>
+              <span class="price-period">/<span data-i18n="subscriptionPage.month">mois</span></span>
+            </div>
+            <p class="plan-description" data-i18n="subscriptionPage.advancedDesc">Idéal pour les professionnels et équipes eSport</p>
+            
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature1">Tout du plan Beginner</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature2">Produits premium illimités</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature3">Bots Discord avancés</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature4">Automatisations personnalisées</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature5">Support prioritaire 24h</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.advancedFeature6">1 projet personnalisé/mois</span></li>
+            </ul>
+            
+            <button class="plan-btn" data-plan="advanced">
+              <i class="fas fa-rocket"></i>
+              <span data-i18n="subscriptionPage.choosePlan">Choisir ce plan</span>
+            </button>
+          </div>
+
+          <!-- Plan Premium -->
+          <div class="plan-card premium">
+            <div class="plan-badge">
+              <i class="fas fa-gem"></i>
+              <span data-i18n="subscriptionPage.premiumLabel">Premium</span>
+            </div>
+            <h2 class="plan-name" data-i18n="subscriptionPage.premiumName">Premium</h2>
+            <div class="plan-price">
+              <span class="price-amount monthly">49.99</span>
+              <span class="price-amount annual hidden">39.99</span>
+              <span class="price-currency">€</span>
+              <span class="price-period">/<span data-i18n="subscriptionPage.month">mois</span></span>
+            </div>
+            <p class="plan-description" data-i18n="subscriptionPage.premiumDesc">L'excellence absolue pour les structures professionnelles</p>
+            
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature1">Tout du plan Advanced</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature2">Accès en avant-première</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature3">Développement sur-mesure</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature4">Infrastructure dédiée</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature5">Support 24/7 prioritaire</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="subscriptionPage.premiumFeature6">Projets illimités + consulting</span></li>
+            </ul>
+            
+            <button class="plan-btn" data-plan="premium">
+              <i class="fas fa-crown"></i>
+              <span data-i18n="subscriptionPage.choosePlan">Choisir ce plan</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="subscriptionPage.faqTitle">Questions fréquentes</h2>
+        
+        <div class="faq-grid">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span data-i18n="subscriptionPage.faq1Q">Puis-je changer d'abonnement à tout moment ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p data-i18n="subscriptionPage.faq1A">Oui, vous pouvez passer à un plan supérieur ou inférieur à tout moment. Les changements prennent effet immédiatement.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span data-i18n="subscriptionPage.faq2Q">Puis-je annuler mon abonnement ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p data-i18n="subscriptionPage.faq2A">Absolument ! Vous pouvez annuler votre abonnement à tout moment depuis vos paramètres. Aucun engagement.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span data-i18n="subscriptionPage.faq3Q">Quels moyens de paiement acceptez-vous ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p data-i18n="subscriptionPage.faq3A">Nous acceptons les cartes bancaires (Visa, Mastercard, Amex) via Stripe pour des paiements 100% sécurisés.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span data-i18n="subscriptionPage.faq4Q">Offrez-vous une garantie satisfait ou remboursé ?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p data-i18n="subscriptionPage.faq4A">Oui, nous offrons une garantie de remboursement de 14 jours sur tous nos abonnements payants.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer.services">Services</h4>
+          <ul>
+            <li><a href="HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
+  <script src="../JS/i18n.js"></script>
+  <script src="../JS/navbar.js"></script>
+  <script src="../JS/subscription.js"></script>
+</body>
+</html>

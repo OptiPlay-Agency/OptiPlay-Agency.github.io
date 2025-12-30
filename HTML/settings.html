@@ -10,9 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
-  <div id="navbar-container"></div>
-
   <!-- Contenu principal -->
   <main class="settings-main">
     <div class="settings-container">
@@ -35,6 +32,10 @@
         <button class="tab-btn" data-tab="security">
           <i class="fas fa-shield-alt"></i>
           Sécurité
+        </button>
+        <button class="tab-btn" data-tab="connections">
+          <i class="fas fa-link"></i>
+          Connexions
         </button>
         <button class="tab-btn" data-tab="notifications">
           <i class="fas fa-bell"></i>
@@ -244,6 +245,87 @@
                   <i class="fas fa-link"></i>
                   Lier
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Connexions -->
+        <div class="tab-content" id="connections-tab">
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-link"></i>
+              Comptes liés
+            </h2>
+            <p class="section-description">Liez vos comptes de réseaux sociaux pour une connexion rapide et sécurisée</p>
+            
+            <div class="linked-accounts">
+              <!-- Discord -->
+              <div class="account-card" id="discordAccount">
+                <div class="account-info">
+                  <div class="account-icon discord-icon">
+                    <i class="fab fa-discord"></i>
+                  </div>
+                  <div class="account-details">
+                    <h3>Discord</h3>
+                    <p class="account-status" id="discordStatus">Non lié</p>
+                    <p class="account-username" id="discordUsername" style="display: none;"></p>
+                  </div>
+                </div>
+                <button class="btn btn-discord" id="discordLinkBtn">
+                  <i class="fas fa-link"></i>
+                  Lier Discord
+                </button>
+              </div>
+
+              <!-- Google (À venir) -->
+              <div class="account-card disabled">
+                <div class="account-info">
+                  <div class="account-icon google-icon">
+                    <i class="fab fa-google"></i>
+                  </div>
+                  <div class="account-details">
+                    <h3>Google</h3>
+                    <p class="account-status">Bientôt disponible</p>
+                  </div>
+                </div>
+                <button class="btn btn-secondary" disabled>
+                  <i class="fas fa-clock"></i>
+                  Prochainement
+                </button>
+              </div>
+
+              <!-- GitHub (À venir) -->
+              <div class="account-card disabled">
+                <div class="account-info">
+                  <div class="account-icon github-icon">
+                    <i class="fab fa-github"></i>
+                  </div>
+                  <div class="account-details">
+                    <h3>GitHub</h3>
+                    <p class="account-status">Bientôt disponible</p>
+                  </div>
+                </div>
+                <button class="btn btn-secondary" disabled>
+                  <i class="fas fa-clock"></i>
+                  Prochainement
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h2>
+              <i class="fas fa-info-circle"></i>
+              Informations
+            </h2>
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="info-content">
+                <h3>Sécurité de vos données</h3>
+                <p>Lorsque vous liez un compte externe, nous récupérons uniquement votre nom d'utilisateur et votre identifiant. Vos données restent privées et sécurisées.</p>
               </div>
             </div>
           </div>

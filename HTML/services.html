@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/services.css">
+  <link rel="stylesheet" href="../CSS/product-modal.css">
 </head>
 <body>
   <main>
@@ -19,9 +20,9 @@
       <div class="container">
         <h1 class="page-title">
           <i class="fas fa-cogs"></i>
-          Nos <span class="gradient-text">Services</span>
+          <span data-i18n="servicesPage.title">Nos</span> <span class="gradient-text" data-i18n="servicesPage.titleHighlight">Services</span>
         </h1>
-        <p class="page-subtitle">Un accompagnement complet pour tous vos projets numériques, événementiels et administratifs</p>
+        <p class="page-subtitle" data-i18n="servicesPage.subtitle">Un accompagnement complet pour tous vos projets numériques, événementiels et administratifs</p>
       </div>
     </section>
     <section class="services-section">
@@ -31,32 +32,32 @@
         <div class="service-category">
           <h2 class="category-title">
             <i class="fas fa-laptop-code"></i>
-            Applications
+            <span data-i18n="servicesPage.applications">Applications</span>
           </h2>
           <div class="category-grid">
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-globe"></i>
               </div>
-              <h3>Sites Web</h3>
-              <p>Sites vitrines et portfolios professionnels</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.websites">Sites Web</h3>
+              <p data-i18n="servicesPage.websitesDesc">Sites vitrines et portfolios professionnels</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-shopping-cart"></i>
               </div>
-              <h3>E-commerce</h3>
-              <p>Boutiques en ligne complètes</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.ecommerce">E-commerce</h3>
+              <p data-i18n="servicesPage.ecommerceDesc">Boutiques en ligne complètes</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-mobile-alt"></i>
               </div>
-              <h3>Applications Mobile</h3>
-              <p>iOS et Android sur-mesure</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.mobileApps">Applications Mobile</h3>
+              <p data-i18n="servicesPage.mobileAppsDesc">iOS et Android sur-mesure</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
           </div>
         </div>
@@ -65,24 +66,24 @@
         <div class="service-category">
           <h2 class="category-title">
             <i class="fas fa-robot"></i>
-            Automatisations
+            <span data-i18n="servicesPage.automations">Automatisations</span>
           </h2>
           <div class="category-grid">
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-code"></i>
               </div>
-              <h3>Scripts Python</h3>
-              <p>Automatisation de tâches répétitives</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.pythonScripts">Scripts Python</h3>
+              <p data-i18n="servicesPage.pythonScriptsDesc">Automatisation de tâches répétitives</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-plug"></i>
               </div>
-              <h3>Intégrations API</h3>
-              <p>Connexion entre vos outils</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.apiIntegrations">Intégrations API</h3>
+              <p data-i18n="servicesPage.apiIntegrationsDesc">Connexion entre vos outils</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
           </div>
         </div>
@@ -91,32 +92,32 @@
         <div class="service-category">
           <h2 class="category-title">
             <i class="fab fa-discord"></i>
-            Bots Discord
+            <span data-i18n="servicesPage.discordBots">Bots Discord</span>
           </h2>
           <div class="category-grid">
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <h3>Bot Modération</h3>
-              <p>Modération automatique et gestion</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.modBot">Bot Modération</h3>
+              <p data-i18n="servicesPage.modBotDesc">Modération automatique et gestion</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-chart-line"></i>
               </div>
-              <h3>Bot Statistiques</h3>
-              <p>Tracking et analytics pour votre serveur</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.statsBot">Bot Statistiques</h3>
+              <p data-i18n="servicesPage.statsBotDesc">Tracking et analytics pour votre serveur</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-gamepad"></i>
               </div>
-              <h3>Bot Gaming</h3>
-              <p>Mini-jeux et économie pour votre communauté</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.gamingBot">Bot Gaming</h3>
+              <p data-i18n="servicesPage.gamingBotDesc">Mini-jeux et économie pour votre communauté</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
           </div>
         </div>
@@ -125,7 +126,7 @@
         <div class="service-category">
           <h2 class="category-title">
             <i class="fas fa-palette"></i>
-            Divers
+            <span data-i18n="servicesPage.misc">Divers</span>
           </h2>
           <div class="category-grid">
             <div class="product-card available">
@@ -134,30 +135,30 @@
               </div>
               <div class="badge-available">
                 <i class="fas fa-check"></i>
-                Disponible
+                <span data-i18n="servicesPage.available">Disponible</span>
               </div>
-              <h3>OptiPlay Manager</h3>
-              <p>Gestion d'équipes eSport complète</p>
-              <a href="../teamPlanner/HTML/manager.html" class="btn-product">
-                <i class="fas fa-rocket"></i>
-                Accéder
-              </a>
+              <h3 data-i18n="servicesPage.manager">OptiPlay Manager</h3>
+              <p data-i18n="servicesPage.managerDesc">Gestion d'équipes eSport complète</p>
+              <button class="btn-product" onclick="openProduct('optiplay-manager')">
+                <i class="fas fa-eye"></i>
+                <span data-i18n="servicesPage.viewDetails">Voir les détails</span>
+              </button>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-trophy"></i>
               </div>
-              <h3>Tournois eSport</h3>
-              <p>Organisation et gestion de tournois</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.tournaments">Tournois eSport</h3>
+              <p data-i18n="servicesPage.tournamentsDesc">Organisation et gestion de tournois</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
             <div class="product-card">
               <div class="product-icon">
                 <i class="fas fa-pen-fancy"></i>
               </div>
-              <h3>Design Graphique</h3>
-              <p>Logos, bannières et identité visuelle</p>
-              <span class="coming-soon">Bientôt</span>
+              <h3 data-i18n="servicesPage.graphicDesign">Design Graphique</h3>
+              <p data-i18n="servicesPage.graphicDesignDesc">Logos, bannières et identité visuelle</p>
+              <span class="coming-soon" data-i18n="servicesPage.comingSoon">Bientôt</span>
             </div>
           </div>
         </div>
@@ -168,26 +169,26 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-content">
-          <h2>Vous souhaitez démarrer votre projet ?</h2>
-          <p>Contactez-nous dès maintenant pour un accompagnement personnalisé et des solutions sur-mesure adaptées à vos besoins.</p>
+          <h2 data-i18n="servicesPage.ctaTitle">Vous souhaitez démarrer votre projet ?</h2>
+          <p data-i18n="servicesPage.ctaSubtitle">Contactez-nous dès maintenant pour un accompagnement personnalisé et des solutions sur-mesure adaptées à vos besoins.</p>
           <div class="contact-methods">
             <div class="contact-item">
               <i class="fas fa-envelope"></i>
-              <span>optiplayy@gmail.com</span>
+              <span data-i18n="footer.email">optiplayy@gmail.com</span>
             </div>
             <div class="contact-item">
               <i class="fab fa-discord"></i>
-              <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a>
+              <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a>
             </div>
           </div>
           <div class="cta-buttons">
             <a href="../HTML/contact.html" class="btn btn-primary">
               <i class="fas fa-paper-plane"></i>
-              Demander un devis gratuit
+              <span data-i18n="servicesPage.requestQuote">Demander un devis gratuit</span>
             </a>
             <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="btn btn-discord">
               <i class="fab fa-discord"></i>
-              Rejoindre Discord
+              <span data-i18n="servicesPage.joinDiscord">Rejoindre Discord</span>
             </a>
           </div>
         </div>
@@ -200,7 +201,7 @@
       <div class="footer-content">
         <div class="footer-section">
           <h4>OptiPlay</h4>
-          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
           <div class="social-links">
             <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -209,24 +210,24 @@
           </div>
         </div>
         <div class="footer-section">
-          <h4>Services</h4>
+          <h4 data-i18n="footer.services">Services</h4>
           <ul>
-            <li><a href="HTML/services.html">Développement web</a></li>
-            <li><a href="HTML/services.html">Setup streaming</a></li>
-            <li><a href="HTML/services.html">Design graphique</a></li>
-            <li><a href="HTML/services.html">Recherche sponsors</a></li>
-            <li><a href="HTML/services.html">Aide administrative</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h4>Contact</h4>
-          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
-          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
-          <p><i class="fas fa-clock"></i> Support 24/7</p>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
       </div>
     </div>
   </footer>
@@ -278,6 +279,9 @@
 
   <!-- Scripts Supabase et Navbar -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
+  <script src="../JS/i18n.js"></script>
+  <script src="../JS/product-modal.js"></script>
   <script src="../JS/navbar.js"></script>
 </body>
 </html>

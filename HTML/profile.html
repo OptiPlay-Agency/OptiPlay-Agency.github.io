@@ -6,6 +6,7 @@
   <title>Mon Profil - OptiPlay Agency</title>
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/profile.css">
+  <link rel="stylesheet" href="../CSS/product-modal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 </head>
@@ -49,6 +50,21 @@
 
       <!-- Statistiques -->
       <section class="profile-stats">
+        <!-- Carte du plan d'abonnement -->
+        <div class="stat-card stat-card-plan" id="subscriptionCard">
+          <div class="stat-icon stat-icon-plan">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Abonnement actuel</p>
+            <p class="stat-value" id="currentPlan">Gratuit</p>
+          </div>
+          <a href="subscription.html" class="btn-upgrade">
+            <i class="fas fa-arrow-up"></i>
+            Changer
+          </a>
+        </div>
+        
         <div class="stat-card">
           <div class="stat-icon">
             <i class="fas fa-shopping-bag"></i>
@@ -154,6 +170,8 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
+  <script src="../JS/product-modal.js"></script>
   <script src="../JS/navbar.js"></script>
   <script src="../JS/profile.js"></script>
 </body>

@@ -55,41 +55,61 @@ class OptiPlayNavbar {
           <div class="navbar-nav">
             <a href="${this.getBasePath()}index.html" class="nav-link">
               <i class="fas fa-home"></i>
-              <span>Accueil</span>
+              <span data-i18n="nav.home">Accueil</span>
             </a>
             
             <a href="${this.getBasePath()}HTML/services.html" class="nav-link">
               <i class="fas fa-cogs"></i>
-              <span>Services</span>
+              <span data-i18n="nav.services">Services</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/tournaments.html" class="nav-link">
               <i class="fas fa-trophy"></i>
-              <span>Tournois</span>
+              <span data-i18n="nav.tournaments">Tournois</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/about.html" class="nav-link">
               <i class="fas fa-info-circle"></i>
-              <span>À propos</span>
+              <span data-i18n="nav.about">À propos</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/contact.html" class="nav-link">
               <i class="fas fa-envelope"></i>
-              <span>Contact</span>
+              <span data-i18n="nav.contact">Contact</span>
             </a>
           </div>
 
           <!-- Section authentification -->
           <div class="navbar-auth">
+            <!-- Sélecteur de langue -->
+            <div class="lang-selector" id="langSelector">
+              <button class="lang-current" id="langCurrentBtn">
+                <span class="flag-icon">🇫🇷</span>
+                <span class="lang-text">FR</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              
+              <div class="lang-dropdown" id="langDropdown">
+                <button class="lang-option" data-lang="fr">
+                  <span class="flag-icon">🇫🇷</span>
+                  <span class="lang-name">Français</span>
+                </button>
+                <button class="lang-option" data-lang="en">
+                  <span class="flag-icon">🇬🇧</span>
+                  <span class="lang-name">English</span>
+                </button>
+              </div>
+            </div>
+
             <!-- Boutons non connecté -->
             <div id="auth-buttons" class="auth-buttons">
               <a href="${this.getBasePath()}HTML/login.html" class="btn btn-outline">
                 <i class="fas fa-sign-in-alt"></i>
-                <span>Connexion</span>
+                <span data-i18n="nav.login">Connexion</span>
               </a>
               <a href="${this.getBasePath()}HTML/register.html" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i>
-                <span>Inscription</span>
+                <span data-i18n="nav.register">Inscription</span>
               </a>
             </div>
             
@@ -116,20 +136,24 @@ class OptiPlayNavbar {
                 <hr>
                 <a href="${this.getBasePath()}HTML/profile.html" class="dropdown-item">
                   <i class="fas fa-user-edit"></i>
-                  <span>Mon Profil</span>
+                  <span data-i18n="nav.profile">Mon Profil</span>
                 </a>
                 <a href="${this.getBasePath()}HTML/dashboard.html" class="dropdown-item">
                   <i class="fas fa-tachometer-alt"></i>
-                  <span>Dashboard</span>
+                  <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
                 <a href="${this.getBasePath()}HTML/settings.html" class="dropdown-item">
                   <i class="fas fa-cog"></i>
-                  <span>Paramètres</span>
+                  <span data-i18n="nav.settings">Paramètres</span>
+                </a>
+                <a href="${this.getBasePath()}HTML/subscription.html" class="dropdown-item subscription-link">
+                  <i class="fas fa-crown"></i>
+                  <span data-i18n="nav.subscription">Abonnement</span>
                 </a>
                 <hr>
                 <button class="dropdown-item logout-btn" onclick="navbar.handleLogout()">
                   <i class="fas fa-sign-out-alt"></i>
-                  <span>Déconnexion</span>
+                  <span data-i18n="nav.logout">Déconnexion</span>
                 </button>
               </div>
             </div>
@@ -240,6 +264,19 @@ class OptiPlayNavbar {
       });
     }
 
+    // Menu de langue
+    const langCurrentBtn = document.getElementById('langCurrentBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    
+    if (langCurrentBtn && langDropdown) {
+      langCurrentBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+        langCurrentBtn.classList.toggle('active');
+      });
+    }
+
     // Menu mobile
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -258,6 +295,12 @@ class OptiPlayNavbar {
       if (userDropdown && !userProfileBtn?.contains(e.target)) {
         userDropdown.classList.remove('show');
         userProfileBtn?.classList.remove('active');
+      }
+
+      // Fermer menu de langue
+      if (langDropdown && !langCurrentBtn?.contains(e.target)) {
+        langDropdown.classList.remove('show');
+        langCurrentBtn?.classList.remove('active');
       }
     });
   }

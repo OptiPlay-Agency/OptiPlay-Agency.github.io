@@ -1,0 +1,89 @@
+<!-- Image de test pour OptiPlay Manager - Équipes -->
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00bfff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0080ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1920" height="1080" fill="url(#bg2)"/>
+  
+  <g opacity="0.1">
+    <line x1="0" y1="270" x2="1920" y2="270" stroke="#00bfff" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1920" y2="540" stroke="#00bfff" stroke-width="1"/>
+    <line x1="0" y1="810" x2="1920" y2="810" stroke="#00bfff" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="1080" stroke="#00bfff" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="1080" stroke="#00bfff" stroke-width="1"/>
+    <line x1="1440" y1="0" x2="1440" y2="1080" stroke="#00bfff" stroke-width="1"/>
+  </g>
+  
+  <text x="960" y="150" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="url(#accent2)" text-anchor="middle">
+    Gestion d'Équipe
+  </text>
+  
+  <!-- Player cards -->
+  <g opacity="0.7">
+    <rect x="300" y="250" width="350" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <circle cx="380" cy="340" r="40" fill="#00bfff" opacity="0.3"/>
+    <text x="450" y="320" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+      Joueur 1
+    </text>
+    <text x="450" y="360" font-family="Arial, sans-serif" font-size="18" fill="#00bfff">
+      Top Lane
+    </text>
+    
+    <rect x="785" y="250" width="350" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <circle cx="865" cy="340" r="40" fill="#00bfff" opacity="0.3"/>
+    <text x="935" y="320" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+      Joueur 2
+    </text>
+    <text x="935" y="360" font-family="Arial, sans-serif" font-size="18" fill="#00bfff">
+      Jungle
+    </text>
+    
+    <rect x="1270" y="250" width="350" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <circle cx="1350" cy="340" r="40" fill="#00bfff" opacity="0.3"/>
+    <text x="1420" y="320" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+      Joueur 3
+    </text>
+    <text x="1420" y="360" font-family="Arial, sans-serif" font-size="18" fill="#00bfff">
+      Mid Lane
+    </text>
+    
+    <rect x="540" y="480" width="350" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <circle cx="620" cy="570" r="40" fill="#00bfff" opacity="0.3"/>
+    <text x="690" y="550" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+      Joueur 4
+    </text>
+    <text x="690" y="590" font-family="Arial, sans-serif" font-size="18" fill="#00bfff">
+      ADC
+    </text>
+    
+    <rect x="1030" y="480" width="350" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <circle cx="1110" cy="570" r="40" fill="#00bfff" opacity="0.3"/>
+    <text x="1180" y="550" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+      Joueur 5
+    </text>
+    <text x="1180" y="590" font-family="Arial, sans-serif" font-size="18" fill="#00bfff">
+      Support
+    </text>
+  </g>
+  
+  <!-- Stats box -->
+  <rect x="300" y="750" width="1320" height="200" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2" opacity="0.6"/>
+  <text x="960" y="820" font-family="Arial, sans-serif" font-size="28" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Statistiques d'Équipe
+  </text>
+  <text x="960" y="870" font-family="Arial, sans-serif" font-size="22" fill="#00bfff" text-anchor="middle">
+    Victoires: 48 | Défaites: 32 | Winrate: 60%
+  </text>
+  
+  <text x="960" y="1020" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle" opacity="0.5">
+    Screenshot 2 - Gestion d'équipe
+  </text>
+</svg>
