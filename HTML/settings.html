@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paramètres - OptiPlay Agency</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/settings.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,32 +20,32 @@
       <div class="settings-header">
         <h1>
           <i class="fas fa-cog"></i>
-          Paramètres du compte
+          <span data-i18n="settings.title">Paramètres du compte</span>
         </h1>
-        <p>Gérez vos informations personnelles et vos préférences</p>
+        <p data-i18n="settings.subtitle">Gérez vos informations personnelles et vos préférences</p>
       </div>
 
       <!-- Navigation par onglets -->
       <div class="settings-tabs">
         <button class="tab-btn active" data-tab="account">
           <i class="fas fa-user"></i>
-          Compte
+          <span data-i18n="settings.tabs.account">Compte</span>
         </button>
         <button class="tab-btn" data-tab="security">
           <i class="fas fa-shield-alt"></i>
-          Sécurité
+          <span data-i18n="settings.tabs.security">Sécurité</span>
         </button>
         <button class="tab-btn" data-tab="connections">
           <i class="fas fa-link"></i>
-          Connexions
+          <span data-i18n="settings.tabs.connections">Connexions</span>
         </button>
         <button class="tab-btn" data-tab="notifications">
           <i class="fas fa-bell"></i>
-          Notifications
+          <span data-i18n="settings.tabs.notifications">Notifications</span>
         </button>
         <button class="tab-btn" data-tab="preferences">
           <i class="fas fa-sliders-h"></i>
-          Préférences
+          <span data-i18n="settings.tabs.preferences">Préférences</span>
         </button>
       </div>
 
@@ -55,7 +57,7 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-user-circle"></i>
-              Informations personnelles
+              <span data-i18n="settings.personalInfo">Informations personnelles</span>
             </h2>
             
             <form class="settings-form" id="accountForm">
@@ -63,18 +65,18 @@
                 <div class="form-group">
                   <label for="pseudo">
                     <i class="fas fa-at"></i>
-                    Pseudo
+                    <span data-i18n="settings.pseudo">Pseudo</span>
                   </label>
-                  <input type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo">
+                  <input type="text" id="pseudo" name="pseudo" data-i18n-placeholder="settings.pseudoPlaceholder" placeholder="Votre pseudo">
                 </div>
                 
                 <div class="form-group">
                   <label for="email">
                     <i class="fas fa-envelope"></i>
-                    Email
+                    <span data-i18n="settings.email">Email</span>
                   </label>
                   <input type="email" id="email" name="email" placeholder="votre@email.com" disabled>
-                  <small class="form-hint">L'email ne peut pas être modifié</small>
+                  <small class="form-hint" data-i18n="settings.emailHint">L'email ne peut pas être modifié</small>
                 </div>
               </div>
 
@@ -82,36 +84,36 @@
                 <div class="form-group">
                   <label for="firstName">
                     <i class="fas fa-user"></i>
-                    Prénom
+                    <span data-i18n="settings.firstName">Prénom</span>
                   </label>
-                  <input type="text" id="firstName" name="first_name" placeholder="Votre prénom">
+                  <input type="text" id="firstName" name="first_name" data-i18n-placeholder="settings.firstNamePlaceholder" placeholder="Votre prénom">
                 </div>
                 
                 <div class="form-group">
                   <label for="lastName">
                     <i class="fas fa-user"></i>
-                    Nom
+                    <span data-i18n="settings.lastName">Nom</span>
                   </label>
-                  <input type="text" id="lastName" name="last_name" placeholder="Votre nom">
+                  <input type="text" id="lastName" name="last_name" data-i18n-placeholder="settings.lastNamePlaceholder" placeholder="Votre nom">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="bio">
                   <i class="fas fa-comment"></i>
-                  Biographie
+                  <span data-i18n="settings.bio">Biographie</span>
                 </label>
-                <textarea id="bio" name="bio" rows="4" placeholder="Parlez-nous de vous..."></textarea>
+                <textarea id="bio" name="bio" rows="4" data-i18n-placeholder="settings.bioPlaceholder" placeholder="Parlez-nous de vous..."></textarea>
               </div>
 
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
                   <i class="fas fa-save"></i>
-                  Enregistrer les modifications
+                  <span data-i18n="settings.saveChanges">Enregistrer les modifications</span>
                 </button>
                 <button type="button" class="btn btn-secondary" id="cancelAccountBtn">
                   <i class="fas fa-times"></i>
-                  Annuler
+                  <span data-i18n="settings.cancel">Annuler</span>
                 </button>
               </div>
             </form>
@@ -120,16 +122,16 @@
           <div class="settings-section danger-zone">
             <h2>
               <i class="fas fa-exclamation-triangle"></i>
-              Zone dangereuse
+              <span data-i18n="settings.dangerZone">Zone dangereuse</span>
             </h2>
             <div class="danger-card">
               <div class="danger-info">
-                <h3>Supprimer mon compte</h3>
-                <p>Cette action est irréversible. Toutes vos données seront définitivement supprimées.</p>
+                <h3><span data-i18n="settings.deleteAccount">Supprimer mon compte</span></h3>
+                <p><span data-i18n="settings.deleteAccountDesc">Cette action est irréversible. Toutes vos données seront définitivement supprimées.</span></p>
               </div>
               <button class="btn btn-danger" id="deleteAccountBtn">
                 <i class="fas fa-trash"></i>
-                Supprimer
+                <span data-i18n="settings.deleteButton">Supprimer</span>
               </button>
             </div>
           </div>
@@ -140,14 +142,14 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-key"></i>
-              Changer le mot de passe
+              <span data-i18n="settings.changePassword">Changer le mot de passe</span>
             </h2>
             
             <form class="settings-form" id="passwordForm">
               <div class="form-group">
                 <label for="currentPassword">
                   <i class="fas fa-lock"></i>
-                  Mot de passe actuel
+                  <span data-i18n="settings.currentPassword">Mot de passe actuel</span>
                 </label>
                 <div class="password-input">
                   <input type="password" id="currentPassword" name="current_password" placeholder="••••••••">
@@ -160,7 +162,7 @@
               <div class="form-group">
                 <label for="newPassword">
                   <i class="fas fa-lock"></i>
-                  Nouveau mot de passe
+                  <span data-i18n="settings.newPassword">Nouveau mot de passe</span>
                 </label>
                 <div class="password-input">
                   <input type="password" id="newPassword" name="new_password" placeholder="••••••••">
@@ -174,7 +176,7 @@
               <div class="form-group">
                 <label for="confirmPassword">
                   <i class="fas fa-lock"></i>
-                  Confirmer le mot de passe
+                  <span data-i18n="settings.confirmPassword">Confirmer le mot de passe</span>
                 </label>
                 <div class="password-input">
                   <input type="password" id="confirmPassword" name="confirm_password" placeholder="••••••••">
@@ -187,7 +189,7 @@
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
                   <i class="fas fa-save"></i>
-                  Changer le mot de passe
+                  <span data-i18n="settings.updatePassword">Changer le mot de passe</span>
                 </button>
               </div>
             </form>
@@ -216,20 +218,20 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-link"></i>
-              Comptes liés
+              <span data-i18n="settings.connectedAccounts">Comptes liés</span>
             </h2>
             <div class="linked-accounts">
               <div class="account-card" id="googleAccount">
                 <div class="account-info">
                   <i class="fab fa-google" style="color: #DB4437;"></i>
                   <div>
-                    <h3>Google</h3>
-                    <p class="account-status" data-provider="google">Non lié</p>
+                    <h3><span data-i18n="settings.google">Google</span></h3>
+                    <p class="account-status" data-provider="google"><span data-i18n="settings.notLinked">Non lié</span></p>
                   </div>
                 </div>
                 <button class="btn btn-secondary link-account-btn" data-provider="google">
                   <i class="fas fa-link"></i>
-                  Lier
+                  <span data-i18n="settings.linkAccounts">Lier</span>
                 </button>
               </div>
 
@@ -237,13 +239,13 @@
                 <div class="account-info">
                   <i class="fab fa-discord" style="color: #5865F2;"></i>
                   <div>
-                    <h3>Discord</h3>
-                    <p class="account-status" data-provider="discord">Non lié</p>
+                    <h3><span data-i18n="settings.discord">Discord</span></h3>
+                    <p class="account-status" data-provider="discord"><span data-i18n="settings.notLinked">Non lié</span></p>
                   </div>
                 </div>
                 <button class="btn btn-secondary link-account-btn" data-provider="discord">
                   <i class="fas fa-link"></i>
-                  Lier
+                  <span data-i18n="settings.linkAccounts">Lier</span>
                 </button>
               </div>
             </div>
@@ -255,9 +257,9 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-link"></i>
-              Comptes liés
+              <span data-i18n="settings.connectedAccounts">Comptes liés</span>
             </h2>
-            <p class="section-description">Liez vos comptes de réseaux sociaux pour une connexion rapide et sécurisée</p>
+            <p class="section-description"><span data-i18n="settings.linkAccounts">Liez vos comptes de réseaux sociaux pour une connexion rapide et sécurisée</span></p>
             
             <div class="linked-accounts">
               <!-- Discord -->
@@ -267,14 +269,14 @@
                     <i class="fab fa-discord"></i>
                   </div>
                   <div class="account-details">
-                    <h3>Discord</h3>
-                    <p class="account-status" id="discordStatus">Non lié</p>
+                    <h3><span data-i18n="settings.discord">Discord</span></h3>
+                    <p class="account-status" id="discordStatus"><span data-i18n="settings.notLinked">Non lié</span></p>
                     <p class="account-username" id="discordUsername" style="display: none;"></p>
                   </div>
                 </div>
                 <button class="btn btn-discord" id="discordLinkBtn">
                   <i class="fas fa-link"></i>
-                  Lier Discord
+                  <span data-i18n="settings.linkDiscord">Lier Discord</span>
                 </button>
               </div>
 
@@ -285,13 +287,13 @@
                     <i class="fab fa-google"></i>
                   </div>
                   <div class="account-details">
-                    <h3>Google</h3>
-                    <p class="account-status">Bientôt disponible</p>
+                    <h3><span data-i18n="settings.google">Google</span></h3>
+                    <p class="account-status"><span data-i18n="settings.comingSoon">Bientôt disponible</span></p>
                   </div>
                 </div>
                 <button class="btn btn-secondary" disabled>
                   <i class="fas fa-clock"></i>
-                  Prochainement
+                  <span data-i18n="settings.comingSoon">Prochainement</span>
                 </button>
               </div>
 
@@ -302,13 +304,13 @@
                     <i class="fab fa-github"></i>
                   </div>
                   <div class="account-details">
-                    <h3>GitHub</h3>
-                    <p class="account-status">Bientôt disponible</p>
+                    <h3><span data-i18n="settings.github">GitHub</span></h3>
+                    <p class="account-status"><span data-i18n="settings.comingSoon">Bientôt disponible</span></p>
                   </div>
                 </div>
                 <button class="btn btn-secondary" disabled>
                   <i class="fas fa-clock"></i>
-                  Prochainement
+                  <span data-i18n="settings.comingSoon">Prochainement</span>
                 </button>
               </div>
             </div>
@@ -317,15 +319,15 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-info-circle"></i>
-              Informations
+              <span data-i18n="settings.information">Informations</span>
             </h2>
             <div class="info-card">
               <div class="info-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
               <div class="info-content">
-                <h3>Sécurité de vos données</h3>
-                <p>Lorsque vous liez un compte externe, nous récupérons uniquement votre nom d'utilisateur et votre identifiant. Vos données restent privées et sécurisées.</p>
+                <h3><span data-i18n="settings.dataPrivacy">Sécurité de vos données</span></h3>
+                <p><span data-i18n="settings.dataPrivacyDesc">Lorsque vous liez un compte externe, nous récupérons uniquement votre nom d'utilisateur et votre identifiant. Vos données restent privées et sécurisées.</span></p>
               </div>
             </div>
           </div>
@@ -336,14 +338,14 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-envelope"></i>
-              Notifications par email
+              <span data-i18n="settings.emailNotifications">Notifications par email</span>
             </h2>
             
             <div class="toggle-list">
               <div class="toggle-item">
                 <div class="toggle-info">
-                  <h3>Nouveaux produits</h3>
-                  <p>Recevez un email lors de la sortie de nouveaux produits</p>
+                  <h3><span data-i18n="settings.newProducts">Nouveaux produits</span></h3>
+                  <p><span data-i18n="settings.newProductsDesc">Recevez un email lors de la sortie de nouveaux produits</span></p>
                 </div>
                 <label class="toggle-switch">
                   <input type="checkbox" id="notif-new-products" checked>
@@ -353,8 +355,8 @@
 
               <div class="toggle-item">
                 <div class="toggle-info">
-                  <h3>Mises à jour</h3>
-                  <p>Notifications lorsqu'un produit acheté est mis à jour</p>
+                  <h3><span data-i18n="settings.updates">Mises à jour</span></h3>
+                  <p><span data-i18n="settings.updatesDesc">Notifications lorsqu'un produit acheté est mis à jour</span></p>
                 </div>
                 <label class="toggle-switch">
                   <input type="checkbox" id="notif-updates" checked>
@@ -364,8 +366,8 @@
 
               <div class="toggle-item">
                 <div class="toggle-info">
-                  <h3>Promotions</h3>
-                  <p>Soyez informé des offres spéciales et réductions</p>
+                  <h3><span data-i18n="settings.promotions">Promotions</span></h3>
+                  <p><span data-i18n="settings.promotionsDesc">Soyez informé des offres spéciales et réductions</span></p>
                 </div>
                 <label class="toggle-switch">
                   <input type="checkbox" id="notif-promotions">
@@ -375,8 +377,8 @@
 
               <div class="toggle-item">
                 <div class="toggle-info">
-                  <h3>Newsletter</h3>
-                  <p>Recevez notre newsletter mensuelle</p>
+                  <h3><span data-i18n="settings.newsletter">Newsletter</span></h3>
+                  <p><span data-i18n="settings.newsletterDesc">Recevez notre newsletter mensuelle</span></p>
                 </div>
                 <label class="toggle-switch">
                   <input type="checkbox" id="notif-newsletter">
@@ -392,38 +394,38 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-paint-brush"></i>
-              Apparence
+              <span data-i18n="settings.appearance">Apparence</span>
             </h2>
             
             <div class="preference-group">
-              <label>Thème</label>
+              <label><span data-i18n="settings.theme">Thème</span></label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input type="radio" name="theme" value="dark" checked>
                   <span class="radio-label">
                     <i class="fas fa-moon"></i>
-                    Sombre
+                    <span data-i18n="settings.dark">Sombre</span>
                   </span>
                 </label>
                 <label class="radio-option">
                   <input type="radio" name="theme" value="light">
                   <span class="radio-label">
                     <i class="fas fa-sun"></i>
-                    Clair
+                    <span data-i18n="settings.light">Clair</span>
                   </span>
                 </label>
                 <label class="radio-option">
                   <input type="radio" name="theme" value="auto">
                   <span class="radio-label">
                     <i class="fas fa-adjust"></i>
-                    Automatique
+                    <span data-i18n="settings.auto">Automatique</span>
                   </span>
                 </label>
               </div>
             </div>
 
             <div class="preference-group">
-              <label>Langue</label>
+              <label><span data-i18n="settings.language">Langue</span></label>
               <select class="settings-select" id="language">
                 <option value="fr" selected>Français</option>
                 <option value="en">English</option>
@@ -433,7 +435,7 @@
             </div>
 
             <div class="preference-group">
-              <label>Format de date</label>
+              <label><span data-i18n="settings.dateFormat">Format de date</span></label>
               <select class="settings-select" id="dateFormat">
                 <option value="dd/mm/yyyy" selected>JJ/MM/AAAA</option>
                 <option value="mm/dd/yyyy">MM/JJ/AAAA</option>
@@ -445,17 +447,17 @@
           <div class="settings-section">
             <h2>
               <i class="fas fa-database"></i>
-              Données et confidentialité
+              <span data-i18n="settings.dataInfo">Données et confidentialité</span>
             </h2>
             
             <div class="data-actions">
               <button class="btn btn-secondary">
                 <i class="fas fa-download"></i>
-                Télécharger mes données
+                <span data-i18n="settings.downloadData">Télécharger mes données</span>
               </button>
               <button class="btn btn-secondary">
                 <i class="fas fa-file-export"></i>
-                Exporter l'historique
+                <span data-i18n="settings.exportHistory">Exporter l'historique</span>
               </button>
             </div>
           </div>
@@ -467,6 +469,7 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/i18n.js"></script>
   <script src="../JS/navbar.js"></script>
   <script src="../JS/settings.js"></script>
 </body>

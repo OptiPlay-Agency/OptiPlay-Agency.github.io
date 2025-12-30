@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Profil - OptiPlay Agency</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/profile.css">
   <link rel="stylesheet" href="../CSS/product-modal.css">
@@ -27,7 +28,7 @@
             </div>
             <button class="btn-change-avatar" id="changeAvatarBtn">
               <i class="fas fa-camera"></i>
-              Changer l'avatar
+              <span data-i18n="profile.changeAvatar">Changer l'avatar</span>
             </button>
           </div>
           
@@ -37,11 +38,11 @@
             <div class="profile-badges">
               <span class="badge badge-member">
                 <i class="fas fa-crown"></i>
-                Membre
+                <span data-i18n="nav.member">Membre</span>
               </span>
               <span class="badge badge-date" id="memberSince">
                 <i class="fas fa-calendar"></i>
-                Membre depuis
+                <span data-i18n="profile.memberSince">Membre depuis</span>
               </span>
             </div>
           </div>
@@ -56,12 +57,12 @@
             <i class="fas fa-crown"></i>
           </div>
           <div class="stat-info">
-            <p class="stat-label">Abonnement actuel</p>
+            <p class="stat-label" data-i18n="profile.subscription">Abonnement actuel</p>
             <p class="stat-value" id="currentPlan">Gratuit</p>
           </div>
           <a href="subscription.html" class="btn-upgrade">
             <i class="fas fa-arrow-up"></i>
-            Changer
+            <span data-i18n="profile.upgrade">Changer</span>
           </a>
         </div>
         
@@ -70,7 +71,7 @@
             <i class="fas fa-shopping-bag"></i>
           </div>
           <div class="stat-info">
-            <p class="stat-label">Achats totaux</p>
+            <p class="stat-label" data-i18n="profile.totalPurchases">Achats totaux</p>
             <p class="stat-value" id="totalPurchases">0</p>
           </div>
         </div>
@@ -80,7 +81,7 @@
             <i class="fas fa-download"></i>
           </div>
           <div class="stat-info">
-            <p class="stat-label">Téléchargements</p>
+            <p class="stat-label" data-i18n="profile.downloads">Téléchargements</p>
             <p class="stat-value" id="totalDownloads">0</p>
           </div>
         </div>
@@ -90,7 +91,7 @@
             <i class="fas fa-euro-sign"></i>
           </div>
           <div class="stat-info">
-            <p class="stat-label">Dépenses totales</p>
+            <p class="stat-label" data-i18n="profile.totalSpent">Dépenses totales</p>
             <p class="stat-value" id="totalSpent">0€</p>
           </div>
         </div>
@@ -100,7 +101,7 @@
             <i class="fas fa-star"></i>
           </div>
           <div class="stat-info">
-            <p class="stat-label">Produits favoris</p>
+            <p class="stat-label" data-i18n="profile.favorites">Produits favoris</p>
             <p class="stat-value" id="totalFavorites">0</p>
           </div>
         </div>
@@ -111,24 +112,24 @@
         <div class="section-header">
           <h2>
             <i class="fas fa-box"></i>
-            Mes Achats
+            <span data-i18n="profile.myLibrary">Mes Achats</span>
           </h2>
           <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">
               <i class="fas fa-th"></i>
-              Tous
+              <span data-i18n="profile.filters.all">Tous</span>
             </button>
             <button class="filter-btn" data-filter="applications">
               <i class="fas fa-laptop-code"></i>
-              Applications
+              <span data-i18n="profile.filters.applications">Applications</span>
             </button>
             <button class="filter-btn" data-filter="bots">
               <i class="fab fa-discord"></i>
-              Bots
+              <span data-i18n="profile.filters.bots">Bots</span>
             </button>
             <button class="filter-btn" data-filter="scripts">
               <i class="fas fa-robot"></i>
-              Scripts
+              <span data-i18n="profile.filters.scripts">Scripts</span>
             </button>
           </div>
         </div>
@@ -137,11 +138,11 @@
           <!-- Les produits seront chargés dynamiquement ici -->
           <div class="no-purchases" id="noPurchases">
             <i class="fas fa-inbox"></i>
-            <h3>Aucun achat pour le moment</h3>
-            <p>Explorez notre catalogue de produits pour commencer !</p>
+            <h3 data-i18n="profile.noProducts">Aucun achat pour le moment</h3>
+            <p data-i18n="profile.browseStore">Explorez notre catalogue de produits pour commencer !</p>
             <a href="../HTML/services.html" class="btn btn-primary">
               <i class="fas fa-store"></i>
-              Découvrir les produits
+              <span data-i18n="servicesPage.viewDetails">Découvrir les produits</span>
             </a>
           </div>
         </div>
@@ -152,7 +153,7 @@
         <div class="section-header">
           <h2>
             <i class="fas fa-history"></i>
-            Historique des téléchargements
+            <span data-i18n="profile.downloads">Historique des téléchargements</span>
           </h2>
         </div>
         
@@ -160,7 +161,7 @@
           <!-- L'historique sera chargé dynamiquement -->
           <div class="no-history">
             <i class="fas fa-clock"></i>
-            <p>Aucun téléchargement récent</p>
+            <p data-i18n="profile.noProducts">Aucun téléchargement récent</p>
           </div>
         </div>
       </section>
@@ -171,6 +172,7 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../JS/supabase-config.js"></script>
+  <script src="../JS/i18n.js"></script>
   <script src="../JS/product-modal.js"></script>
   <script src="../JS/navbar.js"></script>
   <script src="../JS/profile.js"></script>

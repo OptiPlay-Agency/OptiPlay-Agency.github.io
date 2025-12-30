@@ -79,14 +79,47 @@ class ProductModal {
               </div>
               
               <div class="product-actions">
-                <button class="btn-library" id="addToLibraryBtn">
-                  <i class="fas fa-plus"></i>
-                  <span>Ajouter à la bibliothèque</span>
+                <button class="btn-library" id="addToLibraryBtn" disabled style="opacity: 0.6; cursor: not-allowed;">
+                  <i class="fas fa-tools"></i>
+                  <span>En travaux</span>
                 </button>
-                <button class="btn-access" id="accessProductBtn">
-                  <i class="fas fa-rocket"></i>
-                  <span>Accéder</span>
+                <button class="btn-access" id="accessProductBtn" disabled style="opacity: 0.6; cursor: not-allowed;">
+                  <i class="fas fa-tools"></i>
+                  <span>En travaux</span>
                 </button>
+              </div>
+
+              <div class="subscription-requirements">
+                <h3 class="requirements-title">Disponible avec :</h3>
+                <div class="plan-badges">
+                  <button class="plan-badge free active" data-plan="free" onclick="productModal.showPlanDetails('free')">
+                    <i class="fas fa-gift"></i>
+                    <span>Gratuit</span>
+                  </button>
+                  <button class="plan-badge beginner" data-plan="beginner" onclick="productModal.showPlanDetails('beginner')">
+                    <i class="fas fa-star"></i>
+                    <span>Débutant</span>
+                  </button>
+                  <button class="plan-badge advanced" data-plan="advanced" onclick="productModal.showPlanDetails('advanced')">
+                    <i class="fas fa-bolt"></i>
+                    <span>Avancé</span>
+                  </button>
+                  <button class="plan-badge premium" data-plan="premium" onclick="productModal.showPlanDetails('premium')">
+                    <i class="fas fa-crown"></i>
+                    <span>Premium</span>
+                  </button>
+                </div>
+                <div class="plan-details" id="planDetails">
+                  <div class="plan-detail-content">
+                    <h4 id="planDetailTitle">Plan Gratuit</h4>
+                    <p id="planDetailDescription">Accédez à OptiPlay Manager gratuitement avec toutes les fonctionnalités de base.</p>
+                    <ul id="planDetailFeatures">
+                      <li><i class="fas fa-check"></i> Gestion d'équipe complète</li>
+                      <li><i class="fas fa-check"></i> Calendrier des matchs</li>
+                      <li><i class="fas fa-check"></i> Statistiques de base</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               
               <div class="product-info-grid">
@@ -96,7 +129,7 @@ class ProductModal {
                 </div>
                 <div class="info-item">
                   <span class="info-label">Date de sortie</span>
-                  <span class="info-value">2024</span>
+                  <span class="info-value">2025</span>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Catégorie</span>
@@ -161,6 +194,11 @@ class ProductModal {
     // Afficher le modal
     document.getElementById('productModal').classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Afficher par défaut les détails du plan Gratuit
+    setTimeout(() => {
+      this.showPlanDetails('free');
+    }, 100);
   }
 
   updatePrice(price, pricingType) {
@@ -309,6 +347,77 @@ class ProductModal {
     if (this.currentProduct && this.currentProduct.url) {
       window.location.href = this.currentProduct.url;
     }
+  }
+
+  showPlanDetails(planType) {
+    const planData = {
+      free: {
+        title: 'Plan Gratuit',
+        description: 'Accédez à OptiPlay Manager gratuitement avec toutes les fonctionnalités de base.',
+        features: [
+          'Gestion d\'équipe complète',
+          'Calendrier des matchs',
+          'Statistiques de base',
+          'Communication intégrée'
+        ]
+      },
+      beginner: {
+        title: 'Plan Débutant - 9.99€/mois',
+        description: 'Idéal pour commencer avec des fonctionnalités supplémentaires.',
+        features: [
+          'Tous les avantages Gratuit',
+          'Accès à 3 produits premium',
+          'Support par email',
+          'Mises à jour régulières',
+          'Outils de base'
+        ]
+      },
+      advanced: {
+        title: 'Plan Avancé - 19.99€/mois',
+        description: 'Pour les utilisateurs réguliers qui veulent aller plus loin.',
+        features: [
+          'Tous les avantages Débutant',
+          'Accès à 10 produits premium',
+          'Support prioritaire 24/7',
+          'Mises à jour en avant-première',
+          'Outils avancés inclus',
+          'Statistiques détaillées'
+        ]
+      },
+      premium: {
+        title: 'Plan Premium - 49.99€/mois',
+        description: 'L\'expérience complète pour les professionnels.',
+        features: [
+          'Tous les avantages Avancé',
+          'Accès illimité à tous les produits',
+          'Support VIP dédié',
+          'Accès aux bêtas exclusives',
+          'Outils pro illimités',
+          'Personnalisation avancée'
+        ]
+      }
+    };
+
+    const plan = planData[planType];
+    const detailsContainer = document.getElementById('planDetails');
+    const titleEl = document.getElementById('planDetailTitle');
+    const descEl = document.getElementById('planDetailDescription');
+    const featuresEl = document.getElementById('planDetailFeatures');
+
+    // Mettre à jour le contenu
+    titleEl.textContent = plan.title;
+    descEl.textContent = plan.description;
+    featuresEl.innerHTML = plan.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('');
+
+    // Mettre à jour les badges actifs
+    document.querySelectorAll('.plan-badge').forEach(badge => {
+      badge.classList.remove('active');
+    });
+    document.querySelector(`.plan-badge[data-plan="${planType}"]`).classList.add('active');
+
+    // Afficher les détails avec animation
+    detailsContainer.style.display = 'block';
+    setTimeout(() => detailsContainer.classList.add('show'), 10);
   }
 }
 

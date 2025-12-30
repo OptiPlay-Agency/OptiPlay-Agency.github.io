@@ -145,6 +145,9 @@ class ProfileManager {
       if (emailElement) {
         emailElement.textContent = `@${pseudo}`;
       }
+
+      // Afficher le badge de rôle
+      this.updateRoleBadge(profile?.app_role || 'user');
       
       // Date d'inscription
       const joinDate = new Date(user.created_at).toLocaleDateString('fr-FR', {
@@ -159,11 +162,11 @@ class ProfileManager {
         `;
       }
 
-      // Avatar - Charger depuis Supabase Storage ou user_metadata
+      // Avatar - Charger UNIQUEMENT depuis la base de données OptiPlay
       const avatar = document.getElementById('profileAvatar');
       if (avatar) {
-        // Essayer de charger l'avatar depuis Supabase Storage
-        const avatarUrl = metadata.avatar_url || profile?.avatar_url;
+        // Utiliser UNIQUEMENT l'avatar de la table profiles (pas Discord)
+        const avatarUrl = profile?.avatar_url;
         
         if (avatarUrl) {
           // Si c'est un chemin Supabase Storage (avatars/UUID.ext)
@@ -224,7 +227,17 @@ class ProfileManager {
 
       if (error) throw error;
 
-      // Mettre à jour user_metadata avec le chemin complet
+      // Mettre à jour la table profiles (prioritaire)
+      const { error: profileError } = await this.supabase
+        .from('profiles')
+        .update({ avatar_url: `avatars/${filePath}` })
+        .eq('id', this.currentUser.id);
+
+      if (profileError) {
+        console.error('Erreur mise à jour profil:', profileError);
+      }
+
+      // Mettre à jour user_metadata aussi (pour compatibilité)
       const { error: updateError } = await this.supabase.auth.updateUser({
         data: {
           avatar_url: `avatars/${filePath}`
@@ -354,9 +367,9 @@ class ProfileManager {
           </div>
           
           <div class="purchase-actions">
-            <button class="btn btn-primary" onclick="window.location.href='${productUrl}'">
-              <i class="fas fa-rocket"></i>
-              Accéder
+            <button class="btn btn-primary" disabled style="opacity: 0.6; cursor: not-allowed;">
+              <i class="fas fa-tools"></i>
+              En travaux
             </button>
             <button class="btn btn-secondary" onclick="openProduct('${purchase.product_id}')">
               <i class="fas fa-info-circle"></i>
@@ -385,8 +398,8 @@ class ProfileManager {
     
     document.getElementById('totalPurchases').textContent = totalPurchases;
     document.getElementById('totalSpent').textContent = `${totalSpent.toFixed(2)}€`;
-    document.getElementById('totalDownloads').textContent = Math.floor(totalPurchases * 2.5);
-    document.getElementById('totalFavorites').textContent = Math.floor(totalPurchases * 0.6);
+    document.getElementById('totalDownloads').textContent = totalPurchases; // Afficher le nombre réel
+    document.getElementById('totalFavorites').textContent = 0; // Reset favoris à 0 pour l'instant
   }
 
   // Attacher les écouteurs d'événements
@@ -487,6 +500,62 @@ class ProfileManager {
         card.style.display = 'none';
       }
     });
+  }
+
+  // Mettre à jour le badge de rôle
+  updateRoleBadge(appRole) {
+    const roleConfig = {
+      'user': {
+        label: 'Membre',
+        icon: 'fas fa-user',
+        color: '#6b7280'
+      },
+      'vip': {
+        label: 'VIP',
+        icon: 'fas fa-gem',
+        color: '#a855f7'
+      },
+      'moderator': {
+        label: 'Modérateur',
+        icon: 'fas fa-shield-halved',
+        color: '#3b82f6'
+      },
+      'admin': {
+        label: 'Admin',
+        icon: 'fas fa-crown',
+        color: '#f59e0b'
+      },
+      'owner': {
+        label: 'Owner',
+        icon: 'fas fa-star',
+        color: '#ef4444'
+      }
+    };
+
+    const config = roleConfig[appRole] || roleConfig['user'];
+    const badgeContainer = document.querySelector('.profile-header .profile-badges');
+    
+    if (badgeContainer) {
+      // Supprimer l'ancien badge de rôle s'il existe
+      const oldRoleBadge = badgeContainer.querySelector('.role-badge');
+      if (oldRoleBadge) {
+        oldRoleBadge.remove();
+      }
+
+      // Créer le nouveau badge
+      const badge = document.createElement('div');
+      badge.className = 'badge role-badge';
+      badge.style.backgroundColor = config.color;
+      badge.innerHTML = `<i class="${config.icon}"></i> ${config.label}`;
+      
+      // Insérer avant le badge "Membre depuis"
+      const memberBadge = badgeContainer.querySelector('.badge:first-child');
+      if (memberBadge) {
+        badgeContainer.insertBefore(badge, memberBadge);
+      } else {
+        badgeContainer.appendChild(badge);
+      }
+    }
   }
 }
 

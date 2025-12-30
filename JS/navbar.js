@@ -344,7 +344,7 @@ class OptiPlayNavbar {
       // Récupérer le pseudo et les infos du profil
       const metadata = user.user_metadata || {};
       let displayName = metadata.pseudo || user.email.split('@')[0];
-      let avatarUrl = metadata.avatar_url;
+      let avatarUrl = null; // Ne jamais utiliser l'avatar Discord par défaut
       
       try {
         const { data: profile } = await this.supabase
@@ -359,8 +359,8 @@ class OptiPlayNavbar {
           displayName = `${profile.first_name} ${profile.last_name || ''}`.trim();
         }
         
-        // Utiliser l'avatar du profil si disponible
-        if (profile?.avatar_url && !avatarUrl) {
+        // Utiliser UNIQUEMENT l'avatar de la base de données OptiPlay
+        if (profile?.avatar_url) {
           avatarUrl = profile.avatar_url;
         }
       } catch (error) {

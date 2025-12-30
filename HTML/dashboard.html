@@ -69,21 +69,29 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
   <script src="../JS/navbar.js"></script>
   <script>
     // Vérifier l'authentification
-    document.addEventListener('DOMContentLoaded', async () => {
-      const supabase = window.supabase.createClient(
-        'https://kunvgegumrfpizjvikbk.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1bnZnZWd1bXJmcGl6anZpa2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUxNTE3NDIsImV4cCI6MjA1MDcyNzc0Mn0.fL8wP-Rt59oPdVYPZBBVZXxZ-OW8t7XBTDX7z9VUCdA'
-      );
+    async function checkAuth() {
+      // Attendre que Supabase soit initialisé
+      while (!window.OptiPlayConfig?.supabaseClient) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
 
+      const supabase = window.OptiPlayConfig.supabaseClient;
       const { data: { user }, error } = await supabase.auth.getUser();
       
       if (error || !user) {
-        window.location.href = '../HTML/login.html';
+        console.log('Utilisateur non connecté, redirection...');
+        window.location.href = 'login.html';
+      } else {
+        console.log('Utilisateur connecté:', user.email);
       }
-    });
+    }
+
+    // Lancer la vérification au chargement
+    checkAuth();
   </script>
 </body>
 </html>

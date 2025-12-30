@@ -404,6 +404,142 @@
   font-weight: 600;
 }
 
+/* Subscription Requirements Section */
+.subscription-requirements {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.requirements-title {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.plan-badges {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.plan-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.plan-badge i {
+  font-size: 1.5rem;
+}
+
+.plan-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.plan-badge.active {
+  border-color: var(--primary-color);
+  background: rgba(0, 255, 255, 0.1);
+  color: var(--primary-color);
+}
+
+.plan-badge.free.active {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.plan-badge.beginner.active {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.plan-badge.advanced.active {
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+.plan-badge.premium.active {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.plan-details {
+  display: none;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 3px solid var(--primary-color);
+  animation: slideDown 0.3s ease;
+}
+
+.plan-details.show {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.plan-detail-content h4 {
+  font-size: 1.3rem;
+  color: white;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.plan-detail-content p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+#planDetailFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+#planDetailFeatures li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+#planDetailFeatures li i {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .modal-body {
@@ -442,5 +578,9 @@
   
   .thumbnail {
     width: 100px;
+  }
+
+  .plan-badges {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

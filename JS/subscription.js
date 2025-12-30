@@ -64,18 +64,26 @@ class SubscriptionManager {
 
   // Mettre à jour l'UI pour afficher le plan actuel
   updateCurrentPlanUI() {
-    // Retirer tous les boutons "Plan actuel"
-    document.querySelectorAll('.plan-btn.current').forEach(btn => {
-      btn.classList.remove('current');
-      btn.innerHTML = '<i class="fas fa-rocket"></i><span data-i18n="subscriptionPage.choosePlan">Choisir ce plan</span>';
+    // Parcourir tous les boutons de plan
+    document.querySelectorAll('.plan-btn').forEach(btn => {
+      const planType = btn.getAttribute('data-plan');
+      
+      if (planType === this.currentPlan) {
+        // C'est le plan actuel, le marquer
+        btn.classList.add('current');
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.innerHTML = '<i class="fas fa-check"></i><span data-i18n="subscriptionPage.currentPlan">Plan actuel</span>';
+      } else {
+        // Ce n'est pas le plan actuel, mettre "En travaux"
+        btn.classList.remove('current');
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'not-allowed';
+        btn.innerHTML = '<i class="fas fa-tools"></i><span>En travaux</span>';
+      }
     });
-
-    // Marquer le plan actuel
-    const currentPlanBtn = document.querySelector(`.plan-btn[data-plan="${this.currentPlan}"]`);
-    if (currentPlanBtn) {
-      currentPlanBtn.classList.add('current');
-      currentPlanBtn.innerHTML = '<i class="fas fa-check"></i><span data-i18n="subscriptionPage.currentPlan">Plan actuel</span>';
-    }
   }
 
   // Attacher les écouteurs d'événements
