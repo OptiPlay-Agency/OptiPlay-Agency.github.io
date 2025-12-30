@@ -790,16 +790,18 @@
     </div>
   </div>
 
-  <!-- LoL Composition Modal -->
-  <div class="modal" id="comp-modal">
-    <div class="modal-content modal-xlarge">
-      <div class="modal-header">
-        <h2><i class="fas fa-exchange-alt"></i> <span id="comp-modal-title">Nouvelle Composition</span></h2>
-        <button class="modal-close" data-modal="comp-modal">
-          <i class="fas fa-times"></i>
+  <!-- LoL Composition Full Screen -->
+  <div class="comp-fullscreen" id="comp-fullscreen" style="display: none;">
+    <div class="comp-fullscreen-container">
+      <div class="comp-fullscreen-header">
+        <button class="btn btn-secondary" id="back-to-comps">
+          <i class="fas fa-arrow-left"></i>
+          Retour
         </button>
+        <h2><i class="fas fa-exchange-alt"></i> <span id="comp-modal-title">Nouvelle Composition</span></h2>
+        <div></div>
       </div>
-      <div class="modal-body">
+      <div class="comp-fullscreen-body">
         <form id="comp-form">
           <div class="form-group">
             <label for="comp-name">Nom de la composition *</label>
@@ -937,8 +939,8 @@
             </div>
           </div>
 
-          <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" data-modal="comp-modal">
+          <div class="comp-fullscreen-actions">
+            <button type="button" class="btn btn-secondary" id="cancel-comp">
               Annuler
             </button>
             <button type="submit" class="btn btn-primary">

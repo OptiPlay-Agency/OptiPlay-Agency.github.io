@@ -891,10 +891,601 @@ class LeagueOfLegendsManager {
     }
 
     // ==================== COMPOSITIONS ====================
-    // (Keep existing compositions code from original file)
+    
     initCompositions() {
-        // TODO: Implement compositions functionality
-        console.log('Compositions initialized');
+        // Load compositions from database
+        this.loadCompositions();
+        
+        // Event listeners
+        const addCompBtn = document.getElementById('add-comp-btn');
+        if (addCompBtn) {
+            addCompBtn.addEventListener('click', () => this.openCompModal());
+        }
+
+        // Modal form submit
+        const compForm = document.getElementById('comp-form');
+        if (compForm) {
+            compForm.addEventListener('submit', (e) => this.saveComposition(e));
+        }
+
+        // Tab switching
+        const compTabs = document.querySelectorAll('.comp-tab');
+        compTabs.forEach(tab => {
+            tab.addEventListener('click', () => this.switchCompTab(tab.dataset.tab));
+        });
+
+        // Champion search
+        const championSearch = document.getElementById('champion-search');
+        if (championSearch) {
+            championSearch.addEventListener('input', (e) => this.filterChampions(e.target.value));
+        }
+
+        // Initialize bans grid (8 slots)
+        this.initBansGrid();
+        
+        // Initialize champion selection slots
+        const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
+        roles.forEach(role => {
+            const selectedDiv = document.getElementById(`${role}-selected`);
+            if (selectedDiv) {
+                selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
+            }
+        });
+        
+        // Back button
+        const backBtn = document.getElementById('back-to-comps');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => this.closeCompModal());
+        }
+        
+        // Cancel button
+        const cancelBtn = document.getElementById('cancel-comp');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => this.closeCompModal());
+        }
+    }
+
+    async loadCompositions() {
+        try {
+            const { data, error } = await AppState.supabase
+                .from('lol_compositions')
+                .select('*')
+                .eq('team_id', this.currentTeam.id)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            this.compositions = data || [];
+            this.renderCompositions();
+        } catch (error) {
+            console.error('Error loading compositions:', error);
+        }
+    }
+
+    renderCompositions() {
+        const grid = document.getElementById('comps-grid');
+        if (!grid) return;
+
+        if (this.compositions.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Aucune composition</h3>
+                    <p>Créez votre première composition de draft</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = this.compositions.map(comp => this.createCompCard(comp)).join('');
+        
+        // Attach event listeners
+        this.compositions.forEach(comp => {
+            const card = document.querySelector(`[data-comp-id="${comp.id}"]`);
+            if (card) {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.comp-actions')) {
+                        this.viewComposition(comp.id);
+                    }
+                });
+            }
+        });
+    }
+
+    createCompCard(comp) {
+        const data = comp.composition_data || {};
+        const picks = data.picks || {};
+        const bans = data.bans || [];
+        
+        const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
+        const roleIcons = {
+            'toplane': 'shield-alt',
+            'jungle': 'tree',
+            'midlane': 'star',
+            'adc': 'crosshairs',
+            'support': 'hand-holding-heart'
+        };
+
+        const championsHtml = roles.map(role => {
+            const champion = picks[role]?.champion;
+            if (!champion) {
+                return `<div class="comp-champion-slot empty"><i class="fas fa-${roleIcons[role]}"></i></div>`;
+            }
+            return `
+                <div class="comp-champion-slot">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champion)}.png" 
+                         alt="${champion}"
+                         onerror="this.src='../assets/default-champion.png'">
+                </div>
+            `;
+        }).join('');
+
+        const bansCount = bans.length;
+        const updateDate = new Date(comp.updated_at).toLocaleDateString('fr-FR');
+
+        return `
+            <div class="comp-card" data-comp-id="${comp.id}">
+                <div class="comp-card-header">
+                    <h3>${comp.name}</h3>
+                    <div class="comp-actions">
+                        <button class="btn-icon" onclick="event.stopPropagation(); lolManager.editComposition('${comp.id}')" title="Modifier">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" onclick="event.stopPropagation(); lolManager.duplicateComposition('${comp.id}')" title="Dupliquer">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="btn-icon btn-danger" onclick="event.stopPropagation(); lolManager.deleteComposition('${comp.id}')" title="Supprimer">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="comp-champions">
+                    ${championsHtml}
+                </div>
+                <div class="comp-card-footer">
+                    <span><i class="fas fa-ban"></i> ${bansCount} bans</span>
+                    <span><i class="fas fa-calendar"></i> ${updateDate}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    openCompModal(compId = null) {
+        const fullscreen = document.getElementById('comp-fullscreen');
+        const title = document.getElementById('comp-modal-title');
+        const submitText = document.getElementById('comp-submit-text');
+        
+        if (compId) {
+            const comp = this.compositions.find(c => c.id === compId);
+            if (!comp) return;
+            
+            title.textContent = 'Modifier la composition';
+            submitText.textContent = 'Sauvegarder';
+            this.currentEditingComp = compId;
+            this.fillCompForm(comp);
+        } else {
+            title.textContent = 'Nouvelle composition';
+            submitText.textContent = 'Créer la composition';
+            this.currentEditingComp = null;
+            this.resetCompForm();
+        }
+
+        // Load players in dropdowns
+        this.loadPlayersInCompModal();
+        
+        // Load all champions in selector
+        this.loadChampionsInSelector();
+        
+        // Show fullscreen
+        fullscreen.style.display = 'block';
+        
+        // Hide main content
+        const mainContent = document.querySelector('.manager-main');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
+    }
+
+    loadPlayersInCompModal() {
+        const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
+        
+        roles.forEach(role => {
+            const select = document.getElementById(`${role}-player`);
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Joueur...</option>';
+            this.teamMembers.forEach(member => {
+                const option = document.createElement('option');
+                option.value = member.user_id;
+                option.textContent = member.profiles.pseudo;
+                select.appendChild(option);
+            });
+        });
+    }
+
+    loadChampionsInSelector() {
+        const grid = document.getElementById('champion-selector-grid');
+        if (!grid) return;
+
+        // Get champions list
+        const champions = this.champions;
+        
+        grid.innerHTML = champions.map(champ => `
+            <div class="champion-selector-item" onclick="lolManager.selectChampion('${champ}')">
+                <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champ)}.png" 
+                     alt="${champ}"
+                     onerror="this.onerror=null; this.src='../assets/default-champion.png'">
+                <span>${champ}</span>
+            </div>
+        `).join('');
+    }
+
+    filterChampions(query) {
+        const items = document.querySelectorAll('.champion-selector-item');
+        const lowerQuery = query.toLowerCase();
+        
+        items.forEach(item => {
+            const champName = item.querySelector('span').textContent.toLowerCase();
+            item.style.display = champName.includes(lowerQuery) ? 'flex' : 'none';
+        });
+    }
+
+    initBansGrid() {
+        const bansGrid = document.getElementById('bans-grid');
+        if (!bansGrid) return;
+
+        // Create 8 ban slots
+        bansGrid.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'ban-slot';
+            slot.dataset.banIndex = i;
+            slot.innerHTML = `
+                <i class="fas fa-plus"></i>
+                <input type="hidden" class="ban-champion" data-index="${i}">
+            `;
+            slot.addEventListener('click', () => this.openChampionSelectorForBan(i));
+            bansGrid.appendChild(slot);
+        }
+    }
+
+    openChampionSelectorForBan(index) {
+        this.currentBanSlot = index;
+        this.currentSelectingRole = null; // For bans
+        
+        const selector = document.getElementById('champion-selector');
+        if (selector) {
+            selector.style.display = 'block';
+        }
+    }
+
+    openChampionSelectorForRole(role) {
+        this.currentSelectingRole = role;
+        this.currentBanSlot = null;
+        
+        const selector = document.getElementById('champion-selector');
+        if (selector) {
+            selector.style.display = 'block';
+        }
+
+        // Setup click handlers for role selection
+        const selectedDiv = document.getElementById(`${role}-selected`);
+        if (selectedDiv && !selectedDiv.dataset.listenerAdded) {
+            selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
+            selectedDiv.dataset.listenerAdded = 'true';
+        }
+    }
+
+    selectChampion(championName) {
+        if (this.currentBanSlot !== null) {
+            // Selecting for ban
+            const banSlot = document.querySelector(`.ban-slot[data-ban-index="${this.currentBanSlot}"]`);
+            const hiddenInput = banSlot.querySelector('.ban-champion');
+            
+            hiddenInput.value = championName;
+            banSlot.innerHTML = `
+                <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(championName)}.png" 
+                     alt="${championName}"
+                     onerror="this.src='../assets/default-champion.png'">
+                <button type="button" class="remove-ban" onclick="lolManager.removeBan(${this.currentBanSlot})">
+                    <i class="fas fa-times"></i>
+                </button>
+                <input type="hidden" class="ban-champion" data-index="${this.currentBanSlot}" value="${championName}">
+            `;
+            
+            // Re-attach click listener
+            banSlot.addEventListener('click', (e) => {
+                if (!e.target.closest('.remove-ban')) {
+                    this.openChampionSelectorForBan(this.currentBanSlot);
+                }
+            });
+        } else if (this.currentSelectingRole) {
+            // Selecting for role
+            const role = this.currentSelectingRole;
+            const selectedDiv = document.getElementById(`${role}-selected`);
+            const hiddenInput = document.getElementById(`${role}-champion`);
+            
+            hiddenInput.value = championName;
+            selectedDiv.innerHTML = `
+                <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(championName)}.png" 
+                     alt="${championName}"
+                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+            `;
+        }
+
+        this.closeChampionSelector();
+    }
+
+    removeBan(index) {
+        const banSlot = document.querySelector(`.ban-slot[data-ban-index="${index}"]`);
+        if (banSlot) {
+            banSlot.innerHTML = `
+                <i class="fas fa-plus"></i>
+                <input type="hidden" class="ban-champion" data-index="${index}">
+            `;
+            banSlot.addEventListener('click', () => this.openChampionSelectorForBan(index));
+        }
+    }
+
+    closeChampionSelector() {
+        const selector = document.getElementById('champion-selector');
+        if (selector) {
+            selector.style.display = 'none';
+        }
+        
+        // Reset search
+        const searchInput = document.getElementById('champion-search');
+        if (searchInput) {
+            searchInput.value = '';
+            this.filterChampions('');
+        }
+        
+        this.currentSelectingRole = null;
+        this.currentBanSlot = null;
+    }
+
+    switchCompTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.comp-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.tab === tabName);
+        });
+
+        // Update content
+        document.getElementById('picks-content').style.display = tabName === 'picks' ? 'block' : 'none';
+        document.getElementById('tactic-content').style.display = tabName === 'tactic' ? 'block' : 'none';
+    }
+
+    async saveComposition(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('comp-name').value.trim();
+        if (!name) {
+            alert('Veuillez entrer un nom de composition');
+            return;
+        }
+
+        // Collect composition data
+        const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
+        const picks = {};
+        
+        roles.forEach(role => {
+            const champion = document.getElementById(`${role}-champion`).value;
+            const player = document.getElementById(`${role}-player`).value;
+            
+            if (champion) {
+                picks[role] = {
+                    champion: champion,
+                    player_id: player || null
+                };
+            }
+        });
+
+        // Collect bans
+        const bans = [];
+        document.querySelectorAll('.ban-champion').forEach(input => {
+            if (input.value) {
+                bans.push(input.value);
+            }
+        });
+
+        // Get notes
+        const picksNote = document.getElementById('comp-picks').value.trim();
+        const tacticNote = document.getElementById('comp-tactic').value.trim();
+
+        const compositionData = {
+            picks: picks,
+            bans: bans,
+            picks_note: picksNote,
+            tactic_note: tacticNote
+        };
+
+        try {
+            if (this.currentEditingComp) {
+                // Update existing
+                const { error } = await AppState.supabase
+                    .from('lol_compositions')
+                    .update({
+                        name: name,
+                        composition_data: compositionData,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', this.currentEditingComp);
+
+                if (error) throw error;
+                
+                if (typeof showToast === 'function') {
+                    showToast('Composition mise à jour', 'success');
+                }
+            } else {
+                // Create new
+                const { error } = await AppState.supabase
+                    .from('lol_compositions')
+                    .insert({
+                        team_id: this.currentTeam.id,
+                        name: name,
+                        composition_data: compositionData
+                    });
+
+                if (error) throw error;
+                
+                if (typeof showToast === 'function') {
+                    showToast('Composition créée', 'success');
+                }
+            }
+
+            // Reload and close
+            await this.loadCompositions();
+            this.closeCompModal();
+        } catch (error) {
+            console.error('Error saving composition:', error);
+            alert('Erreur lors de la sauvegarde: ' + error.message);
+        }
+    }
+
+    fillCompForm(comp) {
+        const data = comp.composition_data || {};
+        
+        // Fill name
+        document.getElementById('comp-name').value = comp.name;
+
+        // Fill picks
+        const picks = data.picks || {};
+        Object.keys(picks).forEach(role => {
+            const pick = picks[role];
+            if (pick.champion) {
+                document.getElementById(`${role}-champion`).value = pick.champion;
+                const selectedDiv = document.getElementById(`${role}-selected`);
+                if (selectedDiv) {
+                    selectedDiv.innerHTML = `
+                        <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(pick.champion)}.png" 
+                             alt="${pick.champion}"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    `;
+                }
+            }
+            if (pick.player_id) {
+                document.getElementById(`${role}-player`).value = pick.player_id;
+            }
+        });
+
+        // Fill bans
+        const bans = data.bans || [];
+        bans.forEach((ban, index) => {
+            if (index < 8) {
+                const banSlot = document.querySelector(`.ban-slot[data-ban-index="${index}"]`);
+                const hiddenInput = banSlot.querySelector('.ban-champion');
+                
+                hiddenInput.value = ban;
+                banSlot.innerHTML = `
+                    <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(ban)}.png" 
+                         alt="${ban}"
+                         onerror="this.src='../assets/default-champion.png'">
+                    <button type="button" class="remove-ban" onclick="lolManager.removeBan(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <input type="hidden" class="ban-champion" data-index="${index}" value="${ban}">
+                `;
+            }
+        });
+
+        // Fill notes
+        document.getElementById('comp-picks').value = data.picks_note || '';
+        document.getElementById('comp-tactic').value = data.tactic_note || '';
+    }
+
+    resetCompForm() {
+        document.getElementById('comp-form').reset();
+        
+        // Reset champion selections
+        const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
+        roles.forEach(role => {
+            const selectedDiv = document.getElementById(`${role}-selected`);
+            if (selectedDiv) {
+                selectedDiv.innerHTML = `<i class="fas fa-plus"></i><span>Sélectionner</span>`;
+                // Add click listener
+                selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
+            }
+        });
+
+        // Reset bans
+        this.initBansGrid();
+
+        // Reset to Picks tab
+        this.switchCompTab('picks');
+    }
+
+    closeCompModal() {
+        const fullscreen = document.getElementById('comp-fullscreen');
+        if (fullscreen) {
+            fullscreen.style.display = 'none';
+        }
+        
+        // Show main content
+        const mainContent = document.querySelector('.manager-main');
+        if (mainContent) {
+            mainContent.style.display = 'flex';
+        }
+        
+        this.currentEditingComp = null;
+    }
+
+    editComposition(compId) {
+        this.openCompModal(compId);
+    }
+
+    async duplicateComposition(compId) {
+        const comp = this.compositions.find(c => c.id === compId);
+        if (!comp) return;
+
+        try {
+            const { error } = await AppState.supabase
+                .from('lol_compositions')
+                .insert({
+                    team_id: this.currentTeam.id,
+                    name: `${comp.name} (copie)`,
+                    composition_data: comp.composition_data
+                });
+
+            if (error) throw error;
+
+            if (typeof showToast === 'function') {
+                showToast('Composition dupliquée', 'success');
+            }
+
+            await this.loadCompositions();
+        } catch (error) {
+            console.error('Error duplicating composition:', error);
+            alert('Erreur lors de la duplication');
+        }
+    }
+
+    async deleteComposition(compId) {
+        if (!confirm('Voulez-vous vraiment supprimer cette composition ?')) {
+            return;
+        }
+
+        try {
+            const { error } = await AppState.supabase
+                .from('lol_compositions')
+                .delete()
+                .eq('id', compId);
+
+            if (error) throw error;
+
+            if (typeof showToast === 'function') {
+                showToast('Composition supprimée', 'success');
+            }
+
+            await this.loadCompositions();
+        } catch (error) {
+            console.error('Error deleting composition:', error);
+            alert('Erreur lors de la suppression');
+        }
+    }
+
+    viewComposition(compId) {
+        // Open the composition in view/edit mode
+        this.editComposition(compId);
     }
 }
 
