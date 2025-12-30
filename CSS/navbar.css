@@ -163,6 +163,9 @@
 .navbar-auth {
   flex-shrink: 0;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .auth-buttons {
@@ -376,6 +379,111 @@
 
 .logout-btn:hover i {
   color: #ff4757;
+}
+
+/* ========================================
+   SÉLECTEUR DE LANGUE
+   ======================================== */
+
+.lang-selector {
+  position: relative;
+}
+
+.lang-current {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--navbar-border);
+  border-radius: var(--border-radius);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 90px;
+  font-family: 'Inter', sans-serif;
+}
+
+.lang-current:hover,
+.lang-current.active {
+  color: var(--text-primary);
+  border-color: var(--primary-color);
+  background: var(--hover-bg);
+}
+
+.flag-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.lang-text {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.lang-current .fa-chevron-down {
+  font-size: 0.7rem;
+  transition: var(--transition);
+  margin-left: auto;
+}
+
+.lang-current.active .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--dropdown-bg);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--navbar-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 0.5rem;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  z-index: 1001;
+}
+
+.lang-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+
+.lang-option:hover {
+  color: var(--text-primary);
+  background: var(--hover-bg);
+}
+
+.lang-option.active {
+  color: var(--primary-color);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.lang-name {
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 /* ========================================

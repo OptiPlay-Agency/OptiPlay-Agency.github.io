@@ -9,43 +9,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/tournaments.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <a href="../index.html" class="logo-link">
-        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
-        <span class="logo-text">OptiPlay</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
-          <li><a href="tournaments.html" class="nav-link active"><i class="fas fa-trophy"></i> Tournois</a></li>
-          <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
   <main>
     <section class="page-hero">
       <div class="hero-bg"></div>
       <div class="container">
         <h1 class="page-title">
           <i class="fas fa-trophy"></i>
-          Tournois <span class="gradient-text">eSport</span>
+          <span data-i18n="tournamentsPage.title">Tournois</span> <span class="gradient-text" data-i18n="tournamentsPage.titleHighlight">eSport</span>
         </h1>
-        <p class="page-subtitle">Découvrez nos compétitions exceptionnelles et rejoignez la communauté OptiPlay</p>
+        <p class="page-subtitle" data-i18n="tournamentsPage.subtitle">Découvrez nos compétitions exceptionnelles et rejoignez la communauté OptiPlay</p>
       </div>
     </section>
 
     <section class="tournois-container">
       <div class="container">
         <div class="section-header">
-          <h2>Tournois à venir</h2>
+          <h2 data-i18n="tournamentsPage.upcomingTitle">Tournois à venir</h2>
           <div class="section-line"></div>
         </div>
         <div id="tournois-list" class="tournois-grid">
@@ -53,11 +36,11 @@
         </div>
         <div id="no-tournament" class="no-tournament" style="display: none;">
           <i class="fas fa-calendar-times"></i>
-          <h3>Aucun tournoi programmé</h3>
-          <p>Restez connectés, de nouveaux tournois arrivent bientôt !</p>
+          <h3 data-i18n="tournamentsPage.noTournament">Aucun tournoi programmé</h3>
+          <p data-i18n="tournamentsPage.noTournamentDesc">Restez connectés, de nouveaux tournois arrivent bientôt !</p>
           <a href="../HTML/contact.html" class="btn btn-primary">
             <i class="fas fa-bell"></i>
-            Être notifié
+            <span data-i18n="tournamentsPage.notify">Être notifié</span>
           </a>
         </div>
       </div>
@@ -69,32 +52,33 @@
       <div class="footer-content">
         <div class="footer-section">
           <h4>OptiPlay</h4>
-          <p>L'agence eSport de référence pour des compétitions exceptionnelles.</p>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
           <div class="social-links">
-            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-twitch"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
         <div class="footer-section">
-          <h4>Navigation</h4>
+          <h4 data-i18n="footer.services">Services</h4>
           <ul>
-            <li><a href="../index.html">Accueil</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="tournaments.html">Tournois</a></li>
-            <li><a href="about.html">À propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h4>Contact</h4>
-          <p><i class="fas fa-envelope"></i> contact@optiplay.fr</p>
-          <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
       </div>
     </div>
   </footer>
@@ -199,5 +183,10 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
+
+  <!-- Scripts Supabase et Navbar -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/i18n.js"></script>
+  <script src="../JS/navbar.js"></script>
 </body>
 </html>

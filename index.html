@@ -7,29 +7,28 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="CSS/navbar.css">
   <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
-  <!-- Navigation centralisée -->
-  <div id="navbar-container"></div>
-
+  
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <h1 class="hero-title">Bienvenue chez <span class="gradient-text">OptiPlay</span></h1>
-      <p class="hero-subtitle">Agence spécialisée dans l'accompagnement des structures et particuliers dans leurs projets numériques, événementiels et administratifs.</p>
+      <h1 class="hero-title"><span data-i18n="hero.welcome">Bienvenue chez</span> <span class="gradient-text">OptiPlay</span></h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Nous créons des solutions numériques sur-mesure pour vos projets tout en proposant des applications et services prêts à l'emploi pour les communautés gaming et structures eSport.</p>
       <div class="hero-buttons">
         <a href="HTML/services.html" class="btn btn-primary">
           <i class="fas fa-cogs"></i>
-          Découvrir nos services
+          <span data-i18n="hero.discoverServices">Découvrir nos services</span>
         </a>
         <a href="HTML/contact.html" class="btn btn-secondary">
           <i class="fas fa-paper-plane"></i>
-          Demander un devis
+          <span data-i18n="hero.requestQuote">Demander un devis</span>
         </a>
       </div>
     </div>
@@ -38,166 +37,132 @@
     </div>
   </section>
 
-  <section class="stats">
+  <!-- Services -->
+  <section class="services">
     <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Projets réalisés</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">100+</div>
-          <div class="stat-label">Clients satisfaits</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">15+</div>
-          <div class="stat-label">Services experts</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">Support client</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="services-preview">
-    <div class="container">
-      <h2 class="section-title">Nos <span class="gradient-text">Services</span></h2>
-      <p class="section-subtitle">Des solutions complètes pour tous vos besoins numériques</p>
+      <h2 class="section-title"><span data-i18n="services.title">Nos</span> <span class="gradient-text" data-i18n="services.titleHighlight">Solutions</span></h2>
+      <p class="section-subtitle" data-i18n="services.subtitle">Développement sur-mesure et outils prêts à l'emploi</p>
       
       <div class="services-grid">
-        <div class="service-card">
+        <a href="HTML/services/applications.html" class="service-card">
           <div class="service-icon">
-            <i class="fas fa-code"></i>
+            <i class="fas fa-laptop-code"></i>
           </div>
-          <h3>Applications</h3>
-          <p>Développement web et mobile sur-mesure pour vos projets digitaux.</p>
-          <a href="HTML/services/applications.html" class="service-link">Découvrir <i class="fas fa-arrow-right"></i></a>
-        </div>
+          <h3 data-i18n="services.webApps">Applications Web</h3>
+          <p data-i18n="services.webAppsDesc">Sites, plateformes et applications personnalisées pour votre activité</p>
+        </a>
 
-        <div class="service-card">
+        <a href="HTML/services/automatisations.html" class="service-card">
           <div class="service-icon">
             <i class="fas fa-robot"></i>
           </div>
-          <h3>Automatisations</h3>
-          <p>Scripts et workflows pour optimiser vos processus métier.</p>
-          <a href="HTML/services/automatisations.html" class="service-link">Découvrir <i class="fas fa-arrow-right"></i></a>
-        </div>
+          <h3 data-i18n="services.automations">Automatisations</h3>
+          <p data-i18n="services.automationsDesc">Scripts et workflows pour automatiser vos tâches répétitives</p>
+        </a>
 
-        <div class="service-card">
+        <a href="HTML/services/bots-discord.html" class="service-card">
           <div class="service-icon">
             <i class="fab fa-discord"></i>
           </div>
-          <h3>Bots Discord</h3>
-          <p>Bots personnalisés pour animer et gérer vos communautés gaming.</p>
-          <a href="HTML/services/bots-discord.html" class="service-link">Découvrir <i class="fas fa-arrow-right"></i></a>
-        </div>
+          <h3 data-i18n="services.discordBots">Bots Discord</h3>
+          <p data-i18n="services.discordBotsDesc">Bots personnalisés pour animer et gérer votre communauté</p>
+        </a>
 
-        <div class="service-card">
+        <a href="teamPlanner/HTML/index.html" class="service-card featured">
           <div class="service-icon">
-            <i class="fas fa-palette"></i>
+            <i class="fas fa-calendar-alt"></i>
           </div>
-          <h3>Services Divers</h3>
-          <p>Design, conseil et accompagnement pour vos projets spécialisés.</p>
-          <a href="HTML/services/divers.html" class="service-link">Découvrir <i class="fas fa-arrow-right"></i></a>
-        </div>
+          <h3 data-i18n="services.teamPlanner">Team Planner</h3>
+          <p data-i18n="services.teamPlannerDesc">Organisez votre équipe eSport avec calendrier et gestion des scrims</p>
+          <span class="badge" data-i18n="services.available">Disponible</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="about-preview">
+  <!-- Stats -->
+  <!--<section class="stats">
     <div class="container">
-      <div class="about-content">
-        <div class="about-text">
-          <h2>Pourquoi choisir <span class="gradient-text">OptiPlay</span> ?</h2>
-          <p>Notre équipe d'experts vous accompagne dans tous vos projets numériques avec passion et expertise. Nous combinons créativité, innovation technique et approche personnalisée pour garantir votre succès.</p>
-          <ul class="features-list">
-            <li><i class="fas fa-check"></i> Expertise technique reconnue</li>
-            <li><i class="fas fa-check"></i> Solutions sur-mesure</li>
-            <li><i class="fas fa-check"></i> Support réactif 24/7</li>
-            <li><i class="fas fa-check"></i> Tarifs transparents</li>
-          </ul>
-          <a href="HTML/about.html" class="btn btn-primary">En savoir plus</a>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+          <div class="stat-number">20+</div>
+          <div class="stat-label" data-i18n="stats.projects">Projets réalisés</div>
         </div>
-        <div class="about-visual">
-          <div class="tech-icons">
-            <i class="fab fa-js-square"></i>
-            <i class="fab fa-python"></i>
-            <i class="fab fa-node-js"></i>
-            <i class="fab fa-react"></i>
-            <i class="fab fa-discord"></i>
-            <i class="fas fa-database"></i>
-          </div>
+        <div class="stat-item">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-number">35+</div>
+          <div class="stat-label" data-i18n="stats.clients">Clients satisfaits</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon"><i class="fas fa-rocket"></i></div>
+          <div class="stat-number">4</div>
+          <div class="stat-label" data-i18n="stats.solutions">Solutions disponibles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon"><i class="fas fa-headset"></i></div>
+          <div class="stat-number">24/7</div>
+          <div class="stat-label" data-i18n="stats.support">Support réactif</div>
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
-  <section class="testimonials">
+  <!-- Why Choose Us -->
+  <section class="why-us">
     <div class="container">
-      <h2 class="section-title">Ce que disent nos <span class="gradient-text">clients</span></h2>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+      <h2 class="section-title"><span data-i18n="whyUs.title">Pourquoi</span> <span class="gradient-text" data-i18n="whyUs.titleHighlight">OptiPlay</span> ?</h2>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-code"></i>
           </div>
-          <p>"OptiPlay a transformé notre vision en réalité. Leur expertise technique et leur compréhension de nos besoins ont fait la différence."</p>
-          <div class="testimonial-author">
-            <strong>Alex Martin</strong> - CEO GameStudio
-          </div>
+          <h3 data-i18n="whyUs.customDev">Développement sur-mesure</h3>
+          <p data-i18n="whyUs.customDevDesc">Solutions personnalisées adaptées à vos besoins spécifiques</p>
         </div>
 
-        <div class="testimonial-card">
-          <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-box-open"></i>
           </div>
-          <p>"Service impeccable, délais respectés et résultat au-delà de nos attentes. Je recommande vivement OptiPlay."</p>
-          <div class="testimonial-author">
-            <strong>Sarah Chen</strong> - Fondatrice EsportPro
-          </div>
+          <h3 data-i18n="whyUs.readyTools">Outils clés en main</h3>
+          <p data-i18n="whyUs.readyToolsDesc">Applications prêtes à l'emploi pour gagner du temps</p>
         </div>
 
-        <div class="testimonial-card">
-          <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-gamepad"></i>
           </div>
-          <p>"L'équipe OptiPlay comprend vraiment l'écosystème gaming. Leur bot Discord a révolutionné notre communauté."</p>
-          <div class="testimonial-author">
-            <strong>Tom Wilson</strong> - Admin Phoenix Guild
+          <h3 data-i18n="whyUs.esportExpertise">Expertise eSport</h3>
+          <p data-i18n="whyUs.esportExpertiseDesc">Spécialistes des solutions pour communautés gaming</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
           </div>
+          <h3 data-i18n="whyUs.continuousSupport">Support continu</h3>
+          <p data-i18n="whyUs.continuousSupportDesc">Accompagnement et maintenance de vos projets</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA -->
   <section class="cta">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Prêt à démarrer votre <span class="gradient-text">projet</span> ?</h2>
-        <p>Contactez-nous dès aujourd'hui pour discuter de vos besoins et obtenir un devis personnalisé.</p>
-        <div class="cta-buttons">
-          <a href="HTML/contact.html" class="btn btn-primary">
-            <i class="fas fa-rocket"></i>
-            Démarrer un projet
-          </a>
-          <a href="HTML/services.html" class="btn btn-secondary">
-            <i class="fas fa-eye"></i>
-            Voir nos services
-          </a>
-        </div>
+    <div class="cta-content">
+      <h2 data-i18n="cta.title">Prêt à démarrer votre projet ?</h2>
+      <p data-i18n="cta.subtitle">Discutons de vos besoins et trouvons la solution adaptée</p>
+      <div class="cta-buttons">
+        <a href="HTML/contact.html" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i>
+          <span data-i18n="cta.contactUs">Nous contacter</span>
+        </a>
+        <a href="HTML/services.html" class="btn btn-secondary">
+          <i class="fas fa-eye"></i>
+          <span data-i18n="cta.seeServices">Voir tous les services</span>
+        </a>
       </div>
     </div>
   </section>
@@ -205,73 +170,42 @@
   <footer>
     <div class="container">
       <div class="footer-content">
-        <div class="footer-brand">
-          <div class="logo-container">
-            <i class="fas fa-gamepad logo-icon"></i>
-            <span class="brand-text">OptiPlay</span>
+        <div class="footer-section">
+          <h4>OptiPlay</h4>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-twitch"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
           </div>
-          <p>Votre partenaire pour tous vos projets numériques et gaming.</p>
         </div>
-
-        <div class="footer-links">
-          <div class="footer-section">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="HTML/services/applications.html">Applications</a></li>
-              <li><a href="HTML/services/automatisations.html">Automatisations</a></li>
-              <li><a href="HTML/services/bots-discord.html">Bots Discord</a></li>
-              <li><a href="HTML/services/divers.html">Services Divers</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4>Entreprise</h4>
-            <ul>
-              <li><a href="HTML/about.html">À propos</a></li>
-              <li><a href="HTML/tournaments.html">Tournois</a></li>
-              <li><a href="HTML/contact.html">Contact</a></li>
-              <li><a href="#privacy">Confidentialité</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="#help">Centre d'aide</a></li>
-              <li><a href="#docs">Documentation</a></li>
-              <li><a href="#status">Statut des services</a></li>
-              <li><a href="HTML/contact.html">Support technique</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4>Communauté</h4>
-            <ul>
-              <li><a href="#discord" target="_blank">Discord</a></li>
-              <li><a href="#twitter" target="_blank">Twitter</a></li>
-              <li><a href="#github" target="_blank">GitHub</a></li>
-              <li><a href="#youtube" target="_blank">YouTube</a></li>
-            </ul>
-          </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer.services">Services</h4>
+          <ul>
+            <li><a href="HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <div class="footer-bottom-content">
-          <p>&copy; 2024 OptiPlay Agency. Tous droits réservés.</p>
-          <div class="social-links">
-            <a href="#discord" target="_blank"><i class="fab fa-discord"></i></a>
-            <a href="#twitter" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="#github" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#youtube" target="_blank"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="JS/i18n.js"></script>
   <script src="JS/navbar.js"></script>
   <script src="JS/main.js"></script>
 </body>

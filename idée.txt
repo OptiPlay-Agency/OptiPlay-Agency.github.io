@@ -1,0 +1,13 @@
+Sur toutes les navbars, ici la tu vois, je veux un bouton en plus "Abonnement" en dessous de mon profil.
+Parce que pour rémunérer mon travail quand même, on va créer un système d'abonnements. Pareil pour supabase.
+L'idée c'est d'avoir : 
+Abonnement gratuit qui donne accès aux ressources gratuites etc...
+Abonnement beginner qui...
+Abonnement advanced qui ...
+Et enfin abonnement premium...
+
+
+
+Ce qu'on va faire maintenant, c'est faire en sorte que le site soit traductible. Dans la navbar, à coté du profil (droite) 
+Tu vas me faire un bouton comme celui du profil, qui permets de sélectionner une langue. En gros l'idée est que l'utilisateur puisse changer la langue et que tout soit traduit automatiquement dans sa langue de choix. Pour le moment implémente juste français et anglais. 
+Donc tu vas faire en sorte que tous les champs de textes soient changeable entre français et anglais, par du json, peu importe, débrouille toi. Fais moi ça dans la page index.

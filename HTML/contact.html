@@ -9,26 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/contact.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <a href="../index.html" class="logo-link">
-        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
-        <span class="logo-text">OptiPlay</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-          <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
-          <li><a href="tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
-          <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="contact.html" class="nav-link active"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
   <main>
     <section class="page-hero">
@@ -37,13 +21,13 @@
         <h1 class="page-title">
           <div class="contact-line">
             <i class="fas fa-envelope"></i>
-            <span class="contact-white">Contact</span>
+            <span class="contact-white" data-i18n="contactPage.contact">Contact</span>
           </div>
           <div class="partenariats-line">
-            <span class="gradient-text">Partenariats</span>
+            <span class="gradient-text" data-i18n="contactPage.partnerships">Partenariats</span>
           </div>
         </h1>
-        <p class="page-subtitle">Vous souhaitez nous contacter ou proposer un partenariat ? Nous sommes là pour vous accompagner dans tous vos projets !</p>
+        <p class="page-subtitle" data-i18n="contactPage.subtitle">Vous souhaitez nous contacter ou proposer un partenariat ? Nous sommes là pour vous accompagner dans tous vos projets !</p>
       </div>
     </section>
 
@@ -52,7 +36,7 @@
         <div class="contact-grid">
           <div class="contact-info">
             <div class="section-header">
-              <h2>Parlons de votre <span class="gradient-text">projet</span></h2>
+              <h2><span data-i18n="contactPage.talkAboutProject">Parlons de votre</span> <span class="gradient-text" data-i18n="contactPage.projectHighlight">projet</span></h2>
               <div class="section-line"></div>
             </div>
             
@@ -62,9 +46,9 @@
                   <i class="fas fa-envelope"></i>
                 </div>
                 <div class="method-content">
-                  <h3>Email</h3>
-                  <p>optiplayy@gmail.com</p>
-                  <span class="method-subtitle">Réponse sous 24h</span>
+                  <h3 data-i18n="contactPage.email">Email</h3>
+                  <p data-i18n="footer.email">optiplayy@gmail.com</p>
+                  <span class="method-subtitle" data-i18n="contactPage.response24h">Réponse sous 24h</span>
                 </div>
               </div>
               
@@ -73,9 +57,9 @@
                   <i class="fab fa-discord"></i>
                 </div>
                 <div class="method-content">
-                  <h3>Discord</h3>
-                  <p><a href="https://discord.gg/S6XB3thwnH" target="_blank" style="color: var(--secondary-color); text-decoration: none;">Rejoindre notre Discord</a></p>
-                  <span class="method-subtitle">Échange instantané</span>
+                  <h3 data-i18n="contactPage.discord">Discord</h3>
+                  <p><a href="https://discord.gg/S6XB3thwnH" target="_blank" style="color: var(--secondary-color); text-decoration: none;" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+                  <span class="method-subtitle" data-i18n="contactPage.instantChat">Échange instantané</span>
                 </div>
               </div>
               
@@ -84,66 +68,66 @@
                   <i class="fas fa-clock"></i>
                 </div>
                 <div class="method-content">
-                  <h3>Disponibilité</h3>
-                  <p>Support 24/7</p>
-                  <span class="method-subtitle">Toujours là pour vous</span>
+                  <h3 data-i18n="contactPage.availability">Disponibilité</h3>
+                  <p data-i18n="contactPage.support247">Support 24/7</p>
+                  <span class="method-subtitle" data-i18n="contactPage.alwaysThere">Toujours là pour vous</span>
                 </div>
               </div>
             </div>
             
             <div class="benefits">
-              <h3>Pourquoi nous choisir ?</h3>
+              <h3 data-i18n="contactPage.whyChooseUs">Pourquoi nous choisir ?</h3>
               <ul>
-                <li><i class="fas fa-check"></i> Expertise reconnue dans l'eSport</li>
-                <li><i class="fas fa-check"></i> Solutions sur-mesure</li>
-                <li><i class="fas fa-check"></i> Accompagnement personnalisé</li>
-                <li><i class="fas fa-check"></i> Respect des délais</li>
-                <li><i class="fas fa-check"></i> Tarifs compétitifs</li>
+                <li><i class="fas fa-check"></i> <span data-i18n="contactPage.expertiseEsport">Expertise reconnue dans l'eSport</span></li>
+                <li><i class="fas fa-check"></i> <span data-i18n="contactPage.customSolutions">Solutions sur-mesure</span></li>
+                <li><i class="fas fa-check"></i> <span data-i18n="contactPage.personalSupport">Accompagnement personnalisé</span></li>
+                <li><i class="fas fa-check"></i> <span data-i18n="contactPage.meetDeadlines">Respect des délais</span></li>
+                <li><i class="fas fa-check"></i> <span data-i18n="contactPage.competitivePrices">Tarifs compétitifs</span></li>
               </ul>
             </div>
           </div>
           
           <div class="contact-form-container">
             <div class="form-header">
-              <h3>Décrivez-nous votre projet</h3>
-              <p>Remplissez ce formulaire et nous vous recontacterons rapidement</p>
+              <h3 data-i18n="contactPage.describeProject">Décrivez-nous votre projet</h3>
+              <p data-i18n="contactPage.formSubtitle">Remplissez ce formulaire et nous vous recontacterons rapidement</p>
             </div>
             
             <form class="contact-form" id="contactForm">
               <div class="form-group">
                 <label for="name">
                   <i class="fas fa-user"></i>
-                  Votre nom
+                  <span data-i18n="contactPage.yourName">Votre nom</span>
                 </label>
-                <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required>
+                <input type="text" id="name" name="name" data-i18n-placeholder="contactPage.namePlaceholder" placeholder="Ex: Jean Dupont" required>
                 <div class="input-border"></div>
               </div>
               
               <div class="form-group">
                 <label for="email">
                   <i class="fas fa-envelope"></i>
-                  Votre email
+                  <span data-i18n="contactPage.yourEmail">Votre email</span>
                 </label>
-                <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com" required>
+                <input type="email" id="email" name="email" data-i18n-placeholder="contactPage.emailPlaceholder" placeholder="Ex: jean.dupont@email.com" required>
                 <div class="input-border"></div>
               </div>
               
               <div class="form-group">
                 <label for="subject">
                   <i class="fas fa-tag"></i>
-                  Sujet
+                  <span data-i18n="contactPage.subject">Sujet</span>
                 </label>
                 <select id="subject" name="subject" required>
-                  <option value="">Choisissez un sujet</option>
-                  <option value="developpement">Développement Web</option>
-                  <option value="streaming">Setup Streaming</option>
-                  <option value="design">Design & Graphisme</option>
-                  <option value="tournois">Organisation Tournois</option>
-                  <option value="sponsors">Recherche Sponsors</option>
-                  <option value="materiel">Conseil Matériel</option>
-                  <option value="administratif">Aide Administrative</option>
-                  <option value="partenariat">Partenariat</option>
-                  <option value="autre">Autre demande</option>
+                  <option value="" data-i18n="contactPage.chooseSubject">Choisissez un sujet</option>
+                  <option value="developpement" data-i18n="contactPage.webDev">Développement Web</option>
+                  <option value="streaming" data-i18n="contactPage.streamingSetup">Setup Streaming</option>
+                  <option value="design" data-i18n="contactPage.designGraphics">Design & Graphisme</option>
+                  <option value="tournois" data-i18n="contactPage.tournamentOrg">Organisation Tournois</option>
+                  <option value="sponsors" data-i18n="contactPage.sponsorSearch">Recherche Sponsors</option>
+                  <option value="materiel" data-i18n="contactPage.hardwareAdvice">Conseil Matériel</option>
+                  <option value="administratif" data-i18n="contactPage.adminHelp">Aide Administrative</option>
+                  <option value="partenariat" data-i18n="contactPage.partnership">Partenariat</option>
+                  <option value="autre" data-i18n="contactPage.otherRequest">Autre demande</option>
                 </select>
                 <div class="input-border"></div>
               </div>
@@ -151,10 +135,10 @@
               <div class="form-group">
                 <label for="budget">
                   <i class="fas fa-euro-sign"></i>
-                  Budget estimé (optionnel)
+                  <span data-i18n="contactPage.budget">Budget estimé (optionnel)</span>
                 </label>
                 <select id="budget" name="budget">
-                  <option value="">Sélectionnez votre budget</option>
+                  <option value="" data-i18n="contactPage.selectBudget">Sélectionnez votre budget</option>
                   <option value="0-10">0€ - 10€</option>
                   <option value="10-25">10€ - 25€</option>
                   <option value="25-75">25€ - 75€</option>
@@ -164,7 +148,7 @@
                   <option value="1000-2500">1 000€ - 2 500€</option>
                   <option value="2500-5000">2 500€ - 5 000€</option>
                   <option value="5000+">Plus de 5 000€</option>
-                  <option value="a-discuter">À discuter</option>
+                  <option value="a-discuter" data-i18n="contactPage.toDiscuss">À discuter</option>
                 </select>
                 <div class="input-border"></div>
               </div>
@@ -172,21 +156,21 @@
               <div class="form-group">
                 <label for="message">
                   <i class="fas fa-comment"></i>
-                  Décrivez votre projet
+                  <span data-i18n="contactPage.describeProjectLabel">Décrivez votre projet</span>
                 </label>
-                <textarea id="message" name="message" rows="5" placeholder="Décrivez-nous en détail votre projet, vos objectifs, vos contraintes..." required></textarea>
+                <textarea id="message" name="message" rows="5" data-i18n-placeholder="contactPage.projectPlaceholder" placeholder="Décrivez-nous en détail votre projet, vos objectifs, vos contraintes..." required></textarea>
                 <div class="input-border"></div>
               </div>
               
               <button type="submit" class="btn-submit">
                 <i class="fas fa-paper-plane"></i>
-                <span>Envoyer ma demande</span>
+                <span data-i18n="contactPage.sendRequest">Envoyer ma demande</span>
                 <div class="btn-glow"></div>
               </button>
               
               <div class="form-note">
                 <i class="fas fa-shield-alt"></i>
-                Vos données sont protégées et ne seront jamais partagées
+                <span data-i18n="contactPage.dataProtected">Vos données sont protégées et ne seront jamais partagées</span>
               </div>
             </form>
           </div>
@@ -197,9 +181,9 @@
     <section class="calendly-section">
       <div class="container">
         <div class="section-header">
-          <h2>Prendre <span class="gradient-text">rendez-vous</span></h2>
+          <h2><span data-i18n="contactPage.makeAppointment">Prendre</span> <span class="gradient-text" data-i18n="contactPage.appointmentHighlight">rendez-vous</span></h2>
           <div class="section-line"></div>
-          <p class="section-subtitle">Planifiez un appel pour discuter de votre projet en détail</p>
+          <p class="section-subtitle" data-i18n="contactPage.appointmentSubtitle">Planifiez un appel pour discuter de votre projet en détail</p>
         </div>
         
         <div class="calendly-container">
@@ -217,7 +201,7 @@
     <section class="faq-section">
       <div class="container">
         <div class="section-header">
-          <h2>Questions <span class="gradient-text">fréquentes</span></h2>
+          <h2><span data-i18n="contactPage.faqTitle">Questions</span> <span class="gradient-text" data-i18n="contactPage.faqHighlight">fréquentes</span></h2>
           <div class="section-line"></div>
         </div>
         
@@ -225,44 +209,44 @@
           <div class="faq-item">
             <div class="faq-question">
               <i class="fas fa-clock"></i>
-              <span>Quel est le délai de réponse ?</span>
+              <span data-i18n="contactPage.faqQ1">Quel est le délai de réponse ?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              <p>Nous nous engageons à répondre à toutes les demandes sous 24h maximum. Pour les demandes urgentes, contactez-nous sur Discord pour une réponse immédiate.</p>
+              <p data-i18n="contactPage.faqA1">Nous nous engageons à répondre à toutes les demandes sous 24h maximum. Pour les demandes urgentes, contactez-nous sur Discord pour une réponse immédiate.</p>
             </div>
           </div>
           
           <div class="faq-item">
             <div class="faq-question">
               <i class="fas fa-euro-sign"></i>
-              <span>Comment sont calculés les tarifs ?</span>
+              <span data-i18n="contactPage.faqQ2">Comment sont calculés les tarifs ?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              <p>Nos tarifs sont établis en fonction de la complexité du projet, du temps nécessaire et des technologies utilisées. Nous proposons toujours un devis personnalisé et transparent.</p>
+              <p data-i18n="contactPage.faqA2">Nos tarifs sont établis en fonction de la complexité du projet, du temps nécessaire et des technologies utilisées. Nous proposons toujours un devis personnalisé et transparent.</p>
             </div>
           </div>
           
           <div class="faq-item">
             <div class="faq-question">
               <i class="fas fa-handshake"></i>
-              <span>Proposez-vous des partenariats ?</span>
+              <span data-i18n="contactPage.faqQ3">Proposez-vous des partenariats ?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              <p>Oui ! Nous sommes toujours ouverts aux partenariats avec d'autres agences, streamers, équipes eSport ou entreprises. Contactez-nous pour discuter des modalités.</p>
+              <p data-i18n="contactPage.faqA3">Oui ! Nous sommes toujours ouverts aux partenariats avec d'autres agences, streamers, équipes eSport ou entreprises. Contactez-nous pour discuter des modalités.</p>
             </div>
           </div>
           
           <div class="faq-item">
             <div class="faq-question">
               <i class="fas fa-cogs"></i>
-              <span>Quels services proposez-vous ?</span>
+              <span data-i18n="contactPage.faqQ4">Quels services proposez-vous ?</span>
               <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              <p>Nous proposons 7 services principaux : développement web, setup streaming, design graphique, organisation de tournois, recherche de sponsors, conseil matériel et aide administrative.</p>
+              <p data-i18n="contactPage.faqA4">Nous proposons 7 services principaux : développement web, setup streaming, design graphique, organisation de tournois, recherche de sponsors, conseil matériel et aide administrative.</p>
             </div>
           </div>
         </div>
@@ -270,12 +254,12 @@
     </section>
   </main>
 
-  <footer>
+    <footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
           <h4>OptiPlay</h4>
-          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
           <div class="social-links">
             <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -284,24 +268,24 @@
           </div>
         </div>
         <div class="footer-section">
-          <h4>Services</h4>
+          <h4 data-i18n="footer.services">Services</h4>
           <ul>
-            <li><a href="services.html">Développement web</a></li>
-            <li><a href="services.html">Setup streaming</a></li>
-            <li><a href="services.html">Design graphique</a></li>
-            <li><a href="services.html">Recherche sponsors</a></li>
-            <li><a href="services.html">Aide administrative</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h4>Contact</h4>
-          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
-          <p><i class="fab fa-discord"></i> Discord: S6XB3thwnH</p>
-          <p><i class="fas fa-clock"></i> Support 24/7</p>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
       </div>
     </div>
   </footer>
@@ -400,5 +384,10 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/i18n.js"></script>
+  <script src="../JS/navbar.js"></script>
 </body>
 </html>

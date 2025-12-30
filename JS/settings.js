@@ -2,20 +2,35 @@
 // SETTINGS PAGE - OPTIPLAY
 // ========================================
 
-import { getSupabaseClient } from './navbar.js';
-
 class SettingsManager {
   constructor() {
-    this.supabase = getSupabaseClient();
+    this.supabase = null;
     this.currentUser = null;
     this.init();
   }
 
   async init() {
+    // Attendre que Supabase soit initialisé
+    await this.waitForSupabase();
     await this.loadUserData();
     this.setupTabs();
     this.setupForms();
     this.attachEventListeners();
+  }
+
+  // Attendre que Supabase soit disponible
+  async waitForSupabase() {
+    return new Promise((resolve) => {
+      const checkSupabase = () => {
+        if (window.OptiPlayConfig?.supabaseClient) {
+          this.supabase = window.OptiPlayConfig.supabaseClient;
+          resolve();
+        } else {
+          setTimeout(checkSupabase, 100);
+        }
+      };
+      checkSupabase();
+    });
   }
 
   // Charger les données de l'utilisateur
@@ -48,28 +63,29 @@ class SettingsManager {
     // Email
     document.getElementById('email').value = user.email;
 
-    if (profile) {
-      // Informations personnelles
-      if (profile.pseudo) document.getElementById('pseudo').value = profile.pseudo;
-      if (profile.first_name) document.getElementById('firstName').value = profile.first_name;
-      if (profile.last_name) document.getElementById('lastName').value = profile.last_name;
-      if (profile.bio) document.getElementById('bio').value = profile.bio;
+    // Charger depuis user_metadata en priorité, puis profile
+    const metadata = user.user_metadata || {};
+    
+    // Informations personnelles
+    document.getElementById('pseudo').value = metadata.pseudo || profile?.pseudo || '';
+    document.getElementById('firstName').value = metadata.first_name || profile?.first_name || '';
+    document.getElementById('lastName').value = metadata.last_name || profile?.last_name || '';
+    document.getElementById('bio').value = metadata.bio || profile?.bio || '';
 
-      // Préférences de notifications (si elles existent)
-      if (profile.notifications) {
-        const notifs = profile.notifications;
-        if (notifs.new_products !== undefined) {
-          document.getElementById('notif-new-products').checked = notifs.new_products;
-        }
-        if (notifs.updates !== undefined) {
-          document.getElementById('notif-updates').checked = notifs.updates;
-        }
-        if (notifs.promotions !== undefined) {
-          document.getElementById('notif-promotions').checked = notifs.promotions;
-        }
-        if (notifs.newsletter !== undefined) {
-          document.getElementById('notif-newsletter').checked = notifs.newsletter;
-        }
+    // Préférences de notifications
+    if (profile?.notifications) {
+      const notifs = profile.notifications;
+      if (notifs.new_products !== undefined) {
+        document.getElementById('notif-new-products').checked = notifs.new_products;
+      }
+      if (notifs.updates !== undefined) {
+        document.getElementById('notif-updates').checked = notifs.updates;
+      }
+      if (notifs.promotions !== undefined) {
+        document.getElementById('notif-promotions').checked = notifs.promotions;
+      }
+      if (notifs.newsletter !== undefined) {
+        document.getElementById('notif-newsletter').checked = notifs.newsletter;
       }
     }
   }
@@ -302,14 +318,31 @@ class SettingsManager {
     };
 
     try {
-      const { error } = await this.supabase
-        .from('profiles')
-        .update(updates)
-        .eq('id', this.currentUser.id);
+      // Mettre à jour user_metadata dans auth.users
+      const { error: authError } = await this.supabase.auth.updateUser({
+        data: updates
+      });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // Mettre à jour aussi la table profiles si elle existe
+      const { error: profileError } = await this.supabase
+        .from('profiles')
+        .upsert({
+          id: this.currentUser.id,
+          ...updates,
+          updated_at: new Date().toISOString()
+        });
+
+      // Ignorer l'erreur si la table n'existe pas
+      if (profileError && !profileError.message.includes('relation "public.profiles" does not exist')) {
+        throw profileError;
+      }
 
       this.showNotification('Informations mises à jour avec succès !', 'success');
+      
+      // Recharger les données
+      await this.loadUserData();
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
       this.showNotification('Erreur lors de la mise à jour', 'error');
@@ -480,9 +513,109 @@ class SettingsManager {
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
+
+  // ========================================
+  // GESTION DISCORD
+  // ========================================
+
+  async checkDiscordConnection() {
+    try {
+      // Vérifier si Discord est lié
+      const identities = this.currentUser?.identities || [];
+      const discordIdentity = identities.find(identity => identity.provider === 'discord');
+
+      const discordStatus = document.getElementById('discordStatus');
+      const discordUsername = document.getElementById('discordUsername');
+      const discordBtn = document.getElementById('discordLinkBtn');
+      const discordCard = document.getElementById('discordAccount');
+
+      if (discordIdentity) {
+        // Discord est lié
+        const discordName = discordIdentity.identity_data?.full_name || 
+                           discordIdentity.identity_data?.name || 
+                           'Utilisateur Discord';
+        
+        discordStatus.textContent = 'Lié';
+        discordStatus.classList.add('linked');
+        discordUsername.textContent = `@${discordName}`;
+        discordUsername.style.display = 'block';
+        discordCard.classList.add('linked');
+        
+        discordBtn.innerHTML = '<i class="fas fa-unlink"></i> Délier';
+        discordBtn.classList.add('unlink');
+        discordBtn.onclick = () => this.unlinkDiscord();
+      } else {
+        // Discord non lié
+        discordBtn.onclick = () => this.linkDiscord();
+      }
+    } catch (error) {
+      console.error('Erreur vérification Discord:', error);
+    }
+  }
+
+  async linkDiscord() {
+    try {
+      // Rediriger vers l'authentification Discord
+      const { data, error } = await this.supabase.auth.linkIdentity({
+        provider: 'discord',
+        options: {
+          redirectTo: `${window.location.origin}/HTML/settings.html?tab=connections`
+        }
+      });
+
+      if (error) throw error;
+
+      // La redirection se fera automatiquement
+      console.log('Redirection vers Discord...');
+    } catch (error) {
+      console.error('Erreur liaison Discord:', error);
+      this.showNotification('Erreur lors de la liaison avec Discord', 'error');
+    }
+  }
+
+  async unlinkDiscord() {
+    if (!confirm('Êtes-vous sûr de vouloir délier votre compte Discord ?')) {
+      return;
+    }
+
+    try {
+      const identities = this.currentUser?.identities || [];
+      const discordIdentity = identities.find(identity => identity.provider === 'discord');
+
+      if (!discordIdentity) {
+        throw new Error('Compte Discord non trouvé');
+      }
+
+      const { error } = await this.supabase.auth.unlinkIdentity(discordIdentity);
+
+      if (error) throw error;
+
+      this.showNotification('Compte Discord délié avec succès', 'success');
+      
+      // Recharger la page après 1 seconde
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Erreur déliaison Discord:', error);
+      this.showNotification('Erreur lors de la déliaison avec Discord', 'error');
+    }
+  }
 }
 
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
-  new SettingsManager();
+  const settingsManager = new SettingsManager();
+  
+  // Vérifier la connexion Discord après le chargement
+  setTimeout(() => {
+    settingsManager.checkDiscordConnection();
+  }, 1000);
+  
+  // Vérifier si on revient de Discord OAuth
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('tab') === 'connections') {
+    // Activer l'onglet Connexions
+    document.querySelector('[data-tab="connections"]')?.click();
+  }
 });

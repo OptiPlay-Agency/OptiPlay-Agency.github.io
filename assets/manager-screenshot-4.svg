@@ -1,0 +1,109 @@
+<!-- Image de test pour OptiPlay Manager - Statistiques -->
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00bfff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0080ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1920" height="1080" fill="url(#bg4)"/>
+  
+  <g opacity="0.1">
+    <line x1="0" y1="270" x2="1920" y2="270" stroke="#00bfff" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1920" y2="540" stroke="#00bfff" stroke-width="1"/>
+    <line x1="0" y1="810" x2="1920" y2="810" stroke="#00bfff" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="1080" stroke="#00bfff" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="1080" stroke="#00bfff" stroke-width="1"/>
+    <line x1="1440" y1="0" x2="1440" y2="1080" stroke="#00bfff" stroke-width="1"/>
+  </g>
+  
+  <text x="960" y="120" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="url(#accent4)" text-anchor="middle">
+    Statistiques de Performance
+  </text>
+  
+  <!-- Stats cards -->
+  <g opacity="0.7">
+    <rect x="250" y="200" width="320" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <text x="410" y="260" font-family="Arial, sans-serif" font-size="48" fill="#00bfff" text-anchor="middle" font-weight="bold">
+      60%
+    </text>
+    <text x="410" y="310" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">
+      Taux de victoire
+    </text>
+    <text x="410" y="350" font-family="Arial, sans-serif" font-size="16" fill="#00bfff" text-anchor="middle" opacity="0.7">
+      +5% ce mois
+    </text>
+    
+    <rect x="640" y="200" width="320" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <text x="800" y="260" font-family="Arial, sans-serif" font-size="48" fill="#00bfff" text-anchor="middle" font-weight="bold">
+      80
+    </text>
+    <text x="800" y="310" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">
+      Matchs joués
+    </text>
+    <text x="800" y="350" font-family="Arial, sans-serif" font-size="16" fill="#00bfff" text-anchor="middle" opacity="0.7">
+      48W - 32L
+    </text>
+    
+    <rect x="1030" y="200" width="320" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <text x="1190" y="260" font-family="Arial, sans-serif" font-size="48" fill="#00bfff" text-anchor="middle" font-weight="bold">
+      15.2
+    </text>
+    <text x="1190" y="310" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">
+      KDA Moyen
+    </text>
+    <text x="1190" y="350" font-family="Arial, sans-serif" font-size="16" fill="#00bfff" text-anchor="middle" opacity="0.7">
+      Top 5% région
+    </text>
+    
+    <rect x="1420" y="200" width="320" height="180" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2"/>
+    <text x="1580" y="260" font-family="Arial, sans-serif" font-size="48" fill="#00bfff" text-anchor="middle" font-weight="bold">
+      32
+    </text>
+    <text x="1580" y="310" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">
+      Heures jouées
+    </text>
+    <text x="1580" y="350" font-family="Arial, sans-serif" font-size="16" fill="#00bfff" text-anchor="middle" opacity="0.7">
+      Cette semaine
+    </text>
+  </g>
+  
+  <!-- Chart mockup -->
+  <rect x="250" y="450" width="1490" height="450" rx="12" fill="#2a2a3e" stroke="#00bfff" stroke-width="2" opacity="0.6"/>
+  <text x="995" y="510" font-family="Arial, sans-serif" font-size="28" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Évolution du Winrate
+  </text>
+  
+  <!-- Bar chart mockup -->
+  <g opacity="0.8">
+    <rect x="350" y="670" width="60" height="150" rx="5" fill="#00bfff" opacity="0.5"/>
+    <rect x="500" y="620" width="60" height="200" rx="5" fill="#00bfff" opacity="0.5"/>
+    <rect x="650" y="580" width="60" height="240" rx="5" fill="#00bfff" opacity="0.7"/>
+    <rect x="800" y="550" width="60" height="270" rx="5" fill="#00bfff"/>
+    <rect x="950" y="600" width="60" height="220" rx="5" fill="#00bfff" opacity="0.7"/>
+    <rect x="1100" y="570" width="60" height="250" rx="5" fill="#00bfff" opacity="0.8"/>
+    <rect x="1250" y="540" width="60" height="280" rx="5" fill="#00bfff"/>
+    <rect x="1400" y="520" width="60" height="300" rx="5" fill="#0080ff"/>
+    <rect x="1550" y="510" width="60" height="310" rx="5" fill="#0080ff"/>
+    
+    <!-- Axis labels -->
+    <text x="380" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Jan</text>
+    <text x="530" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Fév</text>
+    <text x="680" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Mar</text>
+    <text x="830" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Avr</text>
+    <text x="980" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Mai</text>
+    <text x="1130" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Jun</text>
+    <text x="1280" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Jul</text>
+    <text x="1430" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Aoû</text>
+    <text x="1580" y="850" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.6">Sep</text>
+  </g>
+  
+  <text x="960" y="1020" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle" opacity="0.5">
+    Screenshot 4 - Statistiques détaillées
+  </text>
+</svg>
