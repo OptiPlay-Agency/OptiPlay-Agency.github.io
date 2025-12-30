@@ -8,6 +8,30 @@ class ProfileManager {
     this.currentUser = null;
     this.purchases = [];
     this.isUploading = false;
+    this.userGames = [];
+    this.currentEditingGameId = null;
+    this.gameRanks = {
+      'League of Legends': ['Iron IV', 'Iron III', 'Iron II', 'Iron I', 'Bronze IV', 'Bronze III', 'Bronze II', 'Bronze I', 'Silver IV', 'Silver III', 'Silver II', 'Silver I', 'Gold IV', 'Gold III', 'Gold II', 'Gold I', 'Platinum IV', 'Platinum III', 'Platinum II', 'Platinum I', 'Emerald IV', 'Emerald III', 'Emerald II', 'Emerald I', 'Diamond IV', 'Diamond III', 'Diamond II', 'Diamond I', 'Master', 'Grandmaster', 'Challenger'],
+      'Valorant': ['Iron 1', 'Iron 2', 'Iron 3', 'Bronze 1', 'Bronze 2', 'Bronze 3', 'Silver 1', 'Silver 2', 'Silver 3', 'Gold 1', 'Gold 2', 'Gold 3', 'Platinum 1', 'Platinum 2', 'Platinum 3', 'Diamond 1', 'Diamond 2', 'Diamond 3', 'Ascendant 1', 'Ascendant 2', 'Ascendant 3', 'Immortal 1', 'Immortal 2', 'Immortal 3', 'Radiant'],
+      'CS2': ['Silver I', 'Silver II', 'Silver III', 'Silver IV', 'Silver Elite', 'Silver Elite Master', 'Gold Nova I', 'Gold Nova II', 'Gold Nova III', 'Gold Nova Master', 'Master Guardian I', 'Master Guardian II', 'Master Guardian Elite', 'Distinguished Master Guardian', 'Legendary Eagle', 'Legendary Eagle Master', 'Supreme Master First Class', 'Global Elite'],
+      'Rocket League': ['Bronze I', 'Bronze II', 'Bronze III', 'Silver I', 'Silver II', 'Silver III', 'Gold I', 'Gold II', 'Gold III', 'Platinum I', 'Platinum II', 'Platinum III', 'Diamond I', 'Diamond II', 'Diamond III', 'Champion I', 'Champion II', 'Champion III', 'Grand Champion I', 'Grand Champion II', 'Grand Champion III', 'Supersonic Legend'],
+      'Overwatch 2': ['Bronze 5', 'Bronze 4', 'Bronze 3', 'Bronze 2', 'Bronze 1', 'Silver 5', 'Silver 4', 'Silver 3', 'Silver 2', 'Silver 1', 'Gold 5', 'Gold 4', 'Gold 3', 'Gold 2', 'Gold 1', 'Platinum 5', 'Platinum 4', 'Platinum 3', 'Platinum 2', 'Platinum 1', 'Diamond 5', 'Diamond 4', 'Diamond 3', 'Diamond 2', 'Diamond 1', 'Master 5', 'Master 4', 'Master 3', 'Master 2', 'Master 1', 'Grandmaster 5', 'Grandmaster 4', 'Grandmaster 3', 'Grandmaster 2', 'Grandmaster 1', 'Top 500'],
+      'Fortnite': ['Bronze I', 'Bronze II', 'Bronze III', 'Silver I', 'Silver II', 'Silver III', 'Gold I', 'Gold II', 'Gold III', 'Platinum I', 'Platinum II', 'Platinum III', 'Diamond I', 'Diamond II', 'Diamond III', 'Elite', 'Champion', 'Unreal'],
+      'Apex Legends': ['Bronze IV', 'Bronze III', 'Bronze II', 'Bronze I', 'Silver IV', 'Silver III', 'Silver II', 'Silver I', 'Gold IV', 'Gold III', 'Gold II', 'Gold I', 'Platinum IV', 'Platinum III', 'Platinum II', 'Platinum I', 'Diamond IV', 'Diamond III', 'Diamond II', 'Diamond I', 'Master', 'Predator'],
+      'Rainbow Six Siege': ['Copper V', 'Copper IV', 'Copper III', 'Copper II', 'Copper I', 'Bronze V', 'Bronze IV', 'Bronze III', 'Bronze II', 'Bronze I', 'Silver V', 'Silver IV', 'Silver III', 'Silver II', 'Silver I', 'Gold V', 'Gold IV', 'Gold III', 'Gold II', 'Gold I', 'Platinum V', 'Platinum IV', 'Platinum III', 'Platinum II', 'Platinum I', 'Emerald V', 'Emerald IV', 'Emerald III', 'Emerald II', 'Emerald I', 'Diamond V', 'Diamond IV', 'Diamond III', 'Diamond II', 'Diamond I', 'Champion'],
+      'Dota 2': ['Herald 1', 'Herald 2', 'Herald 3', 'Herald 4', 'Herald 5', 'Guardian 1', 'Guardian 2', 'Guardian 3', 'Guardian 4', 'Guardian 5', 'Crusader 1', 'Crusader 2', 'Crusader 3', 'Crusader 4', 'Crusader 5', 'Archon 1', 'Archon 2', 'Archon 3', 'Archon 4', 'Archon 5', 'Legend 1', 'Legend 2', 'Legend 3', 'Legend 4', 'Legend 5', 'Ancient 1', 'Ancient 2', 'Ancient 3', 'Ancient 4', 'Ancient 5', 'Divine 1', 'Divine 2', 'Divine 3', 'Divine 4', 'Divine 5', 'Immortal'],
+      'Call of Duty': ['Bronze I', 'Bronze II', 'Bronze III', 'Silver I', 'Silver II', 'Silver III', 'Gold I', 'Gold II', 'Gold III', 'Platinum I', 'Platinum II', 'Platinum III', 'Diamond I', 'Diamond II', 'Diamond III', 'Crimson I', 'Crimson II', 'Crimson III', 'Iridescent', 'Top 250'],
+      'Teamfight Tactics': ['Iron IV', 'Iron III', 'Iron II', 'Iron I', 'Bronze IV', 'Bronze III', 'Bronze II', 'Bronze I', 'Silver IV', 'Silver III', 'Silver II', 'Silver I', 'Gold IV', 'Gold III', 'Gold II', 'Gold I', 'Platinum IV', 'Platinum III', 'Platinum II', 'Platinum I', 'Diamond IV', 'Diamond III', 'Diamond II', 'Diamond I', 'Master', 'Grandmaster', 'Challenger'],
+      'PUBG': ['Bronze V', 'Bronze IV', 'Bronze III', 'Bronze II', 'Bronze I', 'Silver V', 'Silver IV', 'Silver III', 'Silver II', 'Silver I', 'Gold V', 'Gold IV', 'Gold III', 'Gold II', 'Gold I', 'Platinum V', 'Platinum IV', 'Platinum III', 'Platinum II', 'Platinum I', 'Diamond V', 'Diamond IV', 'Diamond III', 'Diamond II', 'Diamond I', 'Master'],
+      'Clash Royale': ['Arena 1-10', 'Challenger I', 'Challenger II', 'Challenger III', 'Master I', 'Master II', 'Master III', 'Champion', 'Ultimate Champion'],
+      'Brawl Stars': ['Bronze I', 'Bronze II', 'Bronze III', 'Silver I', 'Silver II', 'Silver III', 'Gold I', 'Gold II', 'Gold III', 'Diamond I', 'Diamond II', 'Diamond III', 'Mythic I', 'Mythic II', 'Mythic III', 'Legendary I', 'Legendary II', 'Legendary III', 'Masters'],
+      'Hearthstone': ['Bronze 10', 'Bronze 9', 'Bronze 8', 'Bronze 7', 'Bronze 6', 'Bronze 5', 'Bronze 4', 'Bronze 3', 'Bronze 2', 'Bronze 1', 'Silver 10', 'Silver 9', 'Silver 8', 'Silver 7', 'Silver 6', 'Silver 5', 'Silver 4', 'Silver 3', 'Silver 2', 'Silver 1', 'Gold 10', 'Gold 9', 'Gold 8', 'Gold 7', 'Gold 6', 'Gold 5', 'Gold 4', 'Gold 3', 'Gold 2', 'Gold 1', 'Platinum 10', 'Platinum 9', 'Platinum 8', 'Platinum 7', 'Platinum 6', 'Platinum 5', 'Platinum 4', 'Platinum 3', 'Platinum 2', 'Platinum 1', 'Diamond 10', 'Diamond 9', 'Diamond 8', 'Diamond 7', 'Diamond 6', 'Diamond 5', 'Diamond 4', 'Diamond 3', 'Diamond 2', 'Diamond 1', 'Legend', 'Top 1000'],
+      'Smash Bros': ['Beginner', 'Intermediate', 'Advanced', 'Elite Smash'],
+      'Street Fighter 6': ['Rookie', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Legend'],
+      'Tekken 8': ['Beginner', '1st Dan', '2nd Dan', '3rd Dan', 'Initiate', 'Mentor', 'Expert', 'Grandmaster', 'Tekken God', 'Tekken God Prime', 'Tekken God Supreme', 'Tekken God Omega'],
+      'Minecraft': ['Casual', 'Skilled', 'Expert', 'Speedrunner'],
+      'FIFA': ['Division 10', 'Division 9', 'Division 8', 'Division 7', 'Division 6', 'Division 5', 'Division 4', 'Division 3', 'Division 2', 'Division 1', 'Elite Division']
+    };
     this.init();
   }
 
@@ -15,6 +39,7 @@ class ProfileManager {
     await this.waitForSupabase();
     await this.loadUserData();
     await this.loadPurchases();
+    await this.loadUserGames();
     this.attachEventListeners();
   }
 
@@ -414,6 +439,54 @@ class ProfileManager {
       });
     });
 
+    // Games modal
+    const addGameBtn = document.getElementById('addGameBtn');
+    const gameModal = document.getElementById('gameModal');
+    const closeGameModal = document.getElementById('closeGameModal');
+    const cancelGameBtn = document.getElementById('cancelGameBtn');
+    const gameForm = document.getElementById('gameForm');
+
+    if (addGameBtn) {
+      addGameBtn.addEventListener('click', () => {
+        this.openGameModal();
+      });
+    }
+
+    if (closeGameModal) {
+      closeGameModal.addEventListener('click', () => {
+        this.closeGameModal();
+      });
+    }
+
+    if (cancelGameBtn) {
+      cancelGameBtn.addEventListener('click', () => {
+        this.closeGameModal();
+      });
+    }
+
+    if (gameModal) {
+      gameModal.addEventListener('click', (e) => {
+        if (e.target === gameModal) {
+          this.closeGameModal();
+        }
+      });
+    }
+
+    if (gameForm) {
+      gameForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleGameSubmit();
+      });
+    }
+
+    // Listener pour changer les rangs en fonction du jeu sélectionné
+    const gameNameSelect = document.getElementById('gameName');
+    if (gameNameSelect) {
+      gameNameSelect.addEventListener('change', (e) => {
+        this.updateRankOptions(e.target.value);
+      });
+    }
+
     // Changement d'avatar
     const changeAvatarBtn = document.getElementById('changeAvatarBtn');
     if (changeAvatarBtn) {
@@ -557,9 +630,239 @@ class ProfileManager {
       }
     }
   }
+
+  // ==================== USER GAMES MANAGEMENT ====================
+  
+  async loadUserGames() {
+    try {
+      const { data, error } = await this.supabase
+        .from('user_games')
+        .select('*')
+        .eq('user_id', this.currentUser.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      this.userGames = data || [];
+      this.renderUserGames();
+    } catch (error) {
+      console.error('Error loading user games:', error);
+    }
+  }
+
+  renderUserGames() {
+    const gamesGrid = document.getElementById('gamesGrid');
+    const noGames = document.getElementById('noGames');
+
+    if (!gamesGrid) return;
+
+    if (this.userGames.length === 0) {
+      if (noGames) noGames.style.display = 'block';
+      gamesGrid.innerHTML = '<div class="no-games" id="noGames"><i class="fas fa-ghost"></i><h3 data-i18n="profile.noGames">Aucun jeu ajouté</h3><p data-i18n="profile.addGamesPrompt">Ajoutez les jeux auxquels vous jouez pour partager votre profil !</p></div>';
+      return;
+    }
+
+    if (noGames) noGames.style.display = 'none';
+
+    gamesGrid.innerHTML = this.userGames.map(game => `
+      <div class="game-card">
+        <div class="game-card-header">
+          <div class="game-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <div class="game-actions">
+            <button class="game-action-btn" onclick="profileManager.editGame('${game.id}')" title="Modifier">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="game-action-btn delete" onclick="profileManager.deleteGame('${game.id}')" title="Supprimer">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        <div class="game-info">
+          <h3>${this.escapeHtml(game.game_name)}</h3>
+          ${game.rank ? `<div class="game-rank"><i class="fas fa-trophy"></i> ${this.escapeHtml(game.rank)}</div>` : ''}
+        </div>
+        ${game.tracker_url || game.profile_url ? `
+          <div class="game-links">
+            ${game.tracker_url ? `<a href="${this.escapeHtml(game.tracker_url)}" target="_blank" rel="noopener noreferrer" class="game-link"><i class="fas fa-chart-line"></i> Tracker</a>` : ''}
+            ${game.profile_url ? `<a href="${this.escapeHtml(game.profile_url)}" target="_blank" rel="noopener noreferrer" class="game-link"><i class="fas fa-link"></i> Profil</a>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+  }
+
+  updateRankOptions(gameName) {
+    const rankGroup = document.getElementById('rankGroup');
+    const rankSelect = document.getElementById('gameRank');
+    
+    if (!rankSelect) return;
+
+    // Clear existing options
+    rankSelect.innerHTML = '<option value="">-- Sélectionnez un rang --</option>';
+    
+    if (gameName && this.gameRanks[gameName]) {
+      // Show rank group
+      if (rankGroup) rankGroup.style.display = 'block';
+      
+      // Add ranks for selected game
+      this.gameRanks[gameName].forEach(rank => {
+        const option = document.createElement('option');
+        option.value = rank;
+        option.textContent = rank;
+        rankSelect.appendChild(option);
+      });
+    } else {
+      // Hide rank group if no game selected
+      if (rankGroup) rankGroup.style.display = 'none';
+    }
+  }
+
+  openGameModal(gameId = null) {
+    const modal = document.getElementById('gameModal');
+    const modalTitle = document.getElementById('gameModalTitle');
+    const form = document.getElementById('gameForm');
+
+    if (!modal || !form) return;
+
+    this.currentEditingGameId = gameId;
+
+    if (gameId) {
+      const game = this.userGames.find(g => g.id === gameId);
+      if (game) {
+        document.getElementById('gameName').value = game.game_name;
+        // Update rank options first
+        this.updateRankOptions(game.game_name);
+        // Then set the rank value
+        document.getElementById('gameRank').value = game.rank || '';
+        document.getElementById('gameTracker').value = game.tracker_url || '';
+        document.getElementById('gameProfileLink').value = game.profile_url || '';
+        if (modalTitle) modalTitle.innerHTML = '<i class="fas fa-edit"></i> <span data-i18n="profile.editGame">Modifier le jeu</span>';
+      }
+    } else {
+      form.reset();
+      // Hide rank group initially
+      const rankGroup = document.getElementById('rankGroup');
+      if (rankGroup) rankGroup.style.display = 'none';
+      if (modalTitle) modalTitle.innerHTML = '<i class="fas fa-gamepad"></i> <span data-i18n="profile.addGame">Ajouter un jeu</span>';
+    }
+
+    modal.style.display = 'flex';
+  }
+
+  closeGameModal() {
+    const modal = document.getElementById('gameModal');
+    const form = document.getElementById('gameForm');
+    
+    if (modal) modal.style.display = 'none';
+    if (form) form.reset();
+    this.currentEditingGameId = null;
+  }
+
+  async handleGameSubmit() {
+    const gameName = document.getElementById('gameName').value.trim();
+    const gameRank = document.getElementById('gameRank').value.trim();
+    const gameTracker = document.getElementById('gameTracker').value.trim();
+    const gameProfileLink = document.getElementById('gameProfileLink').value.trim();
+
+    if (!gameName) {
+      alert('Le nom du jeu est requis');
+      return;
+    }
+
+    console.log('Submitting game:', {
+      gameName,
+      gameRank,
+      gameTracker,
+      gameProfileLink,
+      editingId: this.currentEditingGameId
+    });
+
+    try {
+      if (this.currentEditingGameId) {
+        // Update existing game
+        console.log('Updating game with ID:', this.currentEditingGameId);
+        const { data, error } = await this.supabase
+          .from('user_games')
+          .update({
+            game_name: gameName,
+            rank: gameRank || null,
+            tracker_url: gameTracker || null,
+            profile_url: gameProfileLink || null,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', this.currentEditingGameId)
+          .eq('user_id', this.currentUser.id)
+          .select();
+
+        console.log('Update result:', { data, error });
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+          console.error('No rows updated - game not found or permission denied');
+          alert('Impossible de mettre à jour le jeu. Vérifiez vos permissions.');
+          return;
+        }
+      } else {
+        // Insert new game
+        console.log('Inserting new game');
+        const { data, error } = await this.supabase
+          .from('user_games')
+          .insert({
+            user_id: this.currentUser.id,
+            game_name: gameName,
+            rank: gameRank || null,
+            tracker_url: gameTracker || null,
+            profile_url: gameProfileLink || null
+          })
+          .select();
+
+        console.log('Insert result:', { data, error });
+        if (error) throw error;
+      }
+
+      await this.loadUserGames();
+      this.closeGameModal();
+    } catch (error) {
+      console.error('Error saving game:', error);
+      alert('Erreur lors de l\'enregistrement du jeu: ' + error.message);
+    }
+  }
+
+  editGame(gameId) {
+    this.openGameModal(gameId);
+  }
+
+  async deleteGame(gameId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce jeu ?')) {
+      return;
+    }
+
+    try {
+      const { error } = await this.supabase
+        .from('user_games')
+        .delete()
+        .eq('id', gameId);
+
+      if (error) throw error;
+
+      await this.loadUserGames();
+    } catch (error) {
+      console.error('Error deleting game:', error);
+      alert('Erreur lors de la suppression du jeu');
+    }
+  }
+
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
 }
 
 // Initialiser au chargement de la page
+let profileManager;
 document.addEventListener('DOMContentLoaded', () => {
-  new ProfileManager();
+  profileManager = new ProfileManager();
 });
