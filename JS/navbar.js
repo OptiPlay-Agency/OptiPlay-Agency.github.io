@@ -55,41 +55,61 @@ class OptiPlayNavbar {
           <div class="navbar-nav">
             <a href="${this.getBasePath()}index.html" class="nav-link">
               <i class="fas fa-home"></i>
-              <span>Accueil</span>
+              <span data-i18n="nav.home">Accueil</span>
             </a>
             
             <a href="${this.getBasePath()}HTML/services.html" class="nav-link">
               <i class="fas fa-cogs"></i>
-              <span>Services</span>
+              <span data-i18n="nav.services">Services</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/tournaments.html" class="nav-link">
               <i class="fas fa-trophy"></i>
-              <span>Tournois</span>
+              <span data-i18n="nav.tournaments">Tournois</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/about.html" class="nav-link">
               <i class="fas fa-info-circle"></i>
-              <span>À propos</span>
+              <span data-i18n="nav.about">À propos</span>
             </a>
 
             <a href="${this.getBasePath()}HTML/contact.html" class="nav-link">
               <i class="fas fa-envelope"></i>
-              <span>Contact</span>
+              <span data-i18n="nav.contact">Contact</span>
             </a>
           </div>
 
           <!-- Section authentification -->
           <div class="navbar-auth">
+            <!-- Sélecteur de langue -->
+            <div class="lang-selector" id="langSelector">
+              <button class="lang-current" id="langCurrentBtn">
+                <span class="flag-icon">🇫🇷</span>
+                <span class="lang-text">FR</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              
+              <div class="lang-dropdown" id="langDropdown">
+                <button class="lang-option" data-lang="fr">
+                  <span class="flag-icon">🇫🇷</span>
+                  <span class="lang-name">Français</span>
+                </button>
+                <button class="lang-option" data-lang="en">
+                  <span class="flag-icon">🇬🇧</span>
+                  <span class="lang-name">English</span>
+                </button>
+              </div>
+            </div>
+
             <!-- Boutons non connecté -->
             <div id="auth-buttons" class="auth-buttons">
               <a href="${this.getBasePath()}HTML/login.html" class="btn btn-outline">
                 <i class="fas fa-sign-in-alt"></i>
-                <span>Connexion</span>
+                <span data-i18n="nav.login">Connexion</span>
               </a>
               <a href="${this.getBasePath()}HTML/register.html" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i>
-                <span>Inscription</span>
+                <span data-i18n="nav.register">Inscription</span>
               </a>
             </div>
             
@@ -116,20 +136,24 @@ class OptiPlayNavbar {
                 <hr>
                 <a href="${this.getBasePath()}HTML/profile.html" class="dropdown-item">
                   <i class="fas fa-user-edit"></i>
-                  <span>Mon Profil</span>
+                  <span data-i18n="nav.profile">Mon Profil</span>
                 </a>
                 <a href="${this.getBasePath()}HTML/dashboard.html" class="dropdown-item">
                   <i class="fas fa-tachometer-alt"></i>
-                  <span>Dashboard</span>
+                  <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
                 <a href="${this.getBasePath()}HTML/settings.html" class="dropdown-item">
                   <i class="fas fa-cog"></i>
-                  <span>Paramètres</span>
+                  <span data-i18n="nav.settings">Paramètres</span>
+                </a>
+                <a href="${this.getBasePath()}HTML/subscription.html" class="dropdown-item subscription-link">
+                  <i class="fas fa-crown"></i>
+                  <span data-i18n="nav.subscription">Abonnement</span>
                 </a>
                 <hr>
                 <button class="dropdown-item logout-btn" onclick="navbar.handleLogout()">
                   <i class="fas fa-sign-out-alt"></i>
-                  <span>Déconnexion</span>
+                  <span data-i18n="nav.logout">Déconnexion</span>
                 </button>
               </div>
             </div>
@@ -240,6 +264,19 @@ class OptiPlayNavbar {
       });
     }
 
+    // Menu de langue
+    const langCurrentBtn = document.getElementById('langCurrentBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    
+    if (langCurrentBtn && langDropdown) {
+      langCurrentBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+        langCurrentBtn.classList.toggle('active');
+      });
+    }
+
     // Menu mobile
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -258,6 +295,12 @@ class OptiPlayNavbar {
       if (userDropdown && !userProfileBtn?.contains(e.target)) {
         userDropdown.classList.remove('show');
         userProfileBtn?.classList.remove('active');
+      }
+
+      // Fermer menu de langue
+      if (langDropdown && !langCurrentBtn?.contains(e.target)) {
+        langDropdown.classList.remove('show');
+        langCurrentBtn?.classList.remove('active');
       }
     });
   }
@@ -299,12 +342,14 @@ class OptiPlayNavbar {
       if (userMenu) userMenu.style.display = 'flex';
       
       // Récupérer le pseudo et les infos du profil
-      let displayName = user.email;
+      const metadata = user.user_metadata || {};
+      let displayName = metadata.pseudo || user.email.split('@')[0];
+      let avatarUrl = null; // Ne jamais utiliser l'avatar Discord par défaut
       
       try {
         const { data: profile } = await this.supabase
           .from('profiles')
-          .select('pseudo, first_name, last_name')
+          .select('pseudo, first_name, last_name, avatar_url')
           .eq('id', user.id)
           .single();
         
@@ -313,12 +358,20 @@ class OptiPlayNavbar {
         } else if (profile?.first_name) {
           displayName = `${profile.first_name} ${profile.last_name || ''}`.trim();
         }
+        
+        // Utiliser UNIQUEMENT l'avatar de la base de données OptiPlay
+        if (profile?.avatar_url) {
+          avatarUrl = profile.avatar_url;
+        }
       } catch (error) {
-        console.log('Profil non trouvé, utilisation de l\'email');
+        console.log('Profil non trouvé, utilisation des user_metadata');
       }
       
       if (userName) userName.textContent = displayName;
       if (userDisplayName) userDisplayName.textContent = displayName;
+      
+      // Mettre à jour les avatars
+      this.updateAvatars(avatarUrl, displayName);
       
       this.currentUser = user;
     } else {
@@ -327,6 +380,62 @@ class OptiPlayNavbar {
       if (userMenu) userMenu.style.display = 'none';
       
       this.currentUser = null;
+    }
+  }
+
+  // Mettre à jour les avatars dans la navbar
+  updateAvatars(avatarUrl, displayName) {
+    const userAvatar = document.querySelector('.user-avatar');
+    const userAvatarLarge = document.querySelector('.user-avatar-large');
+    
+    if (avatarUrl) {
+      // Si c'est un chemin Supabase Storage (avatars/UUID.ext)
+      if (avatarUrl.startsWith('avatars/')) {
+        const fileName = avatarUrl.replace('avatars/', '');
+        const { data } = this.supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+        
+        if (data?.publicUrl) {
+          const imgUrl = `${data.publicUrl}?t=${Date.now()}`;
+          
+          if (userAvatar) {
+            userAvatar.innerHTML = `<img src="${imgUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          }
+          if (userAvatarLarge) {
+            userAvatarLarge.innerHTML = `<img src="${imgUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+          }
+          return;
+        }
+      }
+      
+      // URL complète
+      if (userAvatar) {
+        userAvatar.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+      }
+      if (userAvatarLarge) {
+        userAvatarLarge.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+      }
+    } else {
+      // Initiales par défaut
+      const initials = displayName.substring(0, 2).toUpperCase();
+      
+      if (userAvatar) {
+        userAvatar.innerHTML = initials;
+        userAvatar.style.display = 'flex';
+        userAvatar.style.alignItems = 'center';
+        userAvatar.style.justifyContent = 'center';
+        userAvatar.style.fontSize = '0.9rem';
+        userAvatar.style.fontWeight = 'bold';
+      }
+      if (userAvatarLarge) {
+        userAvatarLarge.innerHTML = initials;
+        userAvatarLarge.style.display = 'flex';
+        userAvatarLarge.style.alignItems = 'center';
+        userAvatarLarge.style.justifyContent = 'center';
+        userAvatarLarge.style.fontSize = '1.5rem';
+        userAvatarLarge.style.fontWeight = 'bold';
+      }
     }
   }
 

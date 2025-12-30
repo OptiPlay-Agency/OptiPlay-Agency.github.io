@@ -1,4 +1,4 @@
-/* ======== CSS Moderne pour Page À propos OptiPlay ======== */
+/* ======== CSS Page À propos OptiPlay (CLEAN) ======== */
 
 /* Variables CSS */
 :root {
@@ -6,6 +6,7 @@
   --primary-dark: #001c99;
   --secondary-color: #00d4ff;
   --accent-color: #ff0080;
+  --success-color: #00ff88;
   --bg-dark: #0a0a0f;
   --bg-darker: #070709;
   --bg-card: #141419;
@@ -17,7 +18,6 @@
   --shadow-primary: 0 10px 40px rgba(0, 56, 255, 0.3);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
   --border-radius: 12px;
-  --border-radius-lg: 20px;
 }
 
 /* Reset et base */
@@ -33,7 +33,6 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  padding-top: 80px;
 }
 
 /* Animations */
@@ -53,15 +52,6 @@ body {
   50% { transform: translateY(-10px); }
 }
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 56, 255, 0.5); }
-  50% { box-shadow: 0 0 30px rgba(0, 56, 255, 0.8); }
-}
-
-.animate-in {
-  animation: fadeInUp 0.8s ease-out;
-}
-
 /* ======== Header ======== */
 header {
   background: rgba(7, 7, 9, 0.95);
@@ -72,16 +62,12 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000;
-  transition: all 0.3s ease;
 }
 
 .container {
-  width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0 20px;
 }
 
 .logo-link {
@@ -115,12 +101,11 @@ header {
   background-clip: text;
 }
 
-
-
 nav ul {
-  display: flex;
   list-style: none;
+  display: flex;
   gap: 30px;
+  align-items: center;
 }
 
 .nav-link {
@@ -146,9 +131,9 @@ nav ul {
   font-size: 0.9rem;
 }
 
-/* ======== Hero Section ======== */
+/* ======== Page Hero ======== */
 .page-hero {
-  padding: 120px 0 80px;
+  padding: 140px 0 80px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -167,18 +152,11 @@ nav ul {
   animation: float 6s ease-in-out infinite;
 }
 
-.page-hero .container {
-  position: relative;
-  z-index: 2;
-}
-
 .page-title {
   font-family: 'Orbitron', monospace;
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 900;
-  text-align: center;
   margin-bottom: 20px;
-  line-height: 1.2;
   position: relative;
   z-index: 2;
 }
@@ -186,7 +164,6 @@ nav ul {
 .page-title i {
   color: var(--primary-color);
   margin-right: 15px;
-  font-size: 0.8em;
 }
 
 .gradient-text {
@@ -205,84 +182,80 @@ nav ul {
   z-index: 2;
 }
 
-/* ======== Sections communes ======== */
+/* ======== Section Headers (Titres centrés au-dessus) ======== */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
+  width: 100%;
 }
 
 .section-header h2 {
   font-family: 'Orbitron', monospace;
   font-size: 2.5rem;
   font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 20px;
 }
 
 .section-line {
-  width: 80px;
-  height: 3px;
+  width: 100px;
+  height: 4px;
   background: var(--gradient-primary);
   margin: 0 auto;
   border-radius: 2px;
 }
 
-/* ======== About Content ======== */
+/* ======== About Content Section ======== */
 .about-content {
-  padding: 80px 20px;
+  padding: 100px 0;
   background: var(--bg-dark);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
 }
 
 .about-content .container {
-  width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  text-align: center;
+  display: block;
 }
 
 .story-content {
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  align-items: center;
-  text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .story-text {
-  max-width: 800px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 80px;
 }
 
 .story-text p {
   font-size: 1.2rem;
   color: var(--text-secondary);
+  line-height: 1.9;
   margin-bottom: 30px;
-  line-height: 1.8;
 }
 
 .story-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  width: 100%;
-  max-width: 850px;
+  gap: 40px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 .stat-card {
   background: var(--bg-card);
-  padding: 30px 20px;
-  border-radius: var(--border-radius-lg);
+  padding: 45px 30px;
+  border-radius: var(--border-radius);
   border: 1px solid rgba(0, 56, 255, 0.2);
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-card::before {
@@ -303,14 +276,13 @@ nav ul {
 
 .stat-card:hover {
   transform: translateY(-10px);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 15px 40px rgba(0, 56, 255, 0.25);
   border-color: var(--primary-color);
 }
 
 .stat-icon {
   width: 80px;
   height: 80px;
-  margin: 0 auto 25px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
@@ -318,18 +290,20 @@ nav ul {
   justify-content: center;
   font-size: 2rem;
   color: white;
+  margin: 0 auto 20px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(0, 56, 255, 0.3);
 }
 
 .stat-number {
   font-family: 'Orbitron', monospace;
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .stat-label {
@@ -337,42 +311,46 @@ nav ul {
   font-size: 1rem;
   font-weight: 500;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* ======== Team Section ======== */
 .team-section {
-  padding: 80px 20px;
+  padding: 100px 0;
   background: var(--bg-darker);
-  text-align: center;
 }
 
 .team-section .container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
+  display: block;
 }
 
 .team-grid {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  max-width: 900px;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  max-width: 750px;
   margin: 0 auto;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .team-member {
   background: var(--bg-card);
-  padding: 40px 30px;
-  border-radius: var(--border-radius-lg);
+  padding: 55px 45px;
+  border-radius: var(--border-radius);
   border: 1px solid rgba(0, 56, 255, 0.2);
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  width: 400px;
-  max-width: 100%;
+  width: 100%;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .team-member::before {
@@ -393,7 +371,7 @@ nav ul {
 
 .team-member:hover {
   transform: translateY(-10px);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 15px 40px rgba(0, 56, 255, 0.25);
   border-color: var(--primary-color);
 }
 
@@ -407,36 +385,37 @@ nav ul {
   justify-content: center;
   font-size: 3rem;
   color: white;
-  margin: 0 auto 30px;
+  margin: 0 auto 25px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(0, 56, 255, 0.3);
 }
 
 .member-info h3 {
   font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--text-primary);
+  margin-bottom: 10px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .member-role {
   color: var(--secondary-color);
-  font-weight: 500;
-  margin-bottom: 20px;
+  font-weight: 600;
   font-size: 1.1rem;
+  margin-bottom: 20px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .member-description {
   color: var(--text-secondary);
-  line-height: 1.6;
   font-size: 1rem;
+  line-height: 1.7;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* ======== Values Section ======== */
@@ -445,21 +424,35 @@ nav ul {
   background: var(--bg-dark);
 }
 
+.values-section .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: block;
+}
+
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  max-width: 950px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .value-card {
   background: var(--bg-card);
-  padding: 40px 30px;
-  border-radius: var(--border-radius-lg);
+  padding: 45px 35px;
+  border-radius: var(--border-radius);
   border: 1px solid rgba(0, 56, 255, 0.2);
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .value-card::before {
@@ -479,46 +472,48 @@ nav ul {
 }
 
 .value-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 56, 255, 0.25);
   border-color: var(--primary-color);
 }
 
 .value-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 25px;
+  width: 75px;
+  height: 75px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: white;
+  margin: 0 auto 20px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(0, 56, 255, 0.3);
 }
 
 .value-card h3 {
   font-family: 'Orbitron', monospace;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-weight: 700;
   color: var(--text-primary);
+  margin-bottom: 15px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .value-card p {
   color: var(--text-secondary);
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.7;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* ======== CTA Section ======== */
 .cta-section {
-  padding: 100px 20px;
+  padding: 100px 0;
   background: 
     linear-gradient(135deg, rgba(0, 56, 255, 0.1), rgba(255, 0, 128, 0.1)),
     var(--bg-darker);
@@ -543,7 +538,7 @@ nav ul {
 .cta-content {
   position: relative;
   z-index: 2;
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -560,9 +555,7 @@ nav ul {
   font-size: 1.2rem;
   color: var(--text-secondary);
   margin-bottom: 40px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.8;
 }
 
 .cta-buttons {
@@ -571,39 +564,20 @@ nav ul {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 30px;
 }
 
-/* ======== Boutons ======== */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 15px 30px;
-  border: none;
+  gap: 10px;
+  padding: 14px 28px;
   border-radius: var(--border-radius);
-  font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  font-weight: 600;
   font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn:hover::before {
-  left: 100%;
+  transition: all 0.3s ease;
+  min-width: 180px;
+  justify-content: center;
 }
 
 .btn-primary {
@@ -632,8 +606,6 @@ nav ul {
 /* ======== Footer ======== */
 footer {
   background: var(--bg-darker);
-  color: var(--text-secondary);
-  padding: 60px 0 30px;
   border-top: 1px solid rgba(0, 56, 255, 0.2);
 }
 
@@ -641,31 +613,21 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 40px;
-  margin-bottom: 40px;
+  padding: 60px 0;
 }
 
 .footer-section h4 {
-  color: var(--text-primary);
   font-family: 'Orbitron', monospace;
   font-size: 1.2rem;
+  font-weight: 700;
   margin-bottom: 20px;
+  color: var(--primary-color);
 }
 
 .footer-section p {
-  margin-bottom: 15px;
+  color: var(--text-secondary);
   line-height: 1.6;
-}
-
-.discord-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.discord-link:hover {
-  color: var(--text-primary);
-  text-decoration: underline;
+  margin-bottom: 15px;
 }
 
 .footer-section ul {
@@ -686,6 +648,18 @@ footer {
   color: var(--primary-color);
 }
 
+.discord-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.discord-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
 .social-links {
   display: flex;
   gap: 15px;
@@ -693,105 +667,118 @@ footer {
 }
 
 .social-links a {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 56, 255, 0.1);
+  border: 1px solid rgba(0, 56, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-secondary);
-  font-size: 1.5rem;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .social-links a:hover {
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: white;
   transform: translateY(-3px);
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(0, 56, 255, 0.1);
-  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 0;
   text-align: center;
+  color: var(--text-muted);
 }
 
-/* ======== Responsive ======== */
+/* ======== Responsive Design ======== */
 @media (max-width: 768px) {
-  .page-hero {
-    min-height: 35vh;
-    padding: 30px 20px;
-  }
-
-  .page-title {
-    font-size: 2.5rem;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .page-title i {
-    font-size: 2rem;
-  }
-
-  .page-subtitle {
-    font-size: 1.1rem;
-  }
-
-  .story-content {
-    gap: 40px;
-  }
-
-  .story-stats {
-    grid-template-columns: 1fr;
-    max-width: 400px;
-    gap: 20px;
-  }
-
-  .team-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .team-member {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .container {
     width: 95%;
   }
-
+  
   nav ul {
-    flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
-
+  
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .nav-link i {
+    display: none;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
   .section-header h2 {
     font-size: 2rem;
   }
-
+  
+  .story-stats {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    max-width: 500px;
+  }
+  
+  .team-grid {
+    max-width: 100%;
+  }
+  
+  .team-member {
+    padding: 40px 30px;
+  }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
   .cta-content h2 {
     font-size: 2rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .social-links {
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .page-hero {
-    min-height: 30vh;
-    padding: 25px 15px;
-  }
-
   .page-title {
     font-size: 2rem;
   }
-
-  .page-title i {
-    font-size: 1.6rem;
+  
+  .stat-icon,
+  .member-avatar,
+  .value-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
   }
-
-  .page-subtitle {
-    font-size: 1rem;
+  
+  .stat-number {
+    font-size: 2.3rem;
+  }
+  
+  .team-member {
+    padding: 30px 20px;
+  }
+  
+  .value-card {
+    padding: 30px 20px;
   }
 }

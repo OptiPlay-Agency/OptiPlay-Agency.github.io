@@ -405,8 +405,15 @@
         const result = await authManager.signUp(email, password, userData);
         
         if (result.success) {
-          // Redirection vers une page de confirmation
-          window.location.href = '../index.html';
+          // Vérifier si on doit rediriger vers le manager
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          
+          if (redirect === 'manager') {
+            window.location.href = '/teamPlanner/HTML/manager.html';
+          } else {
+            window.location.href = '../index.html';
+          }
         } else {
           // Restaurer le bouton
           registerBtn.innerHTML = originalText;

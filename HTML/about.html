@@ -9,121 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/about.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <a href="../index.html" class="logo-link">
-        <img src="../assets/logo.png" alt="Logo OptiPlay" class="logo">
-        <span class="logo-text">OptiPlay</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-          <li class="services-dropdown">
-            <a href="#" class="nav-link dropdown-toggle">
-              <i class="fas fa-cogs"></i> Services
-              <i class="fas fa-chevron-down dropdown-arrow"></i>
-            </a>
-            <div class="dropdown-menu">
-              <div class="dropdown-section">
-                <h4>Applications</h4>
-                <div class="submenu-items">
-                  <a href="services/applications.html" class="submenu-item">
-                    <i class="fas fa-desktop"></i>
-                    <div>
-                      <span>Applications Web</span>
-                      <small>Sites & applications personnalisées</small>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              
-              <div class="dropdown-section">
-                <h4>Automatisations</h4>
-                <div class="submenu-items">
-                  <a href="services/automatisations.html" class="submenu-item">
-                    <i class="fas fa-robot"></i>
-                    <div>
-                      <span>Scripts Automatisés</span>
-                      <small>Automatisation de tâches</small>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              
-              <div class="dropdown-section">
-                <h4>Bots Discord</h4>
-                <div class="submenu-items">
-                  <a href="services/bots-discord.html" class="submenu-item">
-                    <i class="fab fa-discord"></i>
-                    <div>
-                      <span>Bots Personnalisés</span>
-                      <small>Fonctionnalités sur-mesure</small>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              
-              <div class="dropdown-section">
-                <h4>Divers</h4>
-                <div class="submenu-items">
-                  <a href="services/divers.html" class="submenu-item">
-                    <i class="fas fa-palette"></i>
-                    <div>
-                      <span>Design & Graphisme</span>
-                      <small>Identité visuelle complète</small>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li><a href="tournaments.html" class="nav-link"><i class="fas fa-trophy"></i> Tournois</a></li>
-          <li><a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-        
-        <div class="auth-section">
-          <div id="auth-buttons" class="auth-buttons">
-            <a href="login.html" class="btn-login">
-              <i class="fas fa-sign-in-alt"></i>
-              Connexion
-            </a>
-            <a href="register.html" class="btn-register">
-              <i class="fas fa-user-plus"></i>
-              Inscription
-            </a>
-          </div>
-          
-          <div id="user-menu" class="user-menu" style="display: none;">
-            <div class="user-info">
-              <div class="user-avatar">
-                <i class="fas fa-user"></i>
-              </div>
-              <div class="user-details">
-                <span class="user-email">user@example.com</span>
-                <small>Membre</small>
-              </div>
-            </div>
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">
-                <i class="fas fa-user-cog"></i> Profil
-              </a>
-              <a href="dashboard.html" class="dropdown-item">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
-              </a>
-              <hr class="dropdown-divider">
-              <a href="#" class="dropdown-item" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Déconnexion
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
 
   <main>
     <section class="page-hero">
@@ -131,23 +20,23 @@
       <div class="container">
         <h1 class="page-title">
           <i class="fas fa-info-circle"></i>
-          Qui sommes-<span class="gradient-text">nous</span> ?
+          <span data-i18n="aboutPage.title">Qui sommes-</span><span class="gradient-text" data-i18n="aboutPage.titleHighlight">nous</span> ?
         </h1>
-        <p class="page-subtitle">OptiPlay est une agence événementielle eSport dédiée à l'organisation de tournois en ligne professionnels, compétitifs et accessibles.</p>
+        <p class="page-subtitle" data-i18n="aboutPage.subtitle">OptiPlay est une agence événementielle eSport dédiée à l'organisation de tournois en ligne professionnels, compétitifs et accessibles.</p>
       </div>
     </section>
 
     <section class="about-content">
       <div class="container">
         <div class="section-header">
-          <h2>Notre <span class="gradient-text">Histoire</span></h2>
+          <h2><span data-i18n="aboutPage.storyTitle">Notre</span> <span class="gradient-text" data-i18n="aboutPage.storyHighlight">Histoire</span></h2>
           <div class="section-line"></div>
         </div>
         
         <div class="story-content">
           <div class="story-text">
-            <p>Née de la passion pour l'eSport et l'événementiel, OptiPlay s'est développée pour devenir une agence complète accompagnant structures et particuliers dans leurs projets numériques et événementiels.</p>
-            <p>Notre expertise s'étend du développement web à l'organisation de tournois, en passant par la création graphique et l'aide administrative, offrant des solutions sur-mesure pour chaque besoin.</p>
+            <p data-i18n="aboutPage.storyText1">Née de la passion pour l'eSport et l'événementiel, OptiPlay s'est développée pour devenir une agence complète accompagnant structures et particuliers dans leurs projets numériques et événementiels.</p>
+            <p data-i18n="aboutPage.storyText2">Notre expertise s'étend du développement web à l'organisation de tournois, en passant par la création graphique et l'aide administrative, offrant des solutions sur-mesure pour chaque besoin.</p>
           </div>
           
           <div class="story-stats">
@@ -155,24 +44,24 @@
               <div class="stat-icon">
                 <i class="fas fa-trophy"></i>
               </div>
-              <div class="stat-number">50+</div>
-              <div class="stat-label">Tournois organisés</div>
+              <div class="stat-number">5+</div>
+              <div class="stat-label" data-i18n="aboutPage.tournamentsOrganized">Tournois organisés</div>
             </div>
             
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-users"></i>
               </div>
-              <div class="stat-number">1000+</div>
-              <div class="stat-label">Participants</div>
+              <div class="stat-number">600+</div>
+              <div class="stat-label" data-i18n="aboutPage.participants">Participants</div>
             </div>
             
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-code"></i>
               </div>
-              <div class="stat-number">25+</div>
-              <div class="stat-label">Projets web</div>
+              <div class="stat-number">60+</div>
+              <div class="stat-label" data-i18n="aboutPage.webProjects">Projets informatiques</div>
             </div>
           </div>
         </div>
@@ -182,7 +71,7 @@
     <section class="team-section">
       <div class="container">
         <div class="section-header">
-          <h2>L'<span class="gradient-text">équipe</span></h2>
+          <h2><span data-i18n="aboutPage.teamTitle">L'</span><span class="gradient-text" data-i18n="aboutPage.teamHighlight">équipe</span></h2>
           <div class="section-line"></div>
         </div>
         
@@ -193,8 +82,8 @@
             </div>
             <div class="member-info">
               <h3>Axel Guionnet</h3>
-              <p class="member-role">Fondateur & Responsable projets</p>
-              <p class="member-description">Expert en organisation d'événements eSport et développement web, Axel pilote les projets avec passion et professionnalisme.</p>
+              <p class="member-role" data-i18n="aboutPage.axelRole">Fondateur & Responsable projets</p>
+              <p class="member-description" data-i18n="aboutPage.axelDesc">Expert en organisation d'événements eSport et développement web, Axel pilote les projets avec passion et professionnalisme.</p>
             </div>
           </div>
           
@@ -204,8 +93,8 @@
             </div>
             <div class="member-info">
               <h3>Anna Guionnet</h3>
-              <p class="member-role">CO-Fondatrice & Responsable relationnel</p>
-              <p class="member-description">Spécialisée dans la gestion client et les partenariats, Anna assure le suivi personnalisé de chaque projet.</p>
+              <p class="member-role" data-i18n="aboutPage.annaRole">CO-Fondatrice & Responsable relationnel</p>
+              <p class="member-description" data-i18n="aboutPage.annaDesc">Spécialisée dans la gestion client et les partenariats, Anna assure le suivi personnalisé de chaque projet.</p>
             </div>
           </div>
         </div>
@@ -215,7 +104,7 @@
     <section class="values-section">
       <div class="container">
         <div class="section-header">
-          <h2>Nos <span class="gradient-text">Valeurs</span></h2>
+          <h2><span data-i18n="aboutPage.valuesTitle">Nos</span> <span class="gradient-text" data-i18n="aboutPage.valuesHighlight">Valeurs</span></h2>
           <div class="section-line"></div>
         </div>
         
@@ -224,32 +113,32 @@
             <div class="value-icon">
               <i class="fas fa-star"></i>
             </div>
-            <h3>Excellence</h3>
-            <p>Nous visons l'excellence dans chaque projet, offrant des solutions de qualité supérieure.</p>
+            <h3 data-i18n="aboutPage.excellence">Excellence</h3>
+            <p data-i18n="aboutPage.excellenceDesc">Nous visons l'excellence dans chaque projet, offrant des solutions de qualité supérieure.</p>
           </div>
           
           <div class="value-card">
             <div class="value-icon">
               <i class="fas fa-handshake"></i>
             </div>
-            <h3>Partenariat</h3>
-            <p>Nous construisons des relations durables basées sur la confiance et la collaboration.</p>
+            <h3 data-i18n="aboutPage.partnership">Partenariat</h3>
+            <p data-i18n="aboutPage.partnershipDesc">Nous construisons des relations durables basées sur la confiance et la collaboration.</p>
           </div>
           
           <div class="value-card">
             <div class="value-icon">
               <i class="fas fa-lightbulb"></i>
             </div>
-            <h3>Innovation</h3>
-            <p>Nous adoptons les dernières technologies pour proposer des solutions innovantes.</p>
+            <h3 data-i18n="aboutPage.innovation">Innovation</h3>
+            <p data-i18n="aboutPage.innovationDesc">Nous adoptons les dernières technologies pour proposer des solutions innovantes.</p>
           </div>
           
           <div class="value-card">
             <div class="value-icon">
               <i class="fas fa-heart"></i>
             </div>
-            <h3>Passion</h3>
-            <p>Notre passion pour l'eSport et le numérique guide chacune de nos actions.</p>
+            <h3 data-i18n="aboutPage.passion">Passion</h3>
+            <p data-i18n="aboutPage.passionDesc">Notre passion pour l'eSport et le numérique guide chacune de nos actions.</p>
           </div>
         </div>
       </div>
@@ -258,16 +147,16 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-content">
-          <h2>Prêt à travailler avec nous ?</h2>
-          <p>Découvrez comment OptiPlay peut vous accompagner dans vos projets !</p>
+          <h2 data-i18n="aboutPage.ctaTitle">Prêt à travailler avec nous ?</h2>
+          <p data-i18n="aboutPage.ctaSubtitle">Découvrez comment OptiPlay peut vous accompagner dans vos projets !</p>
           <div class="cta-buttons">
             <a href="services.html" class="btn btn-primary">
               <i class="fas fa-cogs"></i>
-              Nos Services
+              <span data-i18n="aboutPage.ourServices">Nos Services</span>
             </a>
             <a href="contact.html" class="btn btn-secondary">
               <i class="fas fa-envelope"></i>
-              Nous Contacter
+              <span data-i18n="aboutPage.contactUs">Nous Contacter</span>
             </a>
           </div>
         </div>
@@ -280,7 +169,7 @@
       <div class="footer-content">
         <div class="footer-section">
           <h4>OptiPlay</h4>
-          <p>Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
+          <p data-i18n="footer.description">Agence spécialisée dans l'accompagnement de vos projets numériques et événementiels.</p>
           <div class="social-links">
             <a href="https://discord.gg/S6XB3thwnH" target="_blank"><i class="fab fa-discord"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -289,24 +178,24 @@
           </div>
         </div>
         <div class="footer-section">
-          <h4>Services</h4>
+          <h4 data-i18n="footer.services">Services</h4>
           <ul>
-            <li><a href="services.html">Développement web</a></li>
-            <li><a href="services.html">Setup streaming</a></li>
-            <li><a href="services.html">Design graphique</a></li>
-            <li><a href="services.html">Recherche sponsors</a></li>
-            <li><a href="services.html">Aide administrative</a></li>
+            <li><a href="../HTML/services.html" data-i18n="footer.webDev">Développement web</a></li>
+            <li><a href="../HTML/services.html" data-i18n="footer.streamSetup">Setup streaming</a></li>
+            <li><a href="../HTML/services.html" data-i18n="footer.graphicDesign">Design graphique</a></li>
+            <li><a href="../HTML/services.html" data-i18n="footer.sponsorSearch">Recherche sponsors</a></li>
+            <li><a href="../HTML/services.html" data-i18n="footer.adminHelp">Aide administrative</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h4>Contact</h4>
-          <p><i class="fas fa-envelope"></i> optiplayy@gmail.com</p>
-          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link">Rejoindre notre Discord</a></p>
-          <p><i class="fas fa-clock"></i> Support 24/7</p>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <p><i class="fas fa-envelope"></i> <span data-i18n="footer.email">optiplayy@gmail.com</span></p>
+          <p><i class="fab fa-discord"></i> <a href="https://discord.gg/S6XB3thwnH" target="_blank" class="discord-link" data-i18n="footer.discord">Rejoindre notre Discord</a></p>
+          <p><i class="fas fa-clock"></i> <span data-i18n="footer.support">Support 24/7</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 OptiPlay - Tous droits réservés</p>
+        <p>&copy; 2025 OptiPlay - <span data-i18n="footer.rights">Tous droits réservés</span></p>
       </div>
     </div>
   </footer>
@@ -378,5 +267,10 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/i18n.js"></script>
+  <script src="../JS/navbar.js"></script>
 </body>
 </html>
