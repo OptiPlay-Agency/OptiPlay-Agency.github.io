@@ -9,7 +9,7 @@ if (!window.supabase) {
 }
 
 // Initialisation du client Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Fonctions d'authentification
 class AuthManager {
@@ -20,12 +20,12 @@ class AuthManager {
 
   async init() {
     // Vérifier si l'utilisateur est déjà connecté
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
     this.currentUser = user;
     this.updateUI();
 
     // Écouter les changements d'état d'authentification
-    supabase.auth.onAuthStateChange((event, session) => {
+    window.supabaseClient.auth.onAuthStateChange((event, session) => {
       this.currentUser = session?.user || null;
       this.updateUI();
       
@@ -42,7 +42,7 @@ class AuthManager {
   // Inscription
   async signUp(email, password, userData = {}) {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await window.supabaseClient.auth.signUp({
         email: email,
         password: password,
         options: {
@@ -64,7 +64,7 @@ class AuthManager {
   // Connexion
   async signIn(email, password) {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await window.supabaseClient.auth.signInWithPassword({
         email: email,
         password: password
       });
@@ -82,7 +82,7 @@ class AuthManager {
   // Déconnexion
   async signOut() {
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await window.supabaseClient.auth.signOut();
       if (error) throw error;
       
       return { success: true };
@@ -96,7 +96,7 @@ class AuthManager {
   // Réinitialisation du mot de passe
   async resetPassword(email) {
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+      const { data, error } = await window.supabaseClient.auth.resetPasswordForEmail(email);
       if (error) throw error;
       
       this.showNotification('Email de réinitialisation envoyé !', 'success');

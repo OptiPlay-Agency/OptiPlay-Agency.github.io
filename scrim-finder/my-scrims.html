@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Scrims - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/scrim-finder.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector">
+      <label for="team-select">Équipe active</label>
+      <div class="select-wrapper">
+        <select id="team-select">
+          <option value="">Sélectionner une équipe...</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <button class="btn-create-team" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer une équipe
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <ul>
+        <li><a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a></li>
+        <li><a href="search.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </a></li>
+        <li><a href="propose.html" class="nav-item">
+          <i class="fas fa-plus-circle"></i>
+          Proposer un scrim
+        </a></li>
+        <li><a href="my-scrims.html" class="nav-item active">
+          <i class="fas fa-list"></i>
+          Mes scrims
+        </a></li>
+        <li><a href="history.html" class="nav-item">
+          <i class="fas fa-history"></i>
+          Historique
+        </a></li>
+        <li><a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Paramètres
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span id="user-name">Utilisateur</span>
+        <span id="user-subscription">Plan Gratuit</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>
+        <i class="fas fa-list"></i>
+        Mes scrims
+      </h1>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="window.location.href='propose.html'">
+          <i class="fas fa-plus"></i>
+          Nouveau scrim
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="content-sections">
+      <!-- Proposed Scrims Section -->
+      <section class="section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-plus-circle"></i>
+            Mes scrims proposés
+          </h2>
+          <span class="section-subtitle">Scrims que vous avez créés et qui attendent des adversaires</span>
+        </div>
+        <div id="proposed-scrims" class="scrims-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Received Requests Section -->
+      <section class="section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-inbox"></i>
+            Demandes reçues
+          </h2>
+          <span class="section-subtitle">Autres équipes qui veulent faire un scrim avec vous</span>
+        </div>
+        <div id="received-requests" class="scrims-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Completed Scrims Section -->
+      <section class="section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-trophy"></i>
+            Historique
+          </h2>
+          <span class="section-subtitle">Scrims terminés récemment</span>
+        </div>
+        <div id="completed-scrims" class="scrims-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Scrim Detail Modal -->
+  <div id="scrim-detail-modal" class="modal" style="display: none;">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3 id="modal-title">Détails du scrim</h3>
+        <button class="modal-close" onclick="closeScrimModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body" id="modal-body">
+        <!-- Populated by JS -->
+      </div>
+      
+      <div class="modal-footer" id="modal-footer">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Detail Modal -->
+  <div id="request-detail-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Demande de scrim</h3>
+        <button class="modal-close" onclick="closeRequestModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body" id="request-modal-body">
+        <!-- Populated by JS -->
+      </div>
+      
+      <div class="modal-footer" id="request-modal-footer">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="JS/supabase-config.js"></script>
+  <script src="JS/scrim-finder.js"></script>
+  <script src="JS/my-scrims.js"></script>
+</body>
+</html>

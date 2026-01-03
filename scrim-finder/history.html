@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historique - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/scrim-finder.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector">
+      <label for="team-select">Équipe active</label>
+      <div class="select-wrapper">
+        <select id="team-select">
+          <option value="">Sélectionner une équipe...</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <button class="btn-create-team" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer une équipe
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <ul>
+        <li><a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a></li>
+        <li><a href="search.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </a></li>
+        <li><a href="propose.html" class="nav-item">
+          <i class="fas fa-plus-circle"></i>
+          Proposer un scrim
+        </a></li>
+        <li><a href="my-scrims.html" class="nav-item">
+          <i class="fas fa-list"></i>
+          Mes scrims
+        </a></li>
+        <li><a href="history.html" class="nav-item active">
+          <i class="fas fa-history"></i>
+          Historique
+        </a></li>
+        <li><a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Paramètres
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span id="user-name">Utilisateur</span>
+        <span id="user-subscription">Plan Gratuit</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>
+        <i class="fas fa-history"></i>
+        Historique des scrims
+      </h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="export-history">
+          <i class="fas fa-download"></i>
+          Exporter
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="history-stats">
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="total-scrims">0</span>
+            <span class="stat-label">Scrims joués</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="win-rate">0%</span>
+            <span class="stat-label">Taux de victoire</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="total-hours">0h</span>
+            <span class="stat-label">Temps joué</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="this-month">0</span>
+            <span class="stat-label">Ce mois-ci</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="history-filters">
+      <div class="filters-header">
+        <h2>
+          <i class="fas fa-filter"></i>
+          Filtrer l'historique
+        </h2>
+        <button class="btn btn-secondary" id="reset-history-filters">
+          <i class="fas fa-undo"></i>
+          Réinitialiser
+        </button>
+      </div>
+      
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="history-period">Période</label>
+          <select id="history-period">
+            <option value="all">Toute la période</option>
+            <option value="week">Cette semaine</option>
+            <option value="month">Ce mois</option>
+            <option value="3months">3 derniers mois</option>
+            <option value="year">Cette année</option>
+            <option value="custom">Période personnalisée</option>
+          </select>
+        </div>
+        
+        <div class="filter-group" id="custom-period" style="display: none;">
+          <label for="period-start">Du</label>
+          <input type="date" id="period-start">
+        </div>
+        
+        <div class="filter-group" id="custom-period-end" style="display: none;">
+          <label for="period-end">Au</label>
+          <input type="date" id="period-end">
+        </div>
+        
+        <div class="filter-group">
+          <label for="history-result">Résultat</label>
+          <select id="history-result">
+            <option value="all">Tous les résultats</option>
+            <option value="win">Victoires</option>
+            <option value="loss">Défaites</option>
+            <option value="draw">Égalités</option>
+            <option value="no-result">Sans résultat</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="history-opponent">Adversaire</label>
+          <input type="text" id="history-opponent" placeholder="Nom de l'équipe adverse">
+        </div>
+        
+        <div class="filter-group">
+          <button class="btn btn-primary" id="apply-history-filters">
+            <i class="fas fa-search"></i>
+            Filtrer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- History List -->
+    <div class="history-container">
+      <div id="history-list" class="history-list">
+        <!-- Populated by JS -->
+      </div>
+      
+      <!-- Empty State -->
+      <div id="history-empty" class="empty-state" style="display: none;">
+        <div class="empty-icon">
+          <i class="fas fa-history"></i>
+        </div>
+        <h3>Aucun historique trouvé</h3>
+        <p>Vous n'avez pas encore d'historique de scrims ou aucun résultat ne correspond à vos filtres.</p>
+        <button class="btn btn-primary" onclick="window.location.href='search.html'">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scrim Detail Modal -->
+  <div id="history-detail-modal" class="modal" style="display: none;">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3 id="history-modal-title">Détails du scrim</h3>
+        <button class="modal-close" onclick="closeHistoryModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body" id="history-modal-body">
+        <!-- Populated by JS -->
+      </div>
+      
+      <div class="modal-footer" id="history-modal-footer">
+        <button class="btn btn-secondary" onclick="closeHistoryModal()">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
+  <script src="JS/scrim-finder.js"></script>
+  <script src="JS/history.js"></script>
+</body>
+</html>

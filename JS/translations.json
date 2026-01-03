@@ -33,6 +33,8 @@
       "discordBotsDesc": "Bots personnalisés pour animer et gérer votre communauté",
       "teamPlanner": "Team Planner",
       "teamPlannerDesc": "Organisez votre équipe eSport avec calendrier et gestion des scrims",
+      "scrimFinder": "Scrim Finder",
+      "scrimFinderDesc": "Trouvez et organisez des scrims avec d'autres équipes eSport",
       "available": "Disponible"
     },
     "stats": {
@@ -99,6 +101,8 @@
       "misc": "Divers",
       "manager": "OptiPlay Manager",
       "managerDesc": "Gestion d'équipes eSport complète",
+      "scrimFinder": "OptiPlay Scrim Finder",
+      "scrimFinderDesc": "Plateforme de matchmaking pour équipes eSport",
       "viewDetails": "Voir les détails",
       "tournaments": "Tournois eSport",
       "tournamentsDesc": "Organisation et gestion de tournois",
@@ -367,7 +371,18 @@
         "moderator": "Modérateur",
         "admin": "Admin",
         "owner": "Owner"
-      }
+      },
+      "myGames": "Mes Jeux",
+      "addGame": "Ajouter un jeu",
+      "editGame": "Modifier le jeu",
+      "noGames": "Aucun jeu ajouté",
+      "addGamesPrompt": "Ajoutez les jeux auxquels vous jouez pour partager votre profil !",
+      "gameName": "Nom du jeu",
+      "rank": "Rang / Niveau",
+      "trackerLink": "Lien Tracker",
+      "profileLink": "Lien Profil In-Game",
+      "trackerHint": "Lien vers votre profil tracker.gg, op.gg, ou autre",
+      "profileHint": "Lien vers votre profil dans le jeu (optionnel)"
     }
   },
   "en": {
@@ -737,7 +752,18 @@
         "moderator": "Moderator",
         "admin": "Admin",
         "owner": "Owner"
-      }
+      },
+      "myGames": "My Games",
+      "addGame": "Add a game",
+      "editGame": "Edit game",
+      "noGames": "No games added",
+      "addGamesPrompt": "Add the games you play to share your profile!",
+      "gameName": "Game name",
+      "rank": "Rank / Level",
+      "trackerLink": "Tracker Link",
+      "profileLink": "In-Game Profile Link",
+      "trackerHint": "Link to your tracker.gg, op.gg, or other profile",
+      "profileHint": "Link to your in-game profile (optional)"
     }
   }
 }

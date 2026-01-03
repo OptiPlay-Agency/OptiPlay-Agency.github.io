@@ -151,13 +151,9 @@
           
           <!-- Rocket League tabs -->
           <div class="game-tabs rocketleague-tabs" style="display: none;">
-            <a href="#roles" class="nav-item" data-tab="roles">
-              <i class="fas fa-rocket"></i>
-              <span>Rôles</span>
-            </a>
             <a href="#rotations" class="nav-item" data-tab="rotations">
               <i class="fas fa-sync-alt"></i>
-              <span>Rotations</span>
+              <span>Formations</span>
             </a>
             <a href="#strategies" class="nav-item" data-tab="strategies-rl">
               <i class="fas fa-brain"></i>
@@ -314,6 +310,111 @@
           </div>
         </div>
 
+        <!-- League of Legends: Champion Pool Tab -->
+        <div class="content-section" id="champion-pool-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-chess-queen"></i> Champion Pool</h1>
+            <p class="content-subtitle">Gérez les champions maîtrisés par chaque joueur par lane</p>
+          </div>
+          
+          <div class="champion-pool-layout">
+            <!-- Sidebar avec liste des joueurs -->
+            <aside class="champion-pool-sidebar">
+              <div class="player-list" id="all-players">
+                <!-- Players will be loaded here -->
+              </div>
+            </aside>
+
+            <!-- Main champion pool content -->
+            <div class="champion-pool-main">
+              <!-- Current player header -->
+              <div class="champion-pool-player-header" id="current-player-header">
+                <h2 id="current-player-name">Sélectionner un joueur</h2>
+                <span class="player-role-badge" id="current-player-role"></span>
+              </div>
+
+              <!-- Tiers grid -->
+              <div class="champion-tiers" id="champion-tiers">
+                <!-- Tiers will be loaded here -->
+              </div>
+
+              <!-- Champion selector -->
+              <div class="champion-selector-section">
+                <div class="champion-selector-filters">
+                  <select id="role-filter">
+                    <option value="all">Role: All</option>
+                    <option value="top">Top</option>
+                    <option value="jungle">Jungle</option>
+                    <option value="mid">Mid</option>
+                    <option value="adc">ADC</option>
+                    <option value="support">Support</option>
+                  </select>
+                  <input type="text" id="champion-search-input" placeholder="Search champion...">
+                </div>
+                <div class="all-champions-grid" id="all-champions-grid">
+                  <!-- All champions will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- League of Legends: Compositions Tab -->
+        <div class="content-section" id="drafts-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-exchange-alt"></i> Compositions</h1>
+            <button class="btn btn-primary" id="add-comp-btn">
+              <i class="fas fa-plus"></i>
+              Nouvelle composition
+            </button>
+          </div>
+          <div class="comps-grid" id="comps-grid">
+            <!-- Compositions will be loaded here -->
+          </div>
+        </div>
+
+        <!-- League of Legends: Strategies Tab -->
+        <div class="content-section" id="strategies-lol-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-brain"></i> Stratégies</h1>
+            <button class="btn btn-primary" id="add-lol-strategy-btn">
+              <i class="fas fa-plus"></i>
+              Nouvelle stratégie
+            </button>
+          </div>
+          <div class="strategies-container" id="lol-strategies-container">
+            <!-- Strategies will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Rocket League: Team Formations Tab -->
+        <div class="content-section" id="rotations-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-sync-alt"></i> Compositions & Rotations</h1>
+            <button class="btn btn-primary" id="add-formation-btn">
+              <i class="fas fa-plus"></i>
+              Nouvelle composition
+            </button>
+          </div>
+          <div class="formations-grid" id="formations-grid">
+            <!-- Formations will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Rocket League: Strategies Tab -->
+        <div class="content-section" id="strategies-rl-content" style="display: none;">
+          <div class="content-header">
+            <h1><i class="fas fa-brain"></i> Stratégies</h1>
+            <button class="btn btn-primary" id="add-strategy-btn">
+              <i class="fas fa-plus"></i>
+              Nouvelle stratégie
+            </button>
+          </div>
+          <div class="strategies-container" id="strategies-container">
+            <!-- Strategies will be loaded here -->
+          </div>
+        </div>
+
         <!-- Settings Tab -->
         <div class="content-section" id="settings-content" style="display: none;">
           <div class="content-header">
@@ -330,18 +431,6 @@
               <h3><i class="fab fa-discord"></i> Intégration Discord</h3>
               <div id="discord-settings">
                 <!-- Discord settings will be loaded here -->
-              </div>
-            </div>
-            <div class="settings-section">
-              <h3><i class="fas fa-bug"></i> Support</h3>
-              <div id="support-section">
-                <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                  Vous avez rencontré un problème ou un bug ? Aidez-nous à améliorer OptiPlay Manager.
-                </p>
-                <button class="btn btn-primary" id="report-bug-btn">
-                  <i class="fas fa-exclamation-circle"></i>
-                  Signaler un bug / problème
-                </button>
               </div>
             </div>
             <div class="settings-section danger-zone">
@@ -701,127 +790,319 @@
     </div>
   </div>
 
-  <!-- Bug Report Modal -->
-  <div class="modal" id="bug-report-modal">
+  <!-- LoL Composition Full Screen -->
+  <div class="comp-fullscreen" id="comp-fullscreen" style="display: none;">
+    <div class="comp-fullscreen-container">
+      <div class="comp-fullscreen-header">
+        <button class="btn btn-secondary" id="back-to-comps">
+          <i class="fas fa-arrow-left"></i>
+          Retour
+        </button>
+        <h2><i class="fas fa-exchange-alt"></i> <span id="comp-modal-title">Nouvelle Composition</span></h2>
+        <div></div>
+      </div>
+      <div class="comp-fullscreen-body">
+        <form id="comp-form">
+          <div class="form-group">
+            <label for="comp-name">Nom de la composition *</label>
+            <input type="text" id="comp-name" required placeholder="Ex: Teamfight Comp">
+          </div>
+
+          <div class="comp-builder">
+            <!-- Roles Section -->
+            <div class="comp-roles">
+              <div class="comp-role" data-role="toplane">
+                <div class="role-header">
+                  <i class="fas fa-shield-alt"></i>
+                  <h4>Toplane</h4>
+                </div>
+                <div class="champion-select-wrapper">
+                  <div class="champion-selected" id="toplane-selected">
+                    <i class="fas fa-plus"></i>
+                    <span>Sélectionner</span>
+                  </div>
+                  <input type="hidden" id="toplane-champion" name="toplane">
+                </div>
+                <select class="player-assign" id="toplane-player">
+                  <option value="">Joueur...</option>
+                </select>
+              </div>
+
+              <div class="comp-role" data-role="jungle">
+                <div class="role-header">
+                  <i class="fas fa-tree"></i>
+                  <h4>Jungle</h4>
+                </div>
+                <div class="champion-select-wrapper">
+                  <div class="champion-selected" id="jungle-selected">
+                    <i class="fas fa-plus"></i>
+                    <span>Sélectionner</span>
+                  </div>
+                  <input type="hidden" id="jungle-champion" name="jungle">
+                </div>
+                <select class="player-assign" id="jungle-player">
+                  <option value="">Joueur...</option>
+                </select>
+              </div>
+
+              <div class="comp-role" data-role="midlane">
+                <div class="role-header">
+                  <i class="fas fa-star"></i>
+                  <h4>Midlane</h4>
+                </div>
+                <div class="champion-select-wrapper">
+                  <div class="champion-selected" id="midlane-selected">
+                    <i class="fas fa-plus"></i>
+                    <span>Sélectionner</span>
+                  </div>
+                  <input type="hidden" id="midlane-champion" name="midlane">
+                </div>
+                <select class="player-assign" id="midlane-player">
+                  <option value="">Joueur...</option>
+                </select>
+              </div>
+
+              <div class="comp-role" data-role="adc">
+                <div class="role-header">
+                  <i class="fas fa-crosshairs"></i>
+                  <h4>Ad carry</h4>
+                </div>
+                <div class="champion-select-wrapper">
+                  <div class="champion-selected" id="adc-selected">
+                    <i class="fas fa-plus"></i>
+                    <span>Sélectionner</span>
+                  </div>
+                  <input type="hidden" id="adc-champion" name="adc">
+                </div>
+                <select class="player-assign" id="adc-player">
+                  <option value="">Joueur...</option>
+                </select>
+              </div>
+
+              <div class="comp-role" data-role="support">
+                <div class="role-header">
+                  <i class="fas fa-hand-holding-heart"></i>
+                  <h4>Support</h4>
+                </div>
+                <div class="champion-select-wrapper">
+                  <div class="champion-selected" id="support-selected">
+                    <i class="fas fa-plus"></i>
+                    <span>Sélectionner</span>
+                  </div>
+                  <input type="hidden" id="support-champion" name="support">
+                </div>
+                <select class="player-assign" id="support-player">
+                  <option value="">Joueur...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Bans Section -->
+            <div class="comp-bans">
+              <h3><i class="fas fa-ban"></i> Bans</h3>
+              <div class="bans-grid" id="bans-grid">
+                <!-- 8 ban slots -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabs for Picks and Tactic note -->
+          <div class="comp-tabs">
+            <button type="button" class="comp-tab active" data-tab="picks">Picks</button>
+            <button type="button" class="comp-tab" data-tab="tactic">Tactic note</button>
+          </div>
+
+          <div class="comp-tab-content active" id="picks-content">
+            <div class="form-group">
+              <label>Ordre des picks (optionnel)</label>
+              <textarea id="comp-picks" rows="3" placeholder="Ex: Nous pick 1-2, eux pick 3-4, nous pick 5..."></textarea>
+            </div>
+          </div>
+
+          <div class="comp-tab-content" id="tactic-content" style="display: none;">
+            <div class="form-group">
+              <label>Notes tactiques</label>
+              <textarea id="comp-tactic" rows="5" placeholder="Stratégie de teamfight, win conditions, macro..."></textarea>
+            </div>
+          </div>
+
+          <!-- Champion Selector -->
+          <div class="champion-selector" id="champion-selector" style="display: none;">
+            <div class="champion-selector-header">
+              <input type="text" id="champion-search" placeholder="Search champion...">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="lolManager.closeChampionSelector()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="champion-selector-grid" id="champion-selector-grid">
+              <!-- Champions will be loaded here -->
+            </div>
+          </div>
+
+          <div class="comp-fullscreen-actions">
+            <button type="button" class="btn btn-secondary" id="cancel-comp">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              <span id="comp-submit-text">Créer la composition</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formation Modal (Rocket League) -->
+  <div class="modal" id="formation-modal">
     <div class="modal-content modal-large">
       <div class="modal-header">
-        <h2><i class="fas fa-bug"></i> Signaler un problème</h2>
-        <button class="modal-close" data-modal="bug-report-modal">
+        <h2><i class="fas fa-sync-alt"></i> <span id="formation-modal-title">Nouvelle Composition</span></h2>
+        <button class="modal-close" data-modal="formation-modal">
           <i class="fas fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
-        <form id="bug-report-form">
+        <form id="formation-form">
           <div class="form-group">
-            <label for="bug-title">
-              <i class="fas fa-heading"></i>
-              Titre du problème *
-            </label>
-            <input type="text" id="bug-title" required placeholder="Résumé court du problème">
+            <label for="formation-name">Nom de la composition *</label>
+            <input type="text" id="formation-name" required placeholder="Ex: Compo offensive">
           </div>
 
-          <div class="form-group">
-            <label for="bug-type">
-              <i class="fas fa-tag"></i>
-              Type de problème *
-            </label>
-            <select id="bug-type" required>
-              <option value="">Sélectionner...</option>
-              <option value="bug">🐛 Bug / Erreur</option>
-              <option value="feature">💡 Demande de fonctionnalité</option>
-              <option value="improvement">✨ Amélioration</option>
-              <option value="performance">⚡ Problème de performance</option>
-              <option value="ui">🎨 Problème d'interface</option>
-              <option value="docs">📚 Documentation</option>
-              <option value="other">🤔 Autre</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="bug-priority">
-              <i class="fas fa-exclamation-triangle"></i>
-              Priorité *
-            </label>
-            <select id="bug-priority" required>
-              <option value="">Sélectionner...</option>
-              <option value="low">🟢 Faible - Suggestion / Amélioration</option>
-              <option value="medium">🟡 Moyenne - Gênant mais contournable</option>
-              <option value="high">🟠 Élevée - Empêche certaines actions</option>
-              <option value="critical">🔴 Critique - Bloque l'utilisation</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="bug-description">
-              <i class="fas fa-align-left"></i>
-              Description détaillée *
-            </label>
-            <textarea id="bug-description" rows="6" required placeholder="Décrivez le problème en détail :&#10;- Que s'est-il passé ?&#10;- Que devrait-il se passer ?&#10;- Comment reproduire le problème ?&#10;- Dans quelle section/page du Manager ?"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="bug-steps">
-              <i class="fas fa-list-ol"></i>
-              Étapes pour reproduire (optionnel)
-            </label>
-            <textarea id="bug-steps" rows="4" placeholder="1. Aller sur la page...&#10;2. Cliquer sur...&#10;3. Observer que..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="bug-browser">
-              <i class="fas fa-globe"></i>
-              Informations techniques
-            </label>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <input type="text" id="bug-browser" placeholder="Navigateur (ex: Chrome 120)" readonly>
-              <input type="text" id="bug-device" placeholder="Appareil (ex: Windows 11)" readonly>
-            </div>
-            <small style="color: var(--text-muted);">Ces informations sont automatiquement détectées</small>
-          </div>
-
-          <div class="form-group" style="display: none;">
-            <label for="bug-attachments">
-              <i class="fas fa-paperclip"></i>
-              Pièces jointes (optionnel)
-            </label>
-            <div class="file-upload-area" id="file-upload-area">
-              <input type="file" id="bug-attachments" multiple accept="image/*,.pdf,.txt,.log" style="display: none;">
-              <div class="file-upload-placeholder">
-                <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                <p>Cliquez pour sélectionner des fichiers ou glissez-déposez</p>
-                <small>Images (PNG, JPG), PDF, fichiers texte - Max 10MB par fichier</small>
+          <div class="formation-builder">
+            <div class="formation-positions">
+              <div class="position-slot" data-position="striker">
+                <div class="position-header">
+                  <i class="fas fa-user-tie"></i>
+                  <h3>1er Homme (Striker)</h3>
+                </div>
+                <select class="player-select" id="striker-player">
+                  <option value="">Sélectionner...</option>
+                </select>
+                <select class="car-select" id="striker-car">
+                  <option value="">Voiture...</option>
+                </select>
               </div>
-              <div id="selected-files" class="selected-files"></div>
+
+              <div class="position-slot" data-position="midfielder">
+                <div class="position-header">
+                  <i class="fas fa-user"></i>
+                  <h3>2ème Homme (Milieu)</h3>
+                </div>
+                <select class="player-select" id="midfielder-player">
+                  <option value="">Sélectionner...</option>
+                </select>
+                <select class="car-select" id="midfielder-car">
+                  <option value="">Voiture...</option>
+                </select>
+              </div>
+
+              <div class="position-slot" data-position="defender">
+                <div class="position-header">
+                  <i class="fas fa-shield-alt"></i>
+                  <h3>3ème Homme (Défense)</h3>
+                </div>
+                <select class="player-select" id="defender-player">
+                  <option value="">Sélectionner...</option>
+                </select>
+                <select class="car-select" id="defender-car">
+                  <option value="">Voiture...</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="formation-kickoffs">
+              <h3><i class="fas fa-play-circle"></i> Stratégies de Kickoff</h3>
+              <div class="kickoff-strategies">
+                <div class="form-group">
+                  <label>Position centrale</label>
+                  <select id="kickoff-center">
+                    <option value="">Qui part?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Position diagonale gauche</label>
+                  <select id="kickoff-left">
+                    <option value="">Qui part?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Position diagonale droite</label>
+                  <select id="kickoff-right">
+                    <option value="">Qui part?</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="bug-contact">
-              <i class="fas fa-envelope"></i>
-              Email de contact (optionnel)
-            </label>
-            <input type="email" id="bug-contact" placeholder="Pour être tenu au courant des corrections">
-            <small style="color: var(--text-muted);">Laissez vide pour utiliser l'email de votre compte</small>
-          </div>
-
-          <div class="bug-report-info">
-            <div style="background: var(--bg-darker); padding: 1rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-color);">
-              <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
-                <i class="fas fa-info-circle"></i>
-                Ce rapport sera envoyé sur le GitHub d'OptiPlay Manager pour suivi et résolution.
-                Vos informations personnelles restent privées.
-              </p>
-            </div>
+            <label for="formation-notes">Notes & Tactiques</label>
+            <textarea id="formation-notes" rows="4" placeholder="Décrivez les rotations, les points forts de cette composition..."></textarea>
           </div>
 
           <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" data-modal="bug-report-modal">
-              <i class="fas fa-times"></i>
+            <button type="button" class="btn btn-secondary" data-modal="formation-modal">
               Annuler
             </button>
-            <button type="submit" class="btn btn-primary" id="submit-bug-report">
-              <i class="fas fa-paper-plane"></i>
-              Envoyer le rapport
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              <span id="formation-submit-text">Créer la composition</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategy Modal (Rocket League) -->
+  <div class="modal" id="strategy-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-brain"></i> <span id="strategy-modal-title">Nouvelle Stratégie</span></h2>
+        <button class="modal-close" data-modal="strategy-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="strategy-form">
+          <div class="form-group">
+            <label for="strategy-name">Nom de la stratégie *</label>
+            <input type="text" id="strategy-name" required placeholder="Ex: Fast Break">
+          </div>
+
+          <div class="form-group">
+            <label for="strategy-type">Type *</label>
+            <select id="strategy-type" required>
+              <option value="">Sélectionner...</option>
+              <option value="offensive">Offensive</option>
+              <option value="defensive">Défensive</option>
+              <option value="kickoff">Kickoff</option>
+              <option value="rotation">Rotation</option>
+              <option value="passing">Passing Play</option>
+              <option value="demo">Démolition</option>
+              <option value="boost">Gestion Boost</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="strategy-description">Description *</label>
+            <textarea id="strategy-description" rows="6" required placeholder="Décrivez la stratégie en détail..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="strategy-diagram">Diagramme / Schéma (URL optionnel)</label>
+            <input type="url" id="strategy-diagram" placeholder="https://...">
+            <small>Vous pouvez uploader un schéma sur Imgur ou similaire</small>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" data-modal="strategy-modal">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              <span id="strategy-submit-text">Créer la stratégie</span>
             </button>
           </div>
         </form>
@@ -832,8 +1113,6 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/teamPlanner/JS/supabase-config.js"></script>
-  <script src="/teamPlanner/JS/github-config.js"></script>
-  <script src="/teamPlanner/JS/bug-report.js"></script>
   <script src="/teamPlanner/JS/auth.js"></script>
   <script src="/teamPlanner/JS/teams.js"></script>
   <script src="/teamPlanner/JS/calendar.js"></script>

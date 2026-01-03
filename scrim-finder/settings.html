@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/scrim-finder.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector">
+      <label for="team-select">Équipe active</label>
+      <div class="select-wrapper">
+        <select id="team-select">
+          <option value="">Sélectionner une équipe...</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <button class="btn-create-team" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer une équipe
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <ul>
+        <li><a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a></li>
+        <li><a href="search.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </a></li>
+        <li><a href="propose.html" class="nav-item">
+          <i class="fas fa-plus-circle"></i>
+          Proposer un scrim
+        </a></li>
+        <li><a href="my-scrims.html" class="nav-item">
+          <i class="fas fa-list"></i>
+          Mes scrims
+        </a></li>
+        <li><a href="history.html" class="nav-item">
+          <i class="fas fa-history"></i>
+          Historique
+        </a></li>
+        <li><a href="settings.html" class="nav-item active">
+          <i class="fas fa-cog"></i>
+          Paramètres
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span id="user-name">Utilisateur</span>
+        <span id="user-subscription">Plan Gratuit</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>
+        <i class="fas fa-cog"></i>
+        Paramètres Scrim Finder
+      </h1>
+      <p class="page-description">Configurez vos préférences et paramètres d'équipe</p>
+    </div>
+
+    <!-- Settings Tabs -->
+    <div class="settings-container">
+      <div class="settings-tabs">
+        <button class="settings-tab active" data-tab="team">
+          <i class="fas fa-users"></i>
+          Équipe
+        </button>
+        <button class="settings-tab" data-tab="notifications">
+          <i class="fas fa-bell"></i>
+          Notifications
+        </button>
+        <button class="settings-tab" data-tab="discord">
+          <i class="fab fa-discord"></i>
+          Discord
+        </button>
+        <button class="settings-tab" data-tab="preferences">
+          <i class="fas fa-sliders-h"></i>
+          Préférences
+        </button>
+      </div>
+
+      <!-- Team Settings -->
+      <div id="team-settings" class="settings-content active">
+        <div class="settings-section">
+          <h2>
+            <i class="fas fa-users"></i>
+            Paramètres d'équipe
+          </h2>
+          
+          <div id="no-team-settings" class="empty-state" style="display: none;">
+            <div class="empty-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Aucune équipe sélectionnée</h3>
+            <p>Sélectionnez une équipe pour configurer ses paramètres.</p>
+          </div>
+          
+          <div id="team-settings-form" style="display: none;">
+            <form class="settings-form">
+              <div class="form-group">
+                <label for="team-name-edit">Nom de l'équipe</label>
+                <input type="text" id="team-name-edit" placeholder="Nom de l'équipe">
+              </div>
+              
+              <div class="form-group">
+                <label for="team-level-edit">Niveau / Rang</label>
+                <input type="text" id="team-level-edit" placeholder="Ex: Gold, Platine, Diamond...">
+              </div>
+              
+              <div class="form-group">
+                <label for="team-region-edit">Région</label>
+                <select id="team-region-edit">
+                  <option value="euw">Europe West</option>
+                  <option value="eune">Europe Nordic & East</option>
+                  <option value="na">North America</option>
+                  <option value="kr">Korea</option>
+                  <option value="jp">Japan</option>
+                  <option value="oce">Oceania</option>
+                  <option value="br">Brazil</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="team-description">Description de l'équipe</label>
+                <textarea id="team-description" rows="3" placeholder="Description courte de votre équipe..."></textarea>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  Sauvegarder
+                </button>
+              </div>
+            </form>
+            
+            <div class="team-management">
+              <h3>Gestion de l'équipe</h3>
+              
+              <div class="management-actions">
+                <button class="btn btn-outline" id="generate-invite">
+                  <i class="fas fa-link"></i>
+                  Générer un lien d'invitation
+                </button>
+                
+                <button class="btn btn-warning" id="leave-team">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Quitter l'équipe
+                </button>
+                
+                <button class="btn btn-error" id="delete-team">
+                  <i class="fas fa-trash"></i>
+                  Supprimer l'équipe
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div id="notifications-settings" class="settings-content">
+        <div class="settings-section">
+          <h2>
+            <i class="fas fa-bell"></i>
+            Notifications
+          </h2>
+          
+          <form class="settings-form">
+            <div class="form-checkboxes">
+              <label class="checkbox-group">
+                <input type="checkbox" id="notify-new-requests" checked>
+                <span class="checkmark"></span>
+                Nouvelles demandes de scrim
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="notify-request-responses" checked>
+                <span class="checkmark"></span>
+                Réponses à mes demandes
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="notify-scrim-reminders" checked>
+                <span class="checkmark"></span>
+                Rappels de scrims
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="notify-team-invites" checked>
+                <span class="checkmark"></span>
+                Invitations d'équipe
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="notify-email">
+                <span class="checkmark"></span>
+                Recevoir les notifications par email
+              </label>
+            </div>
+            
+            <div class="form-group">
+              <label>Rappels de scrim</label>
+              <div class="reminder-options">
+                <label class="checkbox-group">
+                  <input type="checkbox" id="remind-1hour" checked>
+                  <span class="checkmark"></span>
+                  1 heure avant
+                </label>
+                
+                <label class="checkbox-group">
+                  <input type="checkbox" id="remind-30min" checked>
+                  <span class="checkmark"></span>
+                  30 minutes avant
+                </label>
+                
+                <label class="checkbox-group">
+                  <input type="checkbox" id="remind-15min">
+                  <span class="checkmark"></span>
+                  15 minutes avant
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Sauvegarder
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Discord Settings -->
+      <div id="discord-settings" class="settings-content">
+        <div class="settings-section">
+          <h2>
+            <i class="fab fa-discord"></i>
+            Intégration Discord
+          </h2>
+          
+          <div class="discord-connection">
+            <div class="connection-status" id="discord-status">
+              <div class="status-indicator disconnected"></div>
+              <div class="status-text">
+                <strong>Discord non connecté</strong>
+                <p>Connectez votre compte Discord pour recevoir des notifications automatiques.</p>
+              </div>
+              <button class="btn btn-primary" id="connect-discord">
+                <i class="fab fa-discord"></i>
+                Connecter Discord
+              </button>
+            </div>
+          </div>
+          
+          <div id="discord-config" class="discord-config" style="display: none;">
+            <form class="settings-form">
+              <div class="form-group">
+                <label for="discord-server">Serveur Discord</label>
+                <select id="discord-server">
+                  <option value="">Sélectionner un serveur...</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="discord-channel">Canal de notification</label>
+                <select id="discord-channel">
+                  <option value="">Sélectionner un canal...</option>
+                </select>
+              </div>
+              
+              <div class="form-checkboxes">
+                <label class="checkbox-group">
+                  <input type="checkbox" id="discord-announce-scrims">
+                  <span class="checkmark"></span>
+                  Annoncer les nouveaux scrims
+                </label>
+                
+                <label class="checkbox-group">
+                  <input type="checkbox" id="discord-remind-scrims">
+                  <span class="checkmark"></span>
+                  Rappels automatiques
+                </label>
+                
+                <label class="checkbox-group">
+                  <input type="checkbox" id="discord-mention-roles">
+                  <span class="checkmark"></span>
+                  Mentionner les rôles d'équipe
+                </label>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  Sauvegarder
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferences Settings -->
+      <div id="preferences-settings" class="settings-content">
+        <div class="settings-section">
+          <h2>
+            <i class="fas fa-sliders-h"></i>
+            Préférences
+          </h2>
+          
+          <form class="settings-form">
+            <div class="form-group">
+              <label for="default-duration">Durée par défaut des scrims</label>
+              <select id="default-duration">
+                <option value="60">1 heure</option>
+                <option value="90">1h30</option>
+                <option value="120">2 heures</option>
+                <option value="150">2h30</option>
+                <option value="180">3 heures</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="default-format">Format par défaut</label>
+              <select id="default-format">
+                <option value="bo1">Best of 1 (BO1)</option>
+                <option value="bo3">Best of 3 (BO3)</option>
+                <option value="bo5">Best of 5 (BO5)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="timezone">Fuseau horaire</label>
+              <select id="timezone">
+                <option value="Europe/Paris">Europe/Paris (CET/CEST)</option>
+                <option value="Europe/London">Europe/London (GMT/BST)</option>
+                <option value="America/New_York">America/New_York (EST/EDT)</option>
+                <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
+              </select>
+            </div>
+            
+            <div class="form-checkboxes">
+              <label class="checkbox-group">
+                <input type="checkbox" id="auto-accept-level">
+                <span class="checkmark"></span>
+                Accepter automatiquement les demandes du même niveau
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="hide-profile-team">
+                <span class="checkmark"></span>
+                Masquer les informations d'équipe dans le profil public
+              </label>
+              
+              <label class="checkbox-group">
+                <input type="checkbox" id="allow-friend-requests">
+                <span class="checkmark"></span>
+                Autoriser les demandes d'ami depuis Scrim Finder
+              </label>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Sauvegarder
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../JS/supabase-config.js"></script>
+  <script src="JS/scrim-finder.js"></script>
+  <script src="JS/settings.js"></script>
+</body>
+</html>

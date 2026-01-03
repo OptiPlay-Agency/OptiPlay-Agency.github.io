@@ -234,6 +234,12 @@ async function selectTeam(teamId) {
     // Load team data
     await loadTeamData();
     
+    // Reload LoL Manager data if game is League of Legends
+    if (team.game_type === 'lol' && window.lolManager) {
+      console.log('Reloading LoL Manager data...');
+      await window.lolManager.loadChampionPool();
+    }
+    
     // Show home content
     showTab('home');
     
@@ -363,6 +369,10 @@ function setupEventListeners() {
   }
   if (typeof ScrimManager !== 'undefined' && ScrimManager.init) {
     ScrimManager.init();
+  }
+  if (typeof window.lolManager !== 'undefined' && window.lolManager.init) {
+    console.log('Initializing LoL Manager...');
+    window.lolManager.init();
   }
   
   // Create team form

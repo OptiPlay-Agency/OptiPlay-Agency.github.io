@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="../CSS/profile-games.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Profil - OptiPlay Agency</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
@@ -107,6 +108,29 @@
         </div>
       </section>
 
+      <!-- Mes Jeux -->
+      <section class="my-games">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-gamepad"></i>
+            <span data-i18n="profile.myGames">Mes Jeux</span>
+          </h2>
+          <button class="btn btn-primary" id="addGameBtn">
+            <i class="fas fa-plus"></i>
+            <span data-i18n="profile.addGame">Ajouter un jeu</span>
+          </button>
+        </div>
+
+        <div class="games-grid" id="gamesGrid">
+          <!-- Les jeux seront chargés dynamiquement ici -->
+          <div class="no-games" id="noGames">
+            <i class="fas fa-ghost"></i>
+            <h3 data-i18n="profile.noGames">Aucun jeu ajouté</h3>
+            <p data-i18n="profile.addGamesPrompt">Ajoutez les jeux auxquels vous jouez pour partager votre profil !</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Mes achats -->
       <section class="my-purchases">
         <div class="section-header">
@@ -168,6 +192,93 @@
 
     </div>
   </main>
+
+  <!-- Modal Ajouter/Modifier un jeu -->
+  <div class="modal" id="gameModal" style="display: none;">
+    <div class="modal-content modal-game">
+      <div class="modal-header">
+        <h2 id="gameModalTitle">
+          <i class="fas fa-gamepad"></i>
+          <span data-i18n="profile.addGame">Ajouter un jeu</span>
+        </h2>
+        <button class="modal-close" id="closeGameModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="gameForm" class="modal-body">
+        <div class="form-group">
+          <label for="gameName">
+            <i class="fas fa-gamepad"></i>
+            <span data-i18n="profile.gameName">Nom du jeu</span>
+          </label>
+          <select id="gameName" name="gameName" required class="game-select">
+            <option value="">-- Sélectionnez un jeu --</option>
+            <option value="League of Legends">League of Legends</option>
+            <option value="Valorant">Valorant</option>
+            <option value="CS2">Counter-Strike 2</option>
+            <option value="Rocket League">Rocket League</option>
+            <option value="Overwatch 2">Overwatch 2</option>
+            <option value="Fortnite">Fortnite</option>
+            <option value="Apex Legends">Apex Legends</option>
+            <option value="Rainbow Six Siege">Rainbow Six Siege</option>
+            <option value="Dota 2">Dota 2</option>
+            <option value="Call of Duty">Call of Duty</option>
+            <option value="Minecraft">Minecraft</option>
+            <option value="FIFA">FIFA / EA FC</option>
+            <option value="Teamfight Tactics">Teamfight Tactics</option>
+            <option value="PUBG">PUBG</option>
+            <option value="Clash Royale">Clash Royale</option>
+            <option value="Brawl Stars">Brawl Stars</option>
+            <option value="Hearthstone">Hearthstone</option>
+            <option value="Smash Bros">Super Smash Bros</option>
+            <option value="Street Fighter 6">Street Fighter 6</option>
+            <option value="Tekken 8">Tekken 8</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="rankGroup" style="display: none;">
+          <label for="gameRank">
+            <i class="fas fa-trophy"></i>
+            <span data-i18n="profile.rank">Rang / Niveau</span>
+          </label>
+          <select id="gameRank" name="gameRank" class="rank-select">
+            <option value="">-- Sélectionnez un rang --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="gameTracker">
+            <i class="fas fa-chart-line"></i>
+            <span data-i18n="profile.trackerLink">Lien Tracker</span>
+          </label>
+          <input type="url" id="gameTracker" name="gameTracker" placeholder="https://tracker.gg/...">
+          <small data-i18n="profile.trackerHint">Lien vers votre profil tracker.gg, op.gg, ou autre</small>
+        </div>
+
+        <div class="form-group">
+          <label for="gameProfileLink">
+            <i class="fas fa-link"></i>
+            <span data-i18n="profile.profileLink">Lien Profil In-Game</span>
+            <span style="color: rgba(255,255,255,0.5); font-weight: 400; font-size: 0.85em;">(optionnel)</span>
+          </label>
+          <input type="url" id="gameProfileLink" name="gameProfileLink" placeholder="https://...">
+          <small data-i18n="profile.profileHint">Lien vers votre profil dans le jeu (optionnel)</small>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelGameBtn">
+            <i class="fas fa-times"></i>
+            <span data-i18n="common.cancel">Annuler</span>
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            <span data-i18n="common.save">Enregistrer</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
