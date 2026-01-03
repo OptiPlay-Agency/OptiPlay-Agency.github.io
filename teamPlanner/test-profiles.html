@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Profils - OptiPlay Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test des Profils - OptiPlay Manager</h1>
+    
+    <div class="test-section">
+        <h2>1. Test de connexion Supabase</h2>
+        <button onclick="testSupabaseConnection()">Tester la connexion</button>
+        <div id="connection-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Créer un profil de test</h2>
+        <input type="text" id="test-pseudo" placeholder="Pseudo">
+        <input type="text" id="test-firstname" placeholder="Prénom">
+        <input type="text" id="test-lastname" placeholder="Nom">
+        <input type="text" id="test-company" placeholder="Entreprise">
+        <button onclick="createTestProfile()">Créer le profil</button>
+        <div id="create-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Lire le profil utilisateur</h2>
+        <button onclick="readUserProfile()">Lire mon profil</button>
+        <div id="read-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Mettre à jour le profil</h2>
+        <input type="text" id="update-pseudo" placeholder="Nouveau pseudo">
+        <button onclick="updateProfile()">Mettre à jour</button>
+        <div id="update-result" class="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+        
+        const supabaseUrl = 'https://fhnlxaxjcqbtvgktaznr.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZobmx4YXhqY3FidHZna3Rhem5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU0MTc1NDQsImV4cCI6MjA1MDk5MzU0NH0.LtOmTuoKjFBGnbLQnkLs-PLBNIcVd6dqZhQvEP6A5F4';
+        
+        window.supabase = createClient(supabaseUrl, supabaseKey);
+        
+        window.testSupabaseConnection = async function() {
+            const result = document.getElementById('connection-result');
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    result.innerHTML = `✅ Connecté en tant que: ${session.user.email}`;
+                    result.style.background = '#d4edda';
+                } else {
+                    result.innerHTML = '❌ Non connecté - Connectez-vous d\'abord sur /teamPlanner/HTML/login-manager.html';
+                    result.style.background = '#f8d7da';
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Erreur: ${error.message}`;
+                result.style.background = '#f8d7da';
+            }
+        };
+        
+        window.createTestProfile = async function() {
+            const result = document.getElementById('create-result');
+            const pseudo = document.getElementById('test-pseudo').value;
+            const firstName = document.getElementById('test-firstname').value;
+            const lastName = document.getElementById('test-lastname').value;
+            const company = document.getElementById('test-company').value;
+            
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    result.innerHTML = '❌ Vous devez être connecté';
+                    return;
+                }
+                
+                const { error } = await supabase
+                    .from('profiles')
+                    .upsert({
+                        id: session.user.id,
+                        email: session.user.email,
+                        pseudo,
+                        first_name: firstName,
+                        last_name: lastName,
+                        company: company || null,
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    });
+                    
+                if (error) throw error;
+                
+                result.innerHTML = '✅ Profil créé avec succès !';
+                result.style.background = '#d4edda';
+            } catch (error) {
+                result.innerHTML = `❌ Erreur: ${error.message}`;
+                result.style.background = '#f8d7da';
+            }
+        };
+        
+        window.readUserProfile = async function() {
+            const result = document.getElementById('read-result');
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    result.innerHTML = '❌ Vous devez être connecté';
+                    return;
+                }
+                
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', session.user.id)
+                    .single();
+                    
+                if (error && error.code !== 'PGRST116') throw error;
+                
+                if (profile) {
+                    result.innerHTML = `
+                        <h4>Profil trouvé:</h4>
+                        <p><strong>Pseudo:</strong> ${profile.pseudo || 'Non défini'}</p>
+                        <p><strong>Prénom:</strong> ${profile.first_name || 'Non défini'}</p>
+                        <p><strong>Nom:</strong> ${profile.last_name || 'Non défini'}</p>
+                        <p><strong>Entreprise:</strong> ${profile.company || 'Non défini'}</p>
+                        <p><strong>Créé le:</strong> ${new Date(profile.created_at).toLocaleString('fr-FR')}</p>
+                        <p><strong>Modifié le:</strong> ${new Date(profile.updated_at).toLocaleString('fr-FR')}</p>
+                    `;
+                    result.style.background = '#d4edda';
+                } else {
+                    result.innerHTML = '❌ Aucun profil trouvé';
+                    result.style.background = '#fff3cd';
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Erreur: ${error.message}`;
+                result.style.background = '#f8d7da';
+            }
+        };
+        
+        window.updateProfile = async function() {
+            const result = document.getElementById('update-result');
+            const newPseudo = document.getElementById('update-pseudo').value;
+            
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    result.innerHTML = '❌ Vous devez être connecté';
+                    return;
+                }
+                
+                const { error } = await supabase
+                    .from('profiles')
+                    .update({
+                        pseudo: newPseudo,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', session.user.id);
+                    
+                if (error) throw error;
+                
+                result.innerHTML = '✅ Profil mis à jour !';
+                result.style.background = '#d4edda';
+            } catch (error) {
+                result.innerHTML = `❌ Erreur: ${error.message}`;
+                result.style.background = '#f8d7da';
+            }
+        };
+        
+        // Test automatique de connexion au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testSupabaseConnection, 500);
+        });
+    </script>
+</body>
+</html>

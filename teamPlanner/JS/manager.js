@@ -8,6 +8,7 @@
 // =====================================================
 const AppState = {
   currentUser: null,
+  currentProfile: null,
   currentTeam: null,
   teams: [],
   currentTab: 'home',
@@ -105,8 +106,23 @@ async function loadUserProfile() {
   try {
     const userInfo = AppState.currentUser;
     
-    // Update UI
-    document.getElementById('user-name').textContent = userInfo.user_metadata?.full_name || 'Utilisateur';
+    // Load profile from database
+    const { data: profile, error } = await AppState.supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userInfo.id)
+      .single();
+      
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows
+      console.error('Error loading profile:', error);
+    }
+    
+    // Store profile in AppState
+    AppState.currentProfile = profile;
+    
+    // Update UI with profile data or fallback to user_metadata
+    const displayName = profile?.pseudo || profile?.first_name || userInfo.user_metadata?.full_name || 'Utilisateur';
+    document.getElementById('user-name').textContent = displayName;
     document.getElementById('user-email').textContent = userInfo.email;
     
     // Load avatar if available
@@ -528,7 +544,7 @@ async function handleJoinTeam(e) {
   
   try {
     const { data, error } = await AppState.supabase
-      .rpc('join_team_via_invite', {
+      .rpc('join_team_via_invite_with_cleanup', {
         invite_code_param: inviteCode
       });
     

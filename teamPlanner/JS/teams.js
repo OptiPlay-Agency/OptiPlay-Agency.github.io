@@ -75,10 +75,14 @@ const TeamManager = {
     return AppState.currentTeam?.userRole === 'owner' || AppState.currentTeam?.userRole === 'coach';
   },
 
-  // Generate invitation link
-  async generateInviteLink() {
+  // Generate invitation code (not link)
+  async generateInviteCode() {
     try {
       const inviteCode = this.generateRandomCode();
+      
+      // Définir expiration à 24h
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 24);
       
       const { data, error } = await AppState.supabase
         .from('invitation_links')
@@ -86,7 +90,7 @@ const TeamManager = {
           team_id: AppState.currentTeam.id,
           invite_code: inviteCode,
           created_by: AppState.currentUser.id,
-          expires_at: null,
+          expires_at: expiresAt.toISOString(),
           max_uses: null
         })
         .select()
@@ -94,17 +98,109 @@ const TeamManager = {
 
       if (error) throw error;
 
-      const inviteUrl = `${window.location.origin}${window.location.pathname}?invite=${inviteCode}`;
+      // Afficher le code dans un modal/alert simple
+      this.showInviteCodeModal(inviteCode, expiresAt);
       
-      // Copy to clipboard
-      await navigator.clipboard.writeText(inviteUrl);
-      showToast('Lien d\'invitation copié !', 'success');
-      
-      return inviteUrl;
+      return inviteCode;
     } catch (error) {
-      console.error('Error generating invite link:', error);
-      showToast('Erreur lors de la génération du lien', 'error');
+      console.error('Error generating invite code:', error);
+      showToast('Erreur lors de la génération du code', 'error');
     }
+  },
+
+  // Show invite code modal
+  showInviteCodeModal(inviteCode, expiresAt) {
+    // Formater la date d'expiration
+    const expirationText = expiresAt.toLocaleString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    // Créer un modal simple pour afficher le code
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    `;
+    
+    modal.innerHTML = `
+      <div style="
+        background: var(--bg-primary);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--primary-color);
+        max-width: 450px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      ">
+        <h3 style="color: var(--primary-color); margin: 0 0 1rem 0;">
+          <i class="fas fa-key"></i> Code d'invitation
+        </h3>
+        <p style="margin: 0 0 1rem 0; color: var(--text-muted);">
+          Partagez ce code avec la personne à inviter :
+        </p>
+        <div style="
+          background: var(--bg-darker);
+          padding: 1rem;
+          border-radius: 8px;
+          font-family: monospace;
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: var(--primary-color);
+          margin: 1rem 0;
+          border: 2px dashed var(--primary-color);
+          user-select: all;
+          cursor: pointer;
+        " onclick="navigator.clipboard.writeText('${inviteCode}'); showToast('Code copié !', 'success');">
+          ${inviteCode}
+        </div>
+        <div style="
+          background: rgba(255, 193, 7, 0.1);
+          border: 1px solid #ffc107;
+          border-radius: 6px;
+          padding: 0.75rem;
+          margin: 1rem 0;
+        ">
+          <p style="margin: 0; font-size: 0.9rem; color: #ffc107;">
+            <i class="fas fa-clock"></i> <strong>Expire le ${expirationText}</strong>
+          </p>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.8rem; color: var(--text-muted);">
+            Le code sera automatiquement supprimé dans 24h
+          </p>
+        </div>
+        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: var(--text-muted);">
+          <i class="fas fa-info-circle"></i> Cliquez sur le code pour le copier
+        </p>
+        <button onclick="this.closest('div').parentElement.remove()" style="
+          background: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+        ">
+          <i class="fas fa-times"></i> Fermer
+        </button>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Copier automatiquement
+    navigator.clipboard.writeText(inviteCode);
+    showToast('Code d\'invitation généré et copié !', 'success');
   },
 
   // Generate random code
@@ -120,24 +216,69 @@ const TeamManager = {
 
     if (!AppState.currentTeam) return;
 
+    // Load user profile first
+    let userProfile = null;
+    try {
+      const { data: profile, error } = await AppState.supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', AppState.currentUser.id)
+        .single();
+      
+      if (!error) {
+        userProfile = profile;
+      }
+    } catch (error) {
+      console.warn('Could not load user profile:', error);
+    }
+
     // Team settings form
     teamSettings.innerHTML = `
-      <form id="update-team-form">
-        <div class="form-group">
-          <label for="edit-team-name">Nom de l'équipe</label>
-          <input type="text" id="edit-team-name" value="${AppState.currentTeam.name}" ${this.canManageTeam() ? '' : 'disabled'}>
-        </div>
-        <div class="form-group">
-          <label for="edit-team-description">Description</label>
-          <textarea id="edit-team-description" rows="4" ${this.canManageTeam() ? '' : 'disabled'}>${AppState.currentTeam.description || ''}</textarea>
-        </div>
-        ${this.canManageTeam() ? `
+      <div class="settings-section">
+        <h4><i class="fas fa-user"></i> Paramètres du profil</h4>
+        <form id="update-profile-form" style="margin-bottom: 2rem;">
+          <div class="form-group">
+            <label for="edit-pseudo">Pseudo</label>
+            <input type="text" id="edit-pseudo" value="${userProfile?.pseudo || ''}" placeholder="Votre pseudo">
+          </div>
+          <div class="form-group">
+            <label for="edit-first-name">Prénom</label>
+            <input type="text" id="edit-first-name" value="${userProfile?.first_name || ''}" placeholder="Votre prénom">
+          </div>
+          <div class="form-group">
+            <label for="edit-last-name">Nom</label>
+            <input type="text" id="edit-last-name" value="${userProfile?.last_name || ''}" placeholder="Votre nom">
+          </div>
+          <div class="form-group">
+            <label for="edit-company">Entreprise</label>
+            <input type="text" id="edit-company" value="${userProfile?.company || ''}" placeholder="Votre entreprise (optionnel)">
+          </div>
           <button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i>
-            Enregistrer les modifications
+            Mettre à jour le profil
           </button>
-        ` : ''}
-      </form>
+        </form>
+      </div>
+
+      <div class="settings-section">
+        <h4><i class="fas fa-users"></i> Informations de l'équipe</h4>
+        <form id="update-team-form">
+          <div class="form-group">
+            <label for="edit-team-name">Nom de l'équipe</label>
+            <input type="text" id="edit-team-name" value="${AppState.currentTeam.name}" ${this.canManageTeam() ? '' : 'disabled'}>
+          </div>
+          <div class="form-group">
+            <label for="edit-team-description">Description</label>
+            <textarea id="edit-team-description" rows="4" ${this.canManageTeam() ? '' : 'disabled'}>${AppState.currentTeam.description || ''}</textarea>
+          </div>
+          ${this.canManageTeam() ? `
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Enregistrer les modifications
+            </button>
+          ` : ''}
+        </form>
+      </div>
     `;
 
     // Discord settings
@@ -156,6 +297,11 @@ const TeamManager = {
     }
 
     // Event listeners
+    const updateProfileForm = document.getElementById('update-profile-form');
+    if (updateProfileForm) {
+      updateProfileForm.addEventListener('submit', (e) => this.handleUpdateProfile(e));
+    }
+
     const updateForm = document.getElementById('update-team-form');
     if (updateForm) {
       updateForm.addEventListener('submit', (e) => this.handleUpdateTeam(e));
@@ -168,6 +314,52 @@ const TeamManager = {
   // Can manage team
   canManageTeam() {
     return AppState.currentTeam?.userRole === 'owner';
+  },
+
+  // Update user profile
+  async handleUpdateProfile(e) {
+    e.preventDefault();
+    
+    const pseudo = document.getElementById('edit-pseudo').value;
+    const firstName = document.getElementById('edit-first-name').value;
+    const lastName = document.getElementById('edit-last-name').value;
+    const company = document.getElementById('edit-company').value;
+
+    try {
+      // Upsert profile (create if not exists, update if exists)
+      const { error } = await AppState.supabase
+        .from('profiles')
+        .upsert({
+          id: AppState.currentUser.id,
+          email: AppState.currentUser.email,
+          pseudo,
+          first_name: firstName,
+          last_name: lastName,
+          company: company || null,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+
+      // Update AppState with new profile data
+      AppState.currentProfile = {
+        ...AppState.currentProfile,
+        pseudo,
+        first_name: firstName,
+        last_name: lastName,
+        company: company || null
+      };
+
+      showToast('Profil mis à jour avec succès', 'success');
+      
+      // Update user name display
+      const displayName = pseudo || `${firstName} ${lastName}`.trim() || 'Utilisateur';
+      document.getElementById('user-name').textContent = displayName;
+      
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      showToast('Erreur lors de la mise à jour du profil', 'error');
+    }
   },
 
   // Update team
@@ -318,7 +510,7 @@ const TeamManager = {
 document.addEventListener('DOMContentLoaded', () => {
   const inviteBtn = document.getElementById('invite-member-btn');
   if (inviteBtn) {
-    inviteBtn.addEventListener('click', () => TeamManager.generateInviteLink());
+    inviteBtn.addEventListener('click', () => TeamManager.generateInviteCode());
   }
 });
 

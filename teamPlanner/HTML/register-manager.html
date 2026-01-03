@@ -189,6 +189,25 @@
             });
 
             if (error) throw error;
+
+            // Créer le profil avec le pseudo
+            if (data.user) {
+              const { error: profileError } = await this.supabaseClient
+                .from('profiles')
+                .insert({
+                  id: data.user.id,
+                  pseudo: userData.pseudo,
+                  first_name: userData.first_name,
+                  last_name: userData.last_name,
+                  company: userData.company
+                });
+
+              if (profileError) {
+                console.error('Error creating profile:', profileError);
+                // On continue même si le profil échoue
+              }
+            }
+
             this.showNotification('Inscription réussie ! Vérifiez votre email pour confirmer votre compte.', 'success');
             return { success: true, data };
           } catch (error) {
