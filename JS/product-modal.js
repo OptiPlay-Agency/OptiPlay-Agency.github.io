@@ -441,6 +441,20 @@ window.openProduct = function(productId) {
         '../assets/manager-screenshot-4.svg'
       ],
       url: '../teamPlanner/HTML/manager.html'
+    },
+    'scrim-finder': {
+      id: 'scrim-finder',
+      name: 'OptiPlay Scrim Finder',
+      description: 'Plateforme de matchmaking pour équipes eSport. Trouvez des adversaires, organisez vos scrims et développez votre niveau de jeu avec un système de matchmaking avancé.',
+      price: 0,
+      pricingType: 'free',
+      images: [
+        '../assets/scrim-finder-screenshot-1.svg',
+        '../assets/scrim-finder-screenshot-2.svg',
+        '../assets/scrim-finder-screenshot-3.svg',
+        '../assets/scrim-finder-screenshot-4.svg'
+      ],
+      url: '../scrim-finder/index.html'
     }
   };
 

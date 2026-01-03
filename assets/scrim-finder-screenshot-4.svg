@@ -1,0 +1,85 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0a0e1f"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="80" fill="#1a2332"/>
+  <rect x="20" y="20" width="40" height="40" rx="8" fill="#6b46c1"/>
+  <text x="80" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff">OptiPlay Scrim Finder</text>
+  <text x="650" y="35" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Historique</text>
+  
+  <!-- Sidebar -->
+  <rect x="0" y="80" width="200" height="520" fill="#141b2d"/>
+  <text x="20" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Navigation</text>
+  <text x="30" y="155" font-family="Arial, sans-serif" font-size="14" fill="#64748b">🏠 Dashboard</text>
+  <text x="30" y="185" font-family="Arial, sans-serif" font-size="14" fill="#64748b">🔍 Chercher Scrims</text>
+  <text x="30" y="215" font-family="Arial, sans-serif" font-size="14" fill="#64748b">📝 Proposer Scrim</text>
+  <text x="30" y="245" font-family="Arial, sans-serif" font-size="14" fill="#64748b">📋 Mes Scrims</text>
+  <rect x="20" y="255" width="160" height="40" rx="8" fill="#6b46c1"/>
+  <text x="30" y="280" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">📊 Historique</text>
+  
+  <!-- Main Content -->
+  <rect x="200" y="80" width="600" height="520" fill="#0f172a"/>
+  
+  <!-- Page Title -->
+  <text x="240" y="120" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff">Historique des Scrims</text>
+  
+  <!-- Stats Overview -->
+  <rect x="240" y="140" width="140" height="80" rx="8" fill="#1e293b"/>
+  <text x="250" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#6b46c1">Total Scrims</text>
+  <text x="250" y="190" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff">47</text>
+  <text x="250" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Ce mois : 12</text>
+  
+  <rect x="400" y="140" width="140" height="80" rx="8" fill="#1e293b"/>
+  <text x="410" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10b981">Winrate</text>
+  <text x="410" y="190" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff">68%</text>
+  <text x="410" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b">32V / 15D</text>
+  
+  <rect x="560" y="140" width="140" height="80" rx="8" fill="#1e293b"/>
+  <text x="570" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">Moyenne KDA</text>
+  <text x="570" y="190" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff">2.3</text>
+  <text x="570" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b">K/D/A moyen</text>
+  
+  <!-- Filter Bar -->
+  <text x="240" y="250" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Filtres :</text>
+  <rect x="240" y="255" width="100" height="30" rx="6" fill="#6b46c1"/>
+  <text x="275" y="275" font-family="Arial, sans-serif" font-size="12" fill="#ffffff">Tous</text>
+  <rect x="350" y="255" width="80" height="30" rx="6" fill="#1e293b"/>
+  <text x="375" y="275" font-family="Arial, sans-serif" font-size="12" fill="#ffffff">Victoires</text>
+  <rect x="440" y="255" width="80" height="30" rx="6" fill="#1e293b"/>
+  <text x="465" y="275" font-family="Arial, sans-serif" font-size="12" fill="#ffffff">Défaites</text>
+  
+  <!-- Match History -->
+  <text x="240" y="320" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Matches récents</text>
+  
+  <!-- Match 1 - Victory -->
+  <rect x="240" y="340" width="520" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <rect x="250" y="350" width="40" height="40" rx="6" fill="#10b981"/>
+  <text x="265" y="375" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">V</text>
+  <text x="310" y="360" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">vs Team Legends</text>
+  <text x="310" y="375" font-family="Arial, sans-serif" font-size="12" fill="#64748b">15/02/2024 • LoL • 34min</text>
+  <text x="310" y="390" font-family="Arial, sans-serif" font-size="12" fill="#10b981">KDA: 8/2/12</text>
+  <text x="680" y="370" font-family="Arial, sans-serif" font-size="12" fill="#10b981">VICTOIRE</text>
+  
+  <!-- Match 2 - Victory -->
+  <rect x="240" y="410" width="520" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <rect x="250" y="420" width="40" height="40" rx="6" fill="#10b981"/>
+  <text x="265" y="445" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">V</text>
+  <text x="310" y="430" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">vs Ace Gaming</text>
+  <text x="310" y="445" font-family="Arial, sans-serif" font-size="12" fill="#64748b">14/02/2024 • LoL • 28min</text>
+  <text x="310" y="460" font-family="Arial, sans-serif" font-size="12" fill="#10b981">KDA: 6/1/9</text>
+  <text x="680" y="440" font-family="Arial, sans-serif" font-size="12" fill="#10b981">VICTOIRE</text>
+  
+  <!-- Match 3 - Defeat -->
+  <rect x="240" y="480" width="520" height="60" rx="8" fill="#1e293b" stroke="#dc2626" stroke-width="2"/>
+  <rect x="250" y="490" width="40" height="40" rx="6" fill="#dc2626"/>
+  <text x="265" y="515" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">D</text>
+  <text x="310" y="500" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">vs Boost Masters</text>
+  <text x="310" y="515" font-family="Arial, sans-serif" font-size="12" fill="#64748b">13/02/2024 • LoL • 42min</text>
+  <text x="310" y="530" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">KDA: 4/7/5</text>
+  <text x="680" y="510" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">DÉFAITE</text>
+  
+  <!-- Export Button -->
+  <rect x="650" y="570" width="100" height="30" rx="6" fill="#6b46c1"/>
+  <text x="685" y="590" font-family="Arial, sans-serif" font-size="12" fill="#ffffff">Exporter CSV</text>
+</svg>

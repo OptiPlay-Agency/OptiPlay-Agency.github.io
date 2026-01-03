@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposer un Scrim - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/scrim-finder.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/logo.png" alt="OptiPlay" class="logo">
+        <span class="logo-text">OptiPlay</span>
+      </a>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector">
+      <label for="team-select">Équipe active</label>
+      <div class="select-wrapper">
+        <select id="team-select">
+          <option value="">Sélectionner une équipe...</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <button class="btn-create-team" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer une équipe
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <ul>
+        <li><a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a></li>
+        <li><a href="search.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </a></li>
+        <li><a href="propose.html" class="nav-item active">
+          <i class="fas fa-plus-circle"></i>
+          Proposer un scrim
+        </a></li>
+        <li><a href="my-scrims.html" class="nav-item">
+          <i class="fas fa-list"></i>
+          Mes scrims
+        </a></li>
+        <li><a href="history.html" class="nav-item">
+          <i class="fas fa-history"></i>
+          Historique
+        </a></li>
+        <li><a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Paramètres
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span id="user-name">Utilisateur</span>
+        <span id="user-subscription">Plan Gratuit</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>
+        <i class="fas fa-plus-circle"></i>
+        Proposer un scrim
+      </h1>
+      <p class="page-description">Créez une proposition de scrim pour votre équipe</p>
+    </div>
+
+    <!-- Scrim Form -->
+    <div class="form-container">
+      <form id="propose-scrim-form" class="scrim-form">
+        
+        <!-- Basic Information -->
+        <div class="form-section">
+          <h2>
+            <i class="fas fa-info-circle"></i>
+            Informations générales
+          </h2>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="scrim-date">Date *</label>
+              <input type="date" id="scrim-date" name="scrim-date" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="scrim-time">Heure de début *</label>
+              <input type="time" id="scrim-time" name="scrim-time" required>
+            </div>
+            
+
+          </div>
+        </div>
+
+        <!-- Game Settings -->
+        <div class="form-section">
+          <h2>
+            <i class="fas fa-gamepad"></i>
+            Configuration du jeu
+          </h2>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="scrim-format">Format *</label>
+              <select id="scrim-format" name="scrim-format" required>
+                <option value="">Sélectionner...</option>
+                <option value="bo1">Best of 1 (BO1)</option>
+                <option value="bo3">Best of 3 (BO3)</option>
+                <option value="bo5">Best of 5 (BO5)</option>
+                <option value="bo3-fearless">BO3 Fearless</option>
+                <option value="bo5-fearless">BO5 Fearless</option>
+                <option value="custom">Personnalisé</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="scrim-region">Région/Serveur *</label>
+              <select id="scrim-region" name="scrim-region" required>
+                <option value="">Sélectionner...</option>
+                <option value="euw">Europe West</option>
+                <option value="eune">Europe Nordic & East</option>
+                <option value="na">North America</option>
+                <option value="kr">Korea</option>
+                <option value="jp">Japan</option>
+                <option value="oce">Oceania</option>
+                <option value="br">Brazil</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="opponent-level">Niveau recherché</label>
+              <select id="opponent-level" name="opponent-level">
+                <option value="">Peu importe</option>
+                <optgroup label="Bronze">
+                  <option value="bronze-4">Bronze 4</option>
+                  <option value="bronze-3">Bronze 3</option>
+                  <option value="bronze-2">Bronze 2</option>
+                  <option value="bronze-1">Bronze 1</option>
+                </optgroup>
+                <optgroup label="Silver">
+                  <option value="silver-4">Silver 4</option>
+                  <option value="silver-3">Silver 3</option>
+                  <option value="silver-2">Silver 2</option>
+                  <option value="silver-1">Silver 1</option>
+                </optgroup>
+                <optgroup label="Gold">
+                  <option value="gold-4">Gold 4</option>
+                  <option value="gold-3">Gold 3</option>
+                  <option value="gold-2">Gold 2</option>
+                  <option value="gold-1">Gold 1</option>
+                </optgroup>
+                <optgroup label="Platinum">
+                  <option value="platinum-4">Platinum 4</option>
+                  <option value="platinum-3">Platinum 3</option>
+                  <option value="platinum-2">Platinum 2</option>
+                  <option value="platinum-1">Platinum 1</option>
+                </optgroup>
+                <optgroup label="Diamond">
+                  <option value="diamond-4">Diamond 4</option>
+                  <option value="diamond-3">Diamond 3</option>
+                  <option value="diamond-2">Diamond 2</option>
+                  <option value="diamond-1">Diamond 1</option>
+                </optgroup>
+                <optgroup label="Master+">
+                  <option value="master">Master</option>
+                  <option value="grandmaster">Grandmaster</option>
+                  <option value="challenger">Challenger</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="form-section">
+          <h2>
+            <i class="fas fa-cog"></i>
+            Options avancées
+          </h2>
+          
+          <div class="form-group">
+            <label for="scrim-description">Description / Commentaires</label>
+            <textarea id="scrim-description" name="scrim-description" rows="4" placeholder="Ajoutez des détails sur le scrim, vos attentes, règles spéciales..."></textarea>
+          </div>
+          
+          <div class="form-checkboxes">
+            <label class="checkbox-group">
+              <input type="checkbox" id="allow-lower-level">
+              <span class="checkmark"></span>
+              Accepter les équipes d'un niveau inférieur
+            </label>
+            
+            <label class="checkbox-group">
+              <input type="checkbox" id="allow-higher-level">
+              <span class="checkmark"></span>
+              Accepter les équipes d'un niveau supérieur
+            </label>
+            
+            <label class="checkbox-group">
+              <input type="checkbox" id="is-recurring">
+              <span class="checkmark"></span>
+              Scrim récurrent (même heure chaque semaine)
+            </label>
+          </div>
+          
+          <!-- Recurring Options -->
+          <div id="recurring-options" class="recurring-options" style="display: none;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="recurring-days">Jours de la semaine</label>
+                <div class="days-selector">
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="1">
+                    <span>Lun</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="2">
+                    <span>Mar</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="3">
+                    <span>Mer</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="4">
+                    <span>Jeu</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="5">
+                    <span>Ven</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="6">
+                    <span>Sam</span>
+                  </label>
+                  <label class="day-checkbox">
+                    <input type="checkbox" name="recurring-days" value="0">
+                    <span>Dim</span>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="recurring-end">Fin de récurrence</label>
+                <input type="date" id="recurring-end" name="recurring-end">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+            Annuler
+          </button>
+          
+          <button type="button" class="btn btn-outline" id="save-draft">
+            <i class="fas fa-save"></i>
+            Sauvegarder en brouillon
+          </button>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i>
+            Publier le scrim
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="JS/supabase-config.js"></script>
+  <script src="JS/scrim-finder.js"></script>
+  <script src="JS/team-manager-integration.js"></script>
+  <script src="JS/propose.js"></script>
+</body>
+</html>

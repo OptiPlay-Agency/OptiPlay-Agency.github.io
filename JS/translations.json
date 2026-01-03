@@ -33,6 +33,8 @@
       "discordBotsDesc": "Bots personnalisés pour animer et gérer votre communauté",
       "teamPlanner": "Team Planner",
       "teamPlannerDesc": "Organisez votre équipe eSport avec calendrier et gestion des scrims",
+      "scrimFinder": "Scrim Finder",
+      "scrimFinderDesc": "Trouvez et organisez des scrims avec d'autres équipes eSport",
       "available": "Disponible"
     },
     "stats": {
@@ -99,6 +101,8 @@
       "misc": "Divers",
       "manager": "OptiPlay Manager",
       "managerDesc": "Gestion d'équipes eSport complète",
+      "scrimFinder": "OptiPlay Scrim Finder",
+      "scrimFinderDesc": "Plateforme de matchmaking pour équipes eSport",
       "viewDetails": "Voir les détails",
       "tournaments": "Tournois eSport",
       "tournamentsDesc": "Organisation et gestion de tournois",

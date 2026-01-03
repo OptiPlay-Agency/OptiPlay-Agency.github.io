@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple - Scrim Finder</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .status { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            border-left: 4px solid #007bff;
+            background: #2d2d2d;
+        }
+        .error { border-left-color: #dc3545; background: #2d1f1f; }
+        .success { border-left-color: #28a745; background: #1f2d1f; }
+        .warning { border-left-color: #ffc107; background: #2d2a1f; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        pre { background: #000; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Simple Scrim Finder</h1>
+    
+    <div id="status-container">
+        <div class="status" id="status-auth">❓ Authentification: En cours...</div>
+        <div class="status" id="status-supabase">❓ Supabase: En cours...</div>
+        <div class="status" id="status-team">❓ Équipe: En attente auth...</div>
+        <div class="status" id="status-scrims">❓ Scrims: En attente équipe...</div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <button onclick="testCreateScrim()">🎮 Créer un scrim de test</button>
+        <button onclick="testSearchScrims()">🔍 Rechercher scrims</button>
+        <button onclick="clearLogs()">🧹 Effacer logs</button>
+    </div>
+    
+    <div id="logs"></div>
+
+    <!-- Import Supabase -->
+    <script src="JS/supabase-config.js"></script>
+    
+    <script>
+        let currentUser = null;
+        let currentTeam = null;
+        let logs = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push(`[${timestamp}] ${message}`);
+            updateLogsDisplay();
+            console.log(message);
+        }
+        
+        function updateLogsDisplay() {
+            const logsContainer = document.getElementById('logs');
+            logsContainer.innerHTML = '<h3>📋 Logs:</h3><pre>' + logs.slice(-20).join('\n') + '</pre>';
+        }
+        
+        function clearLogs() {
+            logs = [];
+            updateLogsDisplay();
+        }
+        
+        function updateStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            if (element) {
+                const icons = { success: '✅', error: '❌', warning: '⚠️', info: '❓' };
+                element.textContent = `${icons[type]} ${message}`;
+                element.className = `status ${type}`;
+            }
+        }
+        
+        async function initializeApp() {
+            log('🚀 Démarrage de l\'application');
+            
+            try {
+                // Test 1: Wait for Supabase to load
+                log('⏳ Attente du chargement de Supabase...');
+                
+                // Wait up to 10 seconds for Supabase to load
+                let attempts = 0;
+                const maxAttempts = 50; // 50 * 200ms = 10 seconds
+                
+                while (!window.supabaseClient && attempts < maxAttempts) {
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    attempts++;
+                }
+                
+                if (!window.supabaseClient) {
+                    updateStatus('status-supabase', 'Supabase: Timeout de chargement', 'error');
+                    log('❌ Timeout: Supabase client non disponible après 10s');
+                    return;
+                }
+                
+                updateStatus('status-supabase', 'Supabase: Connecté', 'success');
+                log('✅ Supabase client disponible');
+                
+                // Test 2: Auth
+                const { data: { user }, error: authError } = await window.supabaseClient.auth.getUser();
+                
+                if (authError || !user) {
+                    updateStatus('status-auth', 'Auth: Non connecté', 'error');
+                    log('❌ Utilisateur non connecté');
+                    log('Redirection vers la page de connexion...');
+                    setTimeout(() => {
+                        window.location.href = '../HTML/login.html';
+                    }, 2000);
+                    return;
+                }
+                
+                currentUser = user;
+                updateStatus('status-auth', `Auth: ${user.email}`, 'success');
+                log(`✅ Utilisateur connecté: ${user.email}`);
+                
+                // Test 3: Équipes
+                await loadTeam();
+                
+                // Test 4: Scrims
+                if (currentTeam) {
+                    await testScrims();
+                }
+                
+            } catch (error) {
+                log(`❌ Erreur d'initialisation: ${error.message}`);
+                updateStatus('status-auth', 'Erreur d\'initialisation', 'error');
+            }
+        }
+        
+        async function loadTeam() {
+            try {
+                log("🔍 Recherche d'équipes...");
+                
+                // Chercher les équipes créées par l'utilisateur
+                const { data: ownedTeams, error: ownedError } = await window.supabaseClient
+                    .from('teams')
+                    .select('*')
+                    .eq('created_by', currentUser.id)
+                    .limit(1);
+                    
+                if (ownedError) {
+                    log(`❌ Erreur équipes owned: ${ownedError.message}`);
+                    throw ownedError;
+                }
+                
+                log(`Équipes trouvées (owned): ${ownedTeams?.length || 0}`);
+                
+                if (ownedTeams && ownedTeams.length > 0) {
+                    currentTeam = ownedTeams[0];
+                    updateStatus('status-team', `Équipe: ${currentTeam.name} (${currentTeam.game})`, 'success');
+                    log(`✅ Équipe chargée: ${currentTeam.name} - ${currentTeam.game}`);
+                } else {
+                    // Chercher dans team_members si pas d'équipe owned
+                    const { data: memberTeams, error: memberError } = await window.supabaseClient
+                        .from('team_members')
+                        .select('teams(*)')
+                        .eq('user_id', currentUser.id)
+                        .limit(1);
+                        
+                    if (memberError) {
+                        log(`⚠️ Erreur team_members: ${memberError.message}`);
+                    }
+                    
+                    if (memberTeams && memberTeams.length > 0 && memberTeams[0].teams) {
+                        currentTeam = memberTeams[0].teams;
+                        updateStatus('status-team', `Équipe: ${currentTeam.name} (membre)`, 'success');
+                        log(`✅ Équipe trouvée (membre): ${currentTeam.name}`);
+                    } else {
+                        updateStatus('status-team', 'Équipe: Aucune équipe trouvée', 'warning');
+                        log('⚠️ Aucune équipe trouvée - vous devez créer une équipe');
+                    }
+                }
+                
+            } catch (error) {
+                updateStatus('status-team', `Équipe: Erreur - ${error.message}`, 'error');
+                log(`❌ Erreur lors du chargement de l'équipe: ${error.message}`);
+            }
+        }
+        
+        async function testScrims() {
+            try {
+                log('🔍 Test des scrims...');
+                
+                // Test simple: compter tous les scrims
+                const { data: allScrims, error: allError } = await window.supabaseClient
+                    .from('scrims')
+                    .select('id, status, team_id, scrim_date')
+                    .limit(10);
+                    
+                if (allError) {
+                    log(`❌ Erreur scrims: ${allError.message}`);
+                    updateStatus('status-scrims', 'Scrims: Erreur DB', 'error');
+                    return;
+                }
+                
+                log(`Total scrims dans la DB: ${allScrims?.length || 0}`);
+                
+                // Test scrims de l'équipe
+                if (currentTeam) {
+                    const { data: teamScrims, error: teamError } = await window.supabaseClient
+                        .from('scrims')
+                        .select('*')
+                        .eq('team_id', currentTeam.id);
+                        
+                    if (teamError) {
+                        log(`❌ Erreur scrims équipe: ${teamError.message}`);
+                    } else {
+                        log(`Scrims de votre équipe: ${teamScrims?.length || 0}`);
+                        
+                        if (teamScrims && teamScrims.length > 0) {
+                            teamScrims.forEach(scrim => {
+                                log(`  - ID: ${scrim.id}, Status: ${scrim.status}, Date: ${scrim.scrim_date}`);
+                            });
+                        }
+                    }
+                    
+                    // Test scrims pending des autres équipes
+                    const { data: pendingScrims, error: pendingError } = await window.supabaseClient
+                        .from('scrims')
+                        .select('id, status, team_id')
+                        .eq('status', 'pending')
+                        .neq('team_id', currentTeam.id);
+                        
+                    if (pendingError) {
+                        log(`❌ Erreur scrims pending: ${pendingError.message}`);
+                    } else {
+                        log(`Scrims pending d'autres équipes: ${pendingScrims?.length || 0}`);
+                        updateStatus('status-scrims', `Scrims: ${allScrims?.length || 0} total, ${pendingScrims?.length || 0} disponibles`, 'success');
+                    }
+                }
+                
+            } catch (error) {
+                log(`❌ Erreur test scrims: ${error.message}`);
+                updateStatus('status-scrims', 'Scrims: Erreur test', 'error');
+            }
+        }
+        
+        async function testCreateScrim() {
+            if (!currentTeam) {
+                log('❌ Impossible de créer un scrim sans équipe');
+                return;
+            }
+            
+            try {
+                log("🎮 Création d'un scrim de test...");
+                
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const dateStr = tomorrow.toISOString().split('T')[0];
+                
+                const scrimData = {
+                    team_id: currentTeam.id,
+                    game: currentTeam.game || 'lol',
+                    title: `Test Scrim - ${currentTeam.name}`,
+                    opponent_name: 'Recherche adversaire',
+                    scrim_date: dateStr,
+                    scrim_time: '20:00:00',
+                    format: 'bo1',
+                    final_score: '0-0',
+                    matches: [],
+                    notes: `Scrim de test créé le ${new Date().toLocaleString()}`,
+                    status: 'pending',
+                    created_by: currentUser.id
+                };
+                
+                const { data: newScrim, error: scrimError } = await window.supabaseClient
+                    .from('scrims')
+                    .insert([scrimData])
+                    .select()
+                    .single();
+                    
+                if (scrimError) {
+                    log(`❌ Erreur création scrim: ${scrimError.message}`);
+                    log(`Code: ${scrimError.code}, Détails: ${scrimError.details}`);
+                    return;
+                }
+                
+                log(`✅ Scrim créé avec succès! ID: ${newScrim.id}`);
+                await testScrims(); // Refresh
+                
+            } catch (error) {
+                log(`❌ Exception création scrim: ${error.message}`);
+            }
+        }
+        
+        async function testSearchScrims() {
+            if (!currentTeam) {
+                log('❌ Impossible de rechercher sans équipe');
+                return;
+            }
+            
+            try {
+                log('🔍 Test de recherche de scrims...');
+                
+                // Requête pour TOUS les scrims pending (y compris les nôtres)
+                const { data: scrims, error } = await window.supabaseClient
+                    .from('scrims')
+                    .select('*')
+                    .eq('status', 'pending')
+                    .gte('scrim_date', new Date().toISOString().split('T')[0])
+                    .order('scrim_date', { ascending: true });
+                    
+                if (error) {
+                    log(`❌ Erreur recherche: ${error.message}`);
+                    log(`Code: ${error.code}, Détails: ${error.details}`);
+                    return;
+                }
+                
+                log(`Scrims trouvés: ${scrims?.length || 0}`);
+                
+                if (scrims && scrims.length > 0) {
+                    scrims.forEach(scrim => {
+                        const isOwnScrim = scrim.team_id === currentTeam.id;
+                        const prefix = isOwnScrim ? '🟢 [VOS]' : '🔵 [AUTRE]';
+                        log(`  ${prefix} ID: ${scrim.id}, Date: ${scrim.scrim_date} ${scrim.scrim_time}`);
+                    });
+                    
+                    const ownScrims = scrims.filter(s => s.team_id === currentTeam.id);
+                    const otherScrims = scrims.filter(s => s.team_id !== currentTeam.id);
+                    log(`📊 Résumé: ${ownScrims.length} vos scrims, ${otherScrims.length} scrims d'autres équipes`);
+                } else {
+                    log('Aucun scrim disponible trouvé');
+                }
+                
+            } catch (error) {
+                log(`❌ Exception recherche: ${error.message}`);
+            }
+        }
+        
+        // Démarrage
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>

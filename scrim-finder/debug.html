@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Scrim Finder</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .debug-section {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+        pre {
+            background: #000;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐛 Scrim Finder Debug</h1>
+    
+    <div class="debug-section">
+        <h3>Actions de Debug</h3>
+        <button onclick="debugCurrentUser()">Current User</button>
+        <button onclick="debugCurrentTeam()">Current Team</button>
+        <button onclick="debugAllScrims()">All Scrims</button>
+        <button onclick="debugPendingScrims()">Pending Scrims</button>
+        <button onclick="debugSearchQuery()">Search Query</button>
+    </div>
+    
+    <div id="debug-output" class="debug-section">
+        <h3>Résultats :</h3>
+        <pre id="output">Cliquez sur un bouton pour commencer le debug...</pre>
+    </div>
+
+    <!-- Import Supabase config -->
+    <script src="../JS/supabase-config.js"></script>
+    
+    <script>
+        let supabaseClient = window.supabaseClient;
+        let currentUser = null;
+        let currentTeam = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkAuth();
+            await loadTeam();
+        });
+        
+        async function checkAuth() {
+            try {
+                const { data: { user }, error } = await supabaseClient.auth.getUser();
+                if (error || !user) {
+                    log('❌ Pas d\'utilisateur connecté');
+                    return;
+                }
+                currentUser = user;
+                log('✅ Utilisateur connecté: ' + user.email);
+            } catch (error) {
+                log('❌ Erreur auth: ' + error.message);
+            }
+        }
+        
+        async function loadTeam() {
+            if (!currentUser) return;
+            
+            try {
+                // Get user's teams
+                const { data: teams, error } = await supabaseClient
+                    .from('teams')
+                    .select('*')
+                    .eq('created_by', currentUser.id)
+                    .limit(1);
+                    
+                if (error) throw error;
+                
+                if (teams && teams.length > 0) {
+                    currentTeam = teams[0];
+                    log('✅ Équipe chargée: ' + currentTeam.name + ' (ID: ' + currentTeam.id + ')');
+                } else {
+                    log('❌ Aucune équipe trouvée');
+                }
+            } catch (error) {
+                log('❌ Erreur lors du chargement de l\'équipe: ' + error.message);
+            }
+        }
+        
+        function log(message) {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('output').textContent = '';
+        }
+        
+        async function debugCurrentUser() {
+            clearLog();
+            log('=== DEBUG CURRENT USER ===');
+            log(JSON.stringify(currentUser, null, 2));
+        }
+        
+        async function debugCurrentTeam() {
+            clearLog();
+            log('=== DEBUG CURRENT TEAM ===');
+            log(JSON.stringify(currentTeam, null, 2));
+        }
+        
+        async function debugAllScrims() {
+            clearLog();
+            log('=== DEBUG ALL SCRIMS ===');
+            
+            try {
+                const { data: scrims, error } = await supabaseClient
+                    .from('scrims')
+                    .select(`
+                        *,
+                        team:teams!scrims_team_id_fkey(id, name, game, level, region)
+                    `)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                    
+                if (error) {
+                    log('❌ Erreur: ' + error.message);
+                    return;
+                }
+                
+                log('✅ Nombre de scrims: ' + (scrims?.length || 0));
+                log('Scrims:');
+                log(JSON.stringify(scrims, null, 2));
+                
+            } catch (error) {
+                log('❌ Exception: ' + error.message);
+            }
+        }
+        
+        async function debugPendingScrims() {
+            clearLog();
+            log('=== DEBUG PENDING SCRIMS ===');
+            
+            if (!currentTeam) {
+                log('❌ Pas d\'équipe active');
+                return;
+            }
+            
+            try {
+                const { data: scrims, error } = await supabaseClient
+                    .from('scrims')
+                    .select(`
+                        *,
+                        team:teams!scrims_team_id_fkey(id, name, game, level, region)
+                    `)
+                    .eq('status', 'pending')
+                    .neq('team_id', currentTeam.id)
+                    .gte('scrim_date', new Date().toISOString().split('T')[0])
+                    .order('scrim_date', { ascending: true });
+                    
+                if (error) {
+                    log('❌ Erreur: ' + error.message);
+                    return;
+                }
+                
+                log('✅ Nombre de scrims pending: ' + (scrims?.length || 0));
+                log('Critères de recherche:');
+                log('- Status: pending');
+                log('- Team ID différent de: ' + currentTeam.id);
+                log('- Date >= ' + new Date().toISOString().split('T')[0]);
+                log('- Game de l\'équipe: ' + currentTeam.game);
+                
+                if (scrims && scrims.length > 0) {
+                    log('\nScrims trouvés:');
+                    scrims.forEach(scrim => {
+                        log(`- ID: ${scrim.id}, Team: ${scrim.team?.name}, Game: ${scrim.team?.game}, Status: ${scrim.status}, Date: ${scrim.scrim_date}`);
+                    });
+                    
+                    // Filter by game
+                    const gameScrims = scrims.filter(scrim => scrim.team?.game === currentTeam.game);
+                    log(`\nAprès filtre par jeu (${currentTeam.game}): ${gameScrims.length} scrims`);
+                } else {
+                    log('Aucun scrim pending trouvé');
+                }
+                
+                log('\nDétails complets:');
+                log(JSON.stringify(scrims, null, 2));
+                
+            } catch (error) {
+                log('❌ Exception: ' + error.message);
+            }
+        }
+        
+        async function debugSearchQuery() {
+            clearLog();
+            log('=== DEBUG SEARCH QUERY ===');
+            
+            if (!currentTeam) {
+                log('❌ Pas d\'équipe active');
+                return;
+            }
+            
+            try {
+                // Test simple query first
+                log('Test 1: Requête simple sur la table scrims');
+                const { data: allScrims, error: error1 } = await supabaseClient
+                    .from('scrims')
+                    .select('*')
+                    .limit(5);
+                    
+                if (error1) {
+                    log('❌ Erreur requête simple: ' + error1.message);
+                } else {
+                    log('✅ Requête simple OK, nombre de résultats: ' + (allScrims?.length || 0));
+                }
+                
+                // Test with team relation
+                log('\nTest 2: Requête avec relation team');
+                const { data: scrimsWithTeam, error: error2 } = await supabaseClient
+                    .from('scrims')
+                    .select(`
+                        *,
+                        team:teams!scrims_team_id_fkey(id, name, game, level, region)
+                    `)
+                    .limit(5);
+                    
+                if (error2) {
+                    log('❌ Erreur avec relation: ' + error2.message);
+                    log('Code erreur: ' + error2.code);
+                    log('Détails: ' + error2.details);
+                } else {
+                    log('✅ Requête avec relation OK, nombre de résultats: ' + (scrimsWithTeam?.length || 0));
+                    if (scrimsWithTeam && scrimsWithTeam.length > 0) {
+                        log('Premier scrim avec team:');
+                        log(JSON.stringify(scrimsWithTeam[0], null, 2));
+                    }
+                }
+                
+                // Test status filtering
+                log('\nTest 3: Filtrage par status');
+                const { data: pendingOnly, error: error3 } = await supabaseClient
+                    .from('scrims')
+                    .select('*')
+                    .eq('status', 'pending');
+                    
+                if (error3) {
+                    log('❌ Erreur filtrage status: ' + error3.message);
+                } else {
+                    log('✅ Filtrage status OK, scrims pending: ' + (pendingOnly?.length || 0));
+                }
+                
+            } catch (error) {
+                log('❌ Exception: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

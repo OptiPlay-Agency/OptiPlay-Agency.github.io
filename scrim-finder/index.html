@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrim Finder - OptiPlay</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/scrim-finder.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="back-link" title="Retour au site">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <div class="logo-container">
+        <img src="../assets/logo.png" alt="OptiPlay" class="logo">
+        <span class="logo-text">Scrim Finder</span>
+      </div>
+    </div>
+
+    <!-- Team Selector -->
+    <div class="team-selector">
+      <label for="team-select">Équipe active</label>
+      <div class="select-wrapper">
+        <select id="team-select">
+          <option value="">Sélectionner une équipe...</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <button class="btn-create-team" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer une équipe
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <ul>
+        <li><a href="index.html" class="nav-item active">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a></li>
+        <li><a href="search.html" class="nav-item">
+          <i class="fas fa-search"></i>
+          Rechercher un scrim
+        </a></li>
+        <li><a href="propose.html" class="nav-item">
+          <i class="fas fa-plus-circle"></i>
+          Proposer un scrim
+        </a></li>
+        <li><a href="my-scrims.html" class="nav-item">
+          <i class="fas fa-list"></i>
+          Mes scrims
+        </a></li>
+        <li><a href="history.html" class="nav-item">
+          <i class="fas fa-history"></i>
+          Historique
+        </a></li>
+        <li><a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Paramètres
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <span id="user-name">Utilisateur</span>
+        <span id="user-subscription">Plan Gratuit</span>
+      </div>
+      <button class="logout-btn" onclick="logout()" title="Se déconnecter">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>
+        <i class="fas fa-tachometer-alt"></i>
+        Dashboard Scrim Finder
+      </h1>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="window.location.href='propose.html'">
+          <i class="fas fa-plus"></i>
+          Nouveau scrim
+        </button>
+      </div>
+    </div>
+
+    <!-- No Team Selected State -->
+    <div id="no-team-state" class="empty-state" style="display: none;">
+      <div class="empty-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <h2>Aucune équipe sélectionnée</h2>
+      <p>Pour utiliser Scrim Finder, vous devez sélectionner ou créer une équipe.</p>
+      <button class="btn btn-primary" onclick="openCreateTeamModal()">
+        <i class="fas fa-plus"></i>
+        Créer ma première équipe
+      </button>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboard-content" class="dashboard-grid">
+      <!-- Quick Stats -->
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="pending-scrims">0</span>
+            <span class="stat-label">Scrims en attente</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="confirmed-scrims">0</span>
+            <span class="stat-label">Scrims confirmés</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number" id="completed-scrims">0</span>
+            <span class="stat-label">Scrims joués</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Scrims -->
+      <div class="dashboard-section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-calendar-alt"></i>
+            Prochains scrims
+          </h2>
+          <a href="my-scrims.html" class="section-link">Voir tout</a>
+        </div>
+        <div id="upcoming-scrims" class="scrims-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Pending Requests -->
+      <div class="dashboard-section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-bell"></i>
+            Demandes en attente
+          </h2>
+          <a href="my-scrims.html" class="section-link">Voir tout</a>
+        </div>
+        <div id="pending-requests" class="requests-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="dashboard-section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-activity"></i>
+            Activité récente
+          </h2>
+        </div>
+        <div id="recent-activity" class="activity-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Create Team Modal -->
+  <div id="create-team-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Créer une nouvelle équipe</h3>
+        <button class="modal-close" onclick="closeCreateTeamModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="create-team-form" class="modal-body">
+        <div class="form-group">
+          <label for="team-name">Nom de l'équipe *</label>
+          <input type="text" id="team-name" name="team-name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="team-game">Jeu principal *</label>
+          <select id="team-game" name="team-game" required>
+            <option value="">Sélectionner un jeu...</option>
+            <option value="lol">League of Legends</option>
+            <option value="valorant">Valorant</option>
+            <option value="rocket-league">Rocket League</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="team-level">Niveau / Rang</label>
+          <input type="text" id="team-level" name="team-level" placeholder="Ex: Gold, Platine, Diamond...">
+        </div>
+        
+        <div class="form-group">
+          <label for="team-region">Région *</label>
+          <select id="team-region" name="team-region" required>
+            <option value="">Sélectionner une région...</option>
+            <option value="euw">Europe West</option>
+            <option value="eune">Europe Nordic & East</option>
+            <option value="na">North America</option>
+            <option value="kr">Korea</option>
+            <option value="jp">Japan</option>
+            <option value="oce">Oceania</option>
+            <option value="br">Brazil</option>
+            <option value="lan">Latin America North</option>
+            <option value="las">Latin America South</option>
+            <option value="tr">Turkey</option>
+            <option value="ru">Russia</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="team-role">Votre rôle *</label>
+          <select id="team-role" name="team-role" required>
+            <option value="">Sélectionner votre rôle...</option>
+            <option value="player">Joueur</option>
+            <option value="coach">Coach</option>
+            <option value="manager">Manager</option>
+            <option value="captain">Capitaine</option>
+          </select>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeCreateTeamModal()">
+          Annuler
+        </button>
+        <button type="submit" form="create-team-form" class="btn btn-primary">
+          <i class="fas fa-plus"></i>
+          Créer l'équipe
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="JS/supabase-config.js"></script>
+  <script src="JS/scrim-finder.js"></script>
+  <script src="JS/team-management.js"></script>
+  <script src="JS/team-manager-integration.js"></script>
+</body>
+</html>
