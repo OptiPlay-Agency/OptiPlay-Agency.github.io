@@ -40,6 +40,7 @@ BEGIN
         a.status,
         a.week_start,
         COALESCE(
+            p.pseudo,
             (au.raw_user_meta_data->>'pseudo')::TEXT,
             split_part(au.email, '@', 1)
         ) as user_pseudo,

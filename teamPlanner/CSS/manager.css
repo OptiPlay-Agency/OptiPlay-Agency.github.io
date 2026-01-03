@@ -2814,6 +2814,22 @@ input, textarea, select {
   padding: 1rem 0;
 }
 
+/* Overlay pour le modal de sélection de champions */
+.champion-selector-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: none;
+}
+
+.champion-selector-overlay.active {
+  display: block;
+}
+
 .champion-selector {
   position: fixed;
   top: 50%;
@@ -2864,6 +2880,28 @@ input, textarea, select {
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 1rem;
   min-height: 0;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(255, 255, 255, 0.1);
+}
+
+/* Styling pour webkit scrollbar (Chrome, Safari, Edge) */
+.champion-selector-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.champion-selector-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.champion-selector-grid::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+.champion-selector-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
 }
 
 .champion-selector-item {

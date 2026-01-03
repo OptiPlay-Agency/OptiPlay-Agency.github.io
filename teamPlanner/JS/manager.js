@@ -237,7 +237,13 @@ async function selectTeam(teamId) {
     // Reload LoL Manager data if game is League of Legends
     if (team.game_type === 'lol' && window.lolManager) {
       console.log('Reloading LoL Manager data...');
+      
+      // Set current team first
+      window.lolManager.currentTeam = team;
+      
+      // Load both champion pool and compositions
       await window.lolManager.loadChampionPool();
+      await window.lolManager.loadCompositions();
     }
     
     // Show home content
@@ -315,7 +321,7 @@ function renderHomeView() {
           <i class="fas fa-user" style="font-size:0.875rem;"></i>
         </div>
         <div>
-          <div style="font-weight:600;font-size:0.9rem;">${member.user_email}</div>
+          <div style="font-weight:600;font-size:0.9rem;">${member.user_pseudo || member.user_name || member.user_email}</div>
           <div style="font-size:0.8rem;color:var(--text-muted);">${member.role}</div>
         </div>
       </div>

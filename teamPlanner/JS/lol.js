@@ -67,9 +67,11 @@ class LeagueOfLegendsManager {
             }
         });
 
-        // Event listeners for adding champions from bottom grid
+        // Event listeners for adding champions from bottom grid (champion pool only)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.champion-selector-item') && !e.target.closest('.champion-selector-item').classList.contains('dimmed')) {
+            // Only for champion pool section, not composition modal
+            const championPoolSection = e.target.closest('.champion-pool-section');
+            if (championPoolSection && e.target.closest('.champion-selector-item') && !e.target.closest('.champion-selector-item').classList.contains('dimmed')) {
                 const item = e.target.closest('.champion-selector-item');
                 const champion = item.dataset.champion;
                 this.showTierSelector(champion);
@@ -210,10 +212,12 @@ class LeagueOfLegendsManager {
                 const profileMap = {};
                 if (profiles && profiles.length > 0) {
                     profiles.forEach(p => {
-                        // For current user, use user_metadata.pseudo
+                        // Always use profiles.pseudo as priority
                         let displayPseudo = p.pseudo || 'Joueur';
-                        if (currentUser && p.id === currentUser.id) {
-                            displayPseudo = currentUserMetadata.pseudo || p.pseudo || currentUser.email.split('@')[0];
+                        
+                        // Fallback to user_metadata only if profiles.pseudo is null
+                        if (!p.pseudo && currentUser && p.id === currentUser.id) {
+                            displayPseudo = currentUserMetadata.pseudo || currentUser.email.split('@')[0];
                         }
                         
                         console.log('Profile found:', { 
@@ -893,6 +897,11 @@ class LeagueOfLegendsManager {
     // ==================== COMPOSITIONS ====================
     
     initCompositions() {
+        // Ensure currentTeam is set from AppState
+        if (AppState && AppState.currentTeam) {
+            this.currentTeam = AppState.currentTeam;
+        }
+        
         // Load compositions from database
         this.loadCompositions();
         
@@ -918,6 +927,12 @@ class LeagueOfLegendsManager {
         const championSearch = document.getElementById('champion-search');
         if (championSearch) {
             championSearch.addEventListener('input', (e) => this.filterChampions(e.target.value));
+        }
+
+        // Click on overlay to close champion selector
+        const championOverlay = document.getElementById('champion-selector-overlay');
+        if (championOverlay) {
+            championOverlay.addEventListener('click', () => this.closeChampionSelector());
         }
 
         // Initialize bans grid (8 slots)
@@ -947,6 +962,14 @@ class LeagueOfLegendsManager {
 
     async loadCompositions() {
         try {
+            // Verify we have a current team
+            if (!this.currentTeam || !this.currentTeam.id) {
+                console.log('No current team selected, skipping compositions load');
+                this.compositions = [];
+                this.renderCompositions();
+                return;
+            }
+
             const { data, error } = await AppState.supabase
                 .from('lol_compositions')
                 .select('*')
@@ -959,6 +982,8 @@ class LeagueOfLegendsManager {
             this.renderCompositions();
         } catch (error) {
             console.error('Error loading compositions:', error);
+            this.compositions = [];
+            this.renderCompositions();
         }
     }
 
@@ -1110,23 +1135,43 @@ class LeagueOfLegendsManager {
         // Get champions list
         const champions = this.champions;
         
-        grid.innerHTML = champions.map(champ => `
-            <div class="champion-selector-item" onclick="lolManager.selectChampion('${champ}')">
+        // Clear existing content
+        grid.innerHTML = '';
+        
+        // Create champion elements with proper event handling
+        champions.forEach(champ => {
+            const champDiv = document.createElement('div');
+            champDiv.className = 'champion-selector-item';
+            champDiv.innerHTML = `
                 <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champ)}.png" 
                      alt="${champ}"
                      onerror="this.onerror=null; this.src='../assets/default-champion.png'">
                 <span>${champ}</span>
-            </div>
-        `).join('');
+            `;
+            
+            // Add click event directly to avoid conflicts with global listeners
+            champDiv.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent global listeners from interfering
+                this.selectChampion(champ);
+            });
+            
+            grid.appendChild(champDiv);
+        });
     }
 
     filterChampions(query) {
-        const items = document.querySelectorAll('.champion-selector-item');
+        const grid = document.getElementById('champion-selector-grid');
+        if (!grid) return;
+        
+        const items = grid.querySelectorAll('.champion-selector-item');
         const lowerQuery = query.toLowerCase();
         
         items.forEach(item => {
-            const champName = item.querySelector('span').textContent.toLowerCase();
-            item.style.display = champName.includes(lowerQuery) ? 'flex' : 'none';
+            const champNameElement = item.querySelector('span');
+            if (champNameElement) {
+                const champName = champNameElement.textContent.toLowerCase();
+                item.style.display = champName.includes(lowerQuery) ? 'flex' : 'none';
+            }
         });
     }
 
@@ -1153,9 +1198,21 @@ class LeagueOfLegendsManager {
         this.currentBanSlot = index;
         this.currentSelectingRole = null; // For bans
         
+        const overlay = document.getElementById('champion-selector-overlay');
         const selector = document.getElementById('champion-selector');
-        if (selector) {
+        
+        if (overlay && selector) {
+            // Load champions in selector if not already loaded
+            this.loadChampionsInSelector();
+            
+            overlay.classList.add('active');
             selector.style.display = 'block';
+            
+            // Focus on search input for better UX
+            const searchInput = document.getElementById('champion-search');
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 100);
+            }
         }
     }
 
@@ -1163,9 +1220,21 @@ class LeagueOfLegendsManager {
         this.currentSelectingRole = role;
         this.currentBanSlot = null;
         
+        const overlay = document.getElementById('champion-selector-overlay');
         const selector = document.getElementById('champion-selector');
-        if (selector) {
+        
+        if (overlay && selector) {
+            // Load champions in selector if not already loaded
+            this.loadChampionsInSelector();
+            
+            overlay.classList.add('active');
             selector.style.display = 'block';
+            
+            // Focus on search input for better UX
+            const searchInput = document.getElementById('champion-search');
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 100);
+            }
         }
 
         // Setup click handlers for role selection
@@ -1228,7 +1297,13 @@ class LeagueOfLegendsManager {
     }
 
     closeChampionSelector() {
+        const overlay = document.getElementById('champion-selector-overlay');
         const selector = document.getElementById('champion-selector');
+        
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+        
         if (selector) {
             selector.style.display = 'none';
         }
