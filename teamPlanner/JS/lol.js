@@ -15,7 +15,7 @@ class LeagueOfLegendsManager {
             'Janna', 'Jarvan IV', 'Jax', 'Jayce', 'Jhin', 'Jinx', "K'Sante", "Kai'Sa", 'Kalista', 'Karma',
             'Karthus', 'Kassadin', 'Katarina', 'Kayle', 'Kayn', 'Kennen', "Kha'Zix", 'Kindred', 'Kled', "Kog'Maw",
             'LeBlanc', 'Lee Sin', 'Leona', 'Lillia', 'Lissandra', 'Lucian', 'Lulu', 'Lux', 'Malphite', 'Malzahar',
-            'Maokai', 'Master Yi', 'Milio', 'Miss Fortune', 'Mordekaiser', 'Morgana', 'Naafiri', 'Nami', 'Nasus',
+            'Maokai', 'Master Yi', 'mel', 'Milio', 'Miss Fortune', 'Mordekaiser', 'Morgana', 'Naafiri', 'Nami', 'Nasus',
             'Nautilus', 'Neeko', 'Nidalee', 'Nilah', 'Nocturne', 'Nunu', 'Olaf', 'Orianna', 'Ornn', 'Pantheon',
             'Poppy', 'Pyke', 'Qiyana', 'Quinn', 'Rakan', 'Rammus', "Rek'Sai", 'Rell', 'Renata Glasc', 'Renekton',
             'Rengar', 'Riven', 'Rumble', 'Ryze', 'Samira', 'Sejuani', 'Senna', 'Seraphine', 'Sett', 'Shaco',
@@ -23,7 +23,7 @@ class LeagueOfLegendsManager {
             'Sylas', 'Syndra', 'Tahm Kench', 'Taliyah', 'Talon', 'Taric', 'Teemo', 'Thresh', 'Tristana',
             'Trundle', 'Tryndamere', 'Twisted Fate', 'Twitch', 'Udyr', 'Urgot', 'Varus', 'Vayne', 'Veigar',
             "Vel'Koz", 'Vex', 'Vi', 'Viego', 'Viktor', 'Vladimir', 'Volibear', 'Warwick', 'Wukong', 'Xayah',
-            'Xerath', 'Xin Zhao', 'Yasuo', 'Yone', 'Yorick', 'Yuumi', 'Zac', 'Zed', 'Zeri', 'Ziggs',
+            'Xerath', 'Xin Zhao', 'Yasuo', 'Yone', 'Yorick', 'Yunara', 'Yuumi', 'Zac', 'Zed', 'Zeri', 'Ziggs',
             'Zilean', 'Zoe', 'Zyra'
         ];
 
@@ -153,8 +153,8 @@ class LeagueOfLegendsManager {
 
             // Select first player by default
             if (this.teamMembers.length > 0) {
-                const firstPlayer = this.teamMembers.find(m => !m.is_substitute) || this.teamMembers[0];
-                this.selectPlayer(firstPlayer.profiles.id);
+                const firstPlayer = this.teamMembers[0];
+                this.selectPlayer(firstPlayer.id);
             } else {
                 // No players, show empty state
                 const header = document.querySelector('.champion-pool-player-header');
@@ -175,105 +175,37 @@ class LeagueOfLegendsManager {
     // Load team members
     async loadTeamMembers() {
         try {
-            // Get team members with their user IDs
-            const { data: members, error } = await AppState.supabase
-                .from('team_members')
-                .select('user_id, role')
-                .eq('team_id', this.currentTeam.id);
+            // Use RPC function to get members with user info (corrected pseudos)
+            const { data: membersWithInfo, error } = await AppState.supabase
+                .rpc('get_team_members_with_info', { p_team_id: this.currentTeam.id });
 
             if (error) throw error;
 
-            // Get all user IDs including owner
-            const userIds = members ? members.map(m => m.user_id) : [];
-            const ownerId = this.currentTeam.created_by;
-            
-            if (ownerId && !userIds.includes(ownerId)) {
-                userIds.push(ownerId);
-            }
-
-            // Get current user for metadata access
-            const { data: { user: currentUser } } = await AppState.supabase.auth.getUser();
-            const currentUserMetadata = currentUser?.user_metadata || {};
-
-            // Fetch profiles from table
-            if (userIds.length > 0) {
-                console.log('Fetching profiles for user IDs:', userIds);
-                
-                const { data: profiles, error: profileError } = await AppState.supabase
-                    .from('profiles')
-                    .select('id, pseudo, avatar_url')
-                    .in('id', userIds);
-
-                console.log('Profiles query result:', { profiles, profileError });
-
-                if (profileError) throw profileError;
-
-                // Map profiles to members
-                const profileMap = {};
-                if (profiles && profiles.length > 0) {
-                    profiles.forEach(p => {
-                        // Always use profiles.pseudo as priority
-                        let displayPseudo = p.pseudo || 'Joueur';
-                        
-                        // Fallback to user_metadata only if profiles.pseudo is null
-                        if (!p.pseudo && currentUser && p.id === currentUser.id) {
-                            displayPseudo = currentUserMetadata.pseudo || currentUser.email.split('@')[0];
-                        }
-                        
-                        console.log('Profile found:', { 
-                            id: p.id, 
-                            pseudo: displayPseudo,
-                            isCurrentUser: p.id === currentUser?.id
-                        });
-                        profileMap[p.id] = { 
-                            id: p.id,
-                            pseudo: displayPseudo,
-                            avatar_url: p.avatar_url 
-                        };
+            // Map to member format expected by the rest of the code
+            const teamMembersArray = [];
+            if (membersWithInfo && membersWithInfo.length > 0) {
+                membersWithInfo.forEach(member => {
+                    console.log('Profile found:', { 
+                        id: member.user_id, 
+                        pseudo: member.user_pseudo,
+                        isCurrentUser: member.user_id === AppState.currentUser?.id
                     });
-                } else {
-                    console.warn('No profiles found for user IDs:', userIds);
-                }
-
-                // Add owner profile if missing
-                if (ownerId && !profileMap[ownerId]) {
-                    if (currentUser && ownerId === currentUser.id) {
-                        profileMap[ownerId] = {
-                            id: ownerId,
-                            pseudo: currentUserMetadata.pseudo || currentUser.email.split('@')[0],
-                            avatar_url: currentUserMetadata.avatar_url || null
-                        };
-                    }
-                }
-
-                // Build team members array
-                this.teamMembers = [];
-
-                // Add owner first if not in members
-                if (ownerId && !members.some(m => m.user_id === ownerId)) {
-                    const ownerProfile = profileMap[ownerId];
-                    console.log('Adding owner:', { ownerId, profile: ownerProfile });
-                    this.teamMembers.push({
-                        user_id: ownerId,
-                        role: 'owner',
-                        profiles: ownerProfile || { id: ownerId, pseudo: 'Owner', avatar_url: null }
-                    });
-                }
-
-                // Add other members
-                members.forEach(member => {
-                    const memberProfile = profileMap[member.user_id];
-                    console.log('Adding member:', { userId: member.user_id, profile: memberProfile });
-                    this.teamMembers.push({
-                        ...member,
-                        profiles: memberProfile || { id: member.user_id, pseudo: 'Unknown', avatar_url: null }
+                    
+                    teamMembersArray.push({
+                        id: member.user_id,
+                        pseudo: member.user_pseudo,
+                        avatar_url: member.user_avatar_url 
                     });
                 });
             }
 
+            // Store members for rendering
+            this.teamMembers = teamMembersArray;
+
             console.log('✓ Team members loaded:', this.teamMembers.length, this.teamMembers);
         } catch (error) {
             console.error('Error loading team members:', error);
+            this.teamMembers = [];
         }
     }
 
@@ -515,18 +447,18 @@ class LeagueOfLegendsManager {
         this.teamMembers.forEach(member => {
             const playerItem = document.createElement('div');
             playerItem.className = 'player-item';
-            playerItem.dataset.playerId = member.profiles.id;
+            playerItem.dataset.playerId = member.id;
             
             // Player name
             const playerName = document.createElement('span');
             playerName.className = 'player-name';
-            playerName.textContent = member.profiles.pseudo || 'Joueur sans nom';
+            playerName.textContent = member.pseudo || 'Joueur sans nom';
             
-            // Player role badge
+            // Player role badge (note: role info not available in new structure, using default)
             const roleBadge = document.createElement('span');
             roleBadge.className = 'role-badge';
-            const roleText = member.role === 'owner' ? 'Owner' : member.role || 'Player';
-            roleBadge.textContent = roleText.charAt(0).toUpperCase() + roleText.slice(1);
+            const roleText = 'Player'; // Default since role not in new structure
+            roleBadge.textContent = roleText;
             
             playerItem.appendChild(playerName);
             playerItem.appendChild(roleBadge);
@@ -565,13 +497,13 @@ class LeagueOfLegendsManager {
         if (!header || !tiersContainer) return;
 
         // Find player data
-        const playerMember = this.teamMembers.find(m => m.profiles.id === this.selectedPlayer);
+        const playerMember = this.teamMembers.find(m => m.id === this.selectedPlayer);
         if (!playerMember) return;
 
         // Update header
         header.innerHTML = `
-            <h2>${playerMember.profiles.pseudo || 'Player'}</h2>
-            ${playerMember.role ? `<span class="player-role-badge">${this.roleLabels[playerMember.role] || playerMember.role}</span>` : ''}
+            <h2>${playerMember.pseudo || 'Player'}</h2>
+            <span class="player-role-badge">Joueur</span>
         `;
 
         // Get player's champions
@@ -938,12 +870,46 @@ class LeagueOfLegendsManager {
         // Initialize bans grid (8 slots)
         this.initBansGrid();
         
-        // Initialize champion selection slots
+        // Initialize champion selection slots (updated for alternatives)
         const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
         roles.forEach(role => {
-            const selectedDiv = document.getElementById(`${role}-selected`);
+            // First slot for each role
+            const selectedDiv = document.getElementById(`${role}-selected-0`);
             if (selectedDiv) {
-                selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
+                selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role, 0));
+            }
+            
+            // Add alternative button
+            const addAltBtn = document.querySelector(`[data-role="${role}"].add-alternative-btn`);
+            if (addAltBtn) {
+                addAltBtn.addEventListener('click', () => this.addAlternativeSlot(role));
+            }
+        });
+        
+        // Delegate for dynamically added slots
+        document.addEventListener('click', (e) => {
+            // Handle champion selection for alternatives
+            if (e.target.closest('.champion-selected')) {
+                const selectedEl = e.target.closest('.champion-selected');
+                const slot = selectedEl.closest('.champion-pick-slot');
+                const role = slot.closest('.comp-role')?.dataset.role;
+                const slotIndex = parseInt(slot.dataset.slot);
+                
+                if (role !== undefined && slotIndex !== undefined) {
+                    this.openChampionSelectorForRole(role, slotIndex);
+                }
+            }
+            
+            // Handle remove alternative button
+            if (e.target.closest('.remove-alternative-btn')) {
+                const btn = e.target.closest('.remove-alternative-btn');
+                const slot = btn.closest('.champion-pick-slot');
+                const role = slot.closest('.comp-role')?.dataset.role;
+                const slotIndex = parseInt(slot.dataset.slot);
+                
+                if (role && slotIndex > 0) {
+                    this.removeAlternativeSlot(role, slotIndex);
+                }
             }
         });
         
@@ -1032,15 +998,34 @@ class LeagueOfLegendsManager {
         };
 
         const championsHtml = roles.map(role => {
-            const champion = picks[role]?.champion;
+            const pick = picks[role];
+            
+            if (!pick) {
+                return `<div class="comp-champion-slot empty"><i class="fas fa-${roleIcons[role]}"></i></div>`;
+            }
+            
+            let champion;
+            let hasAlternatives = false;
+            
+            if (pick.champions && Array.isArray(pick.champions)) {
+                // New format with alternatives
+                champion = pick.champions[0];
+                hasAlternatives = pick.champions.length > 1;
+            } else if (pick.champion) {
+                // Legacy format
+                champion = pick.champion;
+            }
+            
             if (!champion) {
                 return `<div class="comp-champion-slot empty"><i class="fas fa-${roleIcons[role]}"></i></div>`;
             }
+            
             return `
-                <div class="comp-champion-slot">
+                <div class="comp-champion-slot${hasAlternatives ? ' has-alternatives' : ''}">
                     <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champion)}.png" 
                          alt="${champion}"
                          onerror="this.src='../assets/default-champion.png'">
+                    ${hasAlternatives ? '<div class="alternatives-indicator">+</div>' : ''}
                 </div>
             `;
         }).join('');
@@ -1121,8 +1106,8 @@ class LeagueOfLegendsManager {
             select.innerHTML = '<option value="">Joueur...</option>';
             this.teamMembers.forEach(member => {
                 const option = document.createElement('option');
-                option.value = member.user_id;
-                option.textContent = member.profiles.pseudo;
+                option.value = member.id;
+                option.textContent = member.pseudo;
                 select.appendChild(option);
             });
         });
@@ -1216,8 +1201,9 @@ class LeagueOfLegendsManager {
         }
     }
 
-    openChampionSelectorForRole(role) {
+    openChampionSelectorForRole(role, slotIndex = 0) {
         this.currentSelectingRole = role;
+        this.currentSelectingSlot = slotIndex;
         this.currentBanSlot = null;
         
         const overlay = document.getElementById('champion-selector-overlay');
@@ -1235,13 +1221,6 @@ class LeagueOfLegendsManager {
             if (searchInput) {
                 setTimeout(() => searchInput.focus(), 100);
             }
-        }
-
-        // Setup click handlers for role selection
-        const selectedDiv = document.getElementById(`${role}-selected`);
-        if (selectedDiv && !selectedDiv.dataset.listenerAdded) {
-            selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
-            selectedDiv.dataset.listenerAdded = 'true';
         }
     }
 
@@ -1269,17 +1248,30 @@ class LeagueOfLegendsManager {
                 }
             });
         } else if (this.currentSelectingRole) {
-            // Selecting for role
+            // Selecting for role (now with slot support)
             const role = this.currentSelectingRole;
-            const selectedDiv = document.getElementById(`${role}-selected`);
-            const hiddenInput = document.getElementById(`${role}-champion`);
+            const slotIndex = this.currentSelectingSlot || 0;
             
-            hiddenInput.value = championName;
-            selectedDiv.innerHTML = `
-                <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(championName)}.png" 
-                     alt="${championName}"
-                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-            `;
+            const selectedDiv = document.getElementById(`${role}-selected-${slotIndex}`);
+            const hiddenInput = document.getElementById(`${role}-champion-${slotIndex}`);
+            
+            if (selectedDiv && hiddenInput) {
+                hiddenInput.value = championName;
+                selectedDiv.innerHTML = `
+                    <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(championName)}.png" 
+                         alt="${championName}">
+                `;
+                selectedDiv.classList.add('has-champion');
+                
+                // Add remove button for alternatives (not main slot)
+                if (slotIndex > 0) {
+                    selectedDiv.innerHTML += `
+                        <button type="button" class="remove-alternative-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                }
+            }
         }
 
         this.closeChampionSelector();
@@ -1339,19 +1331,31 @@ class LeagueOfLegendsManager {
             return;
         }
 
-        // Collect composition data
+        // Collect composition data (updated for alternatives)
         const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
         const picks = {};
         
         roles.forEach(role => {
-            const champion = document.getElementById(`${role}-champion`).value;
+            const picksContainer = document.getElementById(`${role}-picks`);
             const player = document.getElementById(`${role}-player`).value;
             
-            if (champion) {
-                picks[role] = {
-                    champion: champion,
-                    player_id: player || null
-                };
+            if (picksContainer) {
+                const slots = picksContainer.querySelectorAll('.champion-pick-slot');
+                const champions = [];
+                
+                slots.forEach(slot => {
+                    const hiddenInput = slot.querySelector('input[type="hidden"]');
+                    if (hiddenInput && hiddenInput.value) {
+                        champions.push(hiddenInput.value);
+                    }
+                });
+                
+                if (champions.length > 0) {
+                    picks[role] = {
+                        champions: champions, // Array of champions (main + alternatives)
+                        player_id: player || null
+                    };
+                }
             }
         });
 
@@ -1423,23 +1427,74 @@ class LeagueOfLegendsManager {
         // Fill name
         document.getElementById('comp-name').value = comp.name;
 
-        // Fill picks
+        // Fill picks (updated for alternatives)
         const picks = data.picks || {};
         Object.keys(picks).forEach(role => {
             const pick = picks[role];
-            if (pick.champion) {
-                document.getElementById(`${role}-champion`).value = pick.champion;
-                const selectedDiv = document.getElementById(`${role}-selected`);
+            const picksContainer = document.getElementById(`${role}-picks`);
+            
+            if (pick.champions && Array.isArray(pick.champions)) {
+                // New format with alternatives
+                pick.champions.forEach((champion, index) => {
+                    if (index === 0) {
+                        // Main champion slot
+                        const hiddenInput = document.getElementById(`${role}-champion-0`);
+                        const selectedDiv = document.getElementById(`${role}-selected-0`);
+                        
+                        if (hiddenInput) hiddenInput.value = champion;
+                        if (selectedDiv) {
+                            selectedDiv.innerHTML = `
+                                <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champion)}.png" 
+                                     alt="${champion}">
+                            `;
+                            selectedDiv.classList.add('has-champion');
+                        }
+                    } else {
+                        // Alternative slots - create if needed
+                        let altSlot = picksContainer.querySelector(`[data-slot="${index}"]`);
+                        if (!altSlot) {
+                            this.addAlternativeSlot(role);
+                            altSlot = picksContainer.querySelector(`[data-slot="${index}"]`);
+                        }
+                        
+                        if (altSlot) {
+                            const hiddenInput = altSlot.querySelector('input[type="hidden"]');
+                            const selectedDiv = altSlot.querySelector('.champion-selected');
+                            
+                            if (hiddenInput) hiddenInput.value = champion;
+                            if (selectedDiv) {
+                                selectedDiv.innerHTML = `
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(champion)}.png" 
+                                         alt="${champion}"
+                                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                    <button type="button" class="remove-alternative-btn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                `;
+                                selectedDiv.classList.add('has-champion');
+                            }
+                        }
+                    }
+                });
+            } else if (pick.champion) {
+                // Legacy format - single champion
+                const hiddenInput = document.getElementById(`${role}-champion-0`);
+                const selectedDiv = document.getElementById(`${role}-selected-0`);
+                
+                if (hiddenInput) hiddenInput.value = pick.champion;
                 if (selectedDiv) {
                     selectedDiv.innerHTML = `
                         <img src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${this.formatChampionName(pick.champion)}.png" 
-                             alt="${pick.champion}"
-                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                             alt="${pick.champion}">
                     `;
+                    selectedDiv.classList.add('has-champion');
                 }
             }
+            
+            // Fill player assignment
             if (pick.player_id) {
-                document.getElementById(`${role}-player`).value = pick.player_id;
+                const playerSelect = document.getElementById(`${role}-player`);
+                if (playerSelect) playerSelect.value = pick.player_id;
             }
         });
 
@@ -1471,14 +1526,21 @@ class LeagueOfLegendsManager {
     resetCompForm() {
         document.getElementById('comp-form').reset();
         
-        // Reset champion selections
+        // Reset champion selections (updated for alternatives)
         const roles = ['toplane', 'jungle', 'midlane', 'adc', 'support'];
         roles.forEach(role => {
-            const selectedDiv = document.getElementById(`${role}-selected`);
-            if (selectedDiv) {
-                selectedDiv.innerHTML = `<i class="fas fa-plus"></i><span>Sélectionner</span>`;
-                // Add click listener
-                selectedDiv.addEventListener('click', () => this.openChampionSelectorForRole(role));
+            const picksContainer = document.getElementById(`${role}-picks`);
+            if (picksContainer) {
+                // Reset to only main slot
+                picksContainer.innerHTML = `
+                    <div class="champion-pick-slot" data-slot="0">
+                        <div class="champion-selected" id="${role}-selected-0">
+                            <i class="fas fa-plus"></i>
+                            <span>Sélectionner</span>
+                        </div>
+                        <input type="hidden" id="${role}-champion-0" name="${role}-0">
+                    </div>
+                `;
             }
         });
 
@@ -1561,6 +1623,74 @@ class LeagueOfLegendsManager {
     viewComposition(compId) {
         // Open the composition in view/edit mode
         this.editComposition(compId);
+    }
+
+    // ==================== ALTERNATIVES METHODS ====================
+
+    addAlternativeSlot(role) {
+        const picksContainer = document.getElementById(`${role}-picks`);
+        if (!picksContainer) return;
+
+        const currentSlots = picksContainer.querySelectorAll('.champion-pick-slot');
+        const newSlotIndex = currentSlots.length;
+        
+        // Limit to reasonable number of alternatives (e.g., 4 total including main)
+        if (newSlotIndex >= 4) {
+            if (typeof showToast === 'function') {
+                showToast('Maximum 4 champions par rôle', 'warning');
+            }
+            return;
+        }
+
+        // Create new slot
+        const newSlot = document.createElement('div');
+        newSlot.className = 'champion-pick-slot';
+        newSlot.dataset.slot = newSlotIndex;
+        
+        newSlot.innerHTML = `
+            <div class="champion-selected" id="${role}-selected-${newSlotIndex}">
+                <i class="fas fa-plus"></i>
+                <span>Alternative ${newSlotIndex}</span>
+            </div>
+            <input type="hidden" id="${role}-champion-${newSlotIndex}" name="${role}-${newSlotIndex}">
+            <button type="button" class="remove-alternative-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        picksContainer.appendChild(newSlot);
+    }
+
+    removeAlternativeSlot(role, slotIndex) {
+        const picksContainer = document.getElementById(`${role}-picks`);
+        const slotToRemove = picksContainer.querySelector(`[data-slot="${slotIndex}"]`);
+        
+        if (slotToRemove && slotIndex > 0) {
+            slotToRemove.remove();
+            
+            // Renumber remaining slots to maintain order
+            const remainingSlots = picksContainer.querySelectorAll('.champion-pick-slot');
+            remainingSlots.forEach((slot, index) => {
+                slot.dataset.slot = index;
+                
+                // Update IDs and names
+                const selectedDiv = slot.querySelector('.champion-selected');
+                const hiddenInput = slot.querySelector('input[type="hidden"]');
+                
+                if (selectedDiv) {
+                    selectedDiv.id = `${role}-selected-${index}`;
+                    if (index > 0 && !selectedDiv.querySelector('img')) {
+                        const span = selectedDiv.querySelector('span');
+                        if (span) span.textContent = `Alternative ${index}`;
+                    }
+                }
+                
+                if (hiddenInput) {
+                    hiddenInput.id = `${role}-champion-${index}`;
+                    hiddenInput.name = `${role}-${index}`;
+                }
+            });
+        }
     }
 }
 

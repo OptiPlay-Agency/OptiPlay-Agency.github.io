@@ -96,7 +96,7 @@ const AvailabilityManager = {
 
         ${this.currentView === 'me' ? this.renderLegend() : ''}
 
-        <div style="display:grid;grid-template-columns:80px repeat(7, 1fr);gap:1px;background:var(--border-color);">
+        <div style="display:grid;grid-template-columns:80px repeat(7, 1fr);gap:2px;background:var(--border-color);border:2px solid var(--border-color);border-radius:var(--border-radius);overflow:hidden;">
           ${this.renderGridHeader()}
           ${this.currentView === 'me' ? this.renderMyGridBody() : this.renderTeamGridBody()}
         </div>
@@ -152,6 +152,8 @@ const AvailabilityManager = {
 
   // Render MY grid body (editable)
   renderMyGridBody() {
+    console.log('🎨 Rendering MY grid body, myAvailabilities count:', this.myAvailabilities.length);
+    
     let html = '';
     const hours = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0];
     
@@ -175,6 +177,11 @@ const AvailabilityManager = {
           unsure: '?'
         };
         
+        // Debug for specific slot
+        if (dayOffset === 4 && hour === 15) {
+          console.log('🎨 Rendering slot [4,15] with status:', status, 'color:', colors[status]);
+        }
+        
         html += `
           <div style="background:${colors[status]};padding:0.75rem;text-align:center;font-size:1.2rem;color:white;cursor:pointer;transition:all 0.2s;font-weight:600;" 
                onclick="AvailabilityManager.toggleMySlot(${dayOffset}, ${hour})"
@@ -187,6 +194,7 @@ const AvailabilityManager = {
       }
     });
     
+    console.log('🎨 Grid HTML generated, length:', html.length);
     return html;
   },
 
@@ -240,16 +248,46 @@ const AvailabilityManager = {
     slotDate.setDate(slotDate.getDate() + dayOffset);
     const slotDateStr = this.formatDateForDB(slotDate);
     
+    const weekStartStr = this.formatDateForDB(this.currentWeekStart);
+    
+    // Debug logs
+    if (dayOffset === 4 && hour === 15) { // Debug pour le créneau de test
+      console.log('🔍 Debug slot [4,15]:', {
+        weekStart: weekStartStr,
+        availabilities: this.myAvailabilities.length,
+        hasWeekStart: this.myAvailabilities.some(a => a.week_start)
+      });
+    }
+    
     const avail = this.myAvailabilities.find(a => {
+      // Debug each condition
+      const weekMatch = a.week_start === weekStartStr;
+      const dayMatch = a.day_of_week === dayOfWeek;
+      
+      if (dayOffset === 4 && hour === 15 && weekMatch && dayMatch) {
+        console.log('✅ Found matching availability:', {
+          start_time: a.start_time,
+          status: a.status
+        });
+      }
+      
       // Must match both week and day
-      if (a.week_start !== this.formatDateForDB(this.currentWeekStart)) return false;
-      if (a.day_of_week !== dayOfWeek) return false;
+      if (!weekMatch) return false;
+      if (!dayMatch) return false;
       
       // Parse time string (handle both "18:00" and "18:00:00" formats)
       const startHour = parseInt(a.start_time.split(':')[0]);
       const endHour = parseInt(a.end_time.split(':')[0]);
       
-      return hour >= startHour && hour < endHour;
+      const timeMatch = hour >= startHour && hour < endHour;
+      
+      if (dayOffset === 4 && hour === 15) {
+        console.log('🔍 Time check:', {
+          startHour, endHour, hour, timeMatch
+        });
+      }
+      
+      return timeMatch;
     });
     
     return avail ? (avail.status || this.STATUS.UNDEFINED) : this.STATUS.UNDEFINED;

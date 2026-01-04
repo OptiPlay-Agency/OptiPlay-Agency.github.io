@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiPlay Admin - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="CSS/admin.css" rel="stylesheet">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>OptiPlay Admin</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="admin-info">
+                <span id="adminEmail">admin@optiplay.com</span>
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Déconnexion
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3>Tableau de bord</h3>
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Vue d'ensemble</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Gestion des utilisateurs</h3>
+                <a href="#users" class="nav-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span>Tous les utilisateurs</span>
+                </a>
+                <a href="#profiles" class="nav-item" data-section="profiles">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Profils</span>
+                </a>
+                <a href="#subscriptions" class="nav-item" data-section="subscriptions">
+                    <i class="fas fa-crown"></i>
+                    <span>Abonnements</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Gestion des équipes</h3>
+                <a href="#teams" class="nav-item" data-section="teams">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Équipes</span>
+                </a>
+                <a href="#tournaments" class="nav-item" data-section="tournaments">
+                    <i class="fas fa-trophy"></i>
+                    <span>Tournois</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Modération</h3>
+                <a href="#reports" class="nav-item" data-section="reports">
+                    <i class="fas fa-flag"></i>
+                    <span>Signalements</span>
+                </a>
+                <a href="#bans" class="nav-item" data-section="bans">
+                    <i class="fas fa-ban"></i>
+                    <span>Utilisateurs bannis</span>
+                </a>
+                <a href="#logs" class="nav-item" data-section="logs">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Logs d'activité</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Système</h3>
+                <a href="#settings" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </a>
+                <a href="#analytics" class="nav-item" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytiques</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-tachometer-alt"></i> Tableau de bord</h2>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i>
+                        Actualiser
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalUsers">-</div>
+                        <div class="stat-label">Utilisateurs totaux</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon premium">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="premiumUsers">-</div>
+                        <div class="stat-label">Utilisateurs Premium</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon teams">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalTeams">-</div>
+                        <div class="stat-label">Équipes créées</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon reports">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="pendingReports">-</div>
+                        <div class="stat-label">Signalements en attente</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Activité récente</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-list" id="recentActivity">
+                            <!-- Activity items will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Nouveaux utilisateurs (7 derniers jours)</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="users-chart" id="newUsersChart">
+                            <!-- Chart will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Gestion des utilisateurs</h2>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="userSearch" placeholder="Rechercher un utilisateur...">
+                    </div>
+                    <select id="userFilter" class="filter-select">
+                        <option value="all">Tous les utilisateurs</option>
+                        <option value="premium">Premium</option>
+                        <option value="free">Gratuit</option>
+                        <option value="banned">Bannis</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="users-table-container">
+                <table class="admin-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <th>ID</th>
+                            <th>Rôle</th>
+                            <th>Plan</th>
+                            <th>Inscription</th>
+                            <th>Dernière MAJ</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination" id="usersPagination">
+                <!-- Pagination will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Other sections will be added here -->
+        <section id="profiles-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-user-edit"></i> Gestion des profils</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="subscriptions-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-crown"></i> Gestion des abonnements</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="teams-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users-cog"></i> Gestion des équipes</h2>
+                <button class="btn btn-primary" onclick="teamManager.openTeamsModal()">
+                    <i class="fas fa-eye"></i> Voir toutes les équipes
+                </button>
+            </div>
+            
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalTeams">-</h3>
+                        <p>Équipes totales</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalTeamMembers">-</h3>
+                        <p>Membres d'équipes</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="activeTeams">-</h3>
+                        <p>Équipes actives</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teams-preview">
+                <h3>Équipes récentes</h3>
+                <div class="teams-list" id="recentTeamsList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Chargement...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tournaments-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> Gestion des tournois</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="reports-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-flag"></i> Signalements</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="bans-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-ban"></i> Utilisateurs bannis</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="logs-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-clipboard-list"></i> Logs d'activité</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="settings-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-cog"></i> Paramètres système</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+
+        <section id="analytics-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Analytiques</h2>
+            </div>
+            <div class="content-placeholder">
+                <i class="fas fa-construction"></i>
+                <p>Section en construction...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- User Action Modal -->
+    <div class="modal" id="userActionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Actions utilisateur</h3>
+                <button class="modal-close" onclick="closeModal('userActionModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Teams Management Modal -->
+    <div class="modal" id="teamsModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-users-cog"></i> Gestion des équipes</h3>
+                <button class="modal-close" onclick="closeModal('teamsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="teams-modal-content">
+                    <!-- Search and filters -->
+                    <div class="teams-controls">
+                        <div class="search-container">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="teamSearch" placeholder="Rechercher une équipe..." />
+                        </div>
+                        <div class="filter-container">
+                            <select id="teamFilter">
+                                <option value="all">Toutes les équipes</option>
+                                <option value="lol">League of Legends</option>
+                                <option value="valorant">Valorant</option>
+                                <option value="rocket_league">Rocket League</option>
+                                <option value="other">Autres jeux</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Teams table -->
+                    <div class="teams-table-container">
+                        <table class="admin-table" id="teamsTable">
+                            <thead>
+                                <tr>
+                                    <th>Équipe</th>
+                                    <th>Jeu</th>
+                                    <th>Membres</th>
+                                    <th>Créée le</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teamsTableBody">
+                                <!-- Teams will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagination" id="teamsPagination">
+                        <!-- Pagination will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Details Modal -->
+    <div class="modal" id="teamDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="teamDetailsTitle">Détails de l'équipe</h3>
+                <button class="modal-close" onclick="closeModal('teamDetailsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="teamDetailsBody">
+                <!-- Team details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="JS/supabase-config.js"></script>
+    <script src="JS/auth.js"></script>
+    <script src="JS/admin.js"></script>
+    <script src="JS/users.js"></script>
+    <script src="JS/dashboard.js"></script>
+    <script src="JS/teams.js"></script>
+    <script src="JS/logs.js"></script>
+</body>
+</html>

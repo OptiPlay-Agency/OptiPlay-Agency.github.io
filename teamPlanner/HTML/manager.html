@@ -383,7 +383,7 @@
               <div>
                 <i class="fas fa-tools" style="font-size: 4rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
                 <h2 style="font-size: 2rem; font-weight: 600; color: var(--text-color); margin: 0;">EN TRAVAUX</h2>
-                <p style="color: var(--text-muted); margin-top: 0.5rem;">Cette fonctionnalité sera bientôt disponible</p>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Cette fonctionnalité sera bientôt disponible. Vous pourrez importer vos résultats de scrims.</p>
               </div>
             </div>
           </div>
@@ -830,12 +830,19 @@
                   <i class="fas fa-shield-alt"></i>
                   <h4>Toplane</h4>
                 </div>
-                <div class="champion-select-wrapper">
-                  <div class="champion-selected" id="toplane-selected">
-                    <i class="fas fa-plus"></i>
-                    <span>Sélectionner</span>
+                <div class="champion-picks-wrapper">
+                  <div class="champion-picks" id="toplane-picks">
+                    <div class="champion-pick-slot" data-slot="0">
+                      <div class="champion-selected" id="toplane-selected-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Sélectionner</span>
+                      </div>
+                      <input type="hidden" id="toplane-champion-0" name="toplane-0">
+                    </div>
                   </div>
-                  <input type="hidden" id="toplane-champion" name="toplane">
+                  <button type="button" class="add-alternative-btn" data-role="toplane">
+                    <i class="fas fa-plus"></i> Ajouter alternative
+                  </button>
                 </div>
                 <select class="player-assign" id="toplane-player">
                   <option value="">Joueur...</option>
@@ -847,12 +854,19 @@
                   <i class="fas fa-tree"></i>
                   <h4>Jungle</h4>
                 </div>
-                <div class="champion-select-wrapper">
-                  <div class="champion-selected" id="jungle-selected">
-                    <i class="fas fa-plus"></i>
-                    <span>Sélectionner</span>
+                <div class="champion-picks-wrapper">
+                  <div class="champion-picks" id="jungle-picks">
+                    <div class="champion-pick-slot" data-slot="0">
+                      <div class="champion-selected" id="jungle-selected-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Sélectionner</span>
+                      </div>
+                      <input type="hidden" id="jungle-champion-0" name="jungle-0">
+                    </div>
                   </div>
-                  <input type="hidden" id="jungle-champion" name="jungle">
+                  <button type="button" class="add-alternative-btn" data-role="jungle">
+                    <i class="fas fa-plus"></i> Ajouter alternative
+                  </button>
                 </div>
                 <select class="player-assign" id="jungle-player">
                   <option value="">Joueur...</option>
@@ -864,12 +878,19 @@
                   <i class="fas fa-star"></i>
                   <h4>Midlane</h4>
                 </div>
-                <div class="champion-select-wrapper">
-                  <div class="champion-selected" id="midlane-selected">
-                    <i class="fas fa-plus"></i>
-                    <span>Sélectionner</span>
+                <div class="champion-picks-wrapper">
+                  <div class="champion-picks" id="midlane-picks">
+                    <div class="champion-pick-slot" data-slot="0">
+                      <div class="champion-selected" id="midlane-selected-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Sélectionner</span>
+                      </div>
+                      <input type="hidden" id="midlane-champion-0" name="midlane-0">
+                    </div>
                   </div>
-                  <input type="hidden" id="midlane-champion" name="midlane">
+                  <button type="button" class="add-alternative-btn" data-role="midlane">
+                    <i class="fas fa-plus"></i> Ajouter alternative
+                  </button>
                 </div>
                 <select class="player-assign" id="midlane-player">
                   <option value="">Joueur...</option>
@@ -881,12 +902,19 @@
                   <i class="fas fa-crosshairs"></i>
                   <h4>Ad carry</h4>
                 </div>
-                <div class="champion-select-wrapper">
-                  <div class="champion-selected" id="adc-selected">
-                    <i class="fas fa-plus"></i>
-                    <span>Sélectionner</span>
+                <div class="champion-picks-wrapper">
+                  <div class="champion-picks" id="adc-picks">
+                    <div class="champion-pick-slot" data-slot="0">
+                      <div class="champion-selected" id="adc-selected-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Sélectionner</span>
+                      </div>
+                      <input type="hidden" id="adc-champion-0" name="adc-0">
+                    </div>
                   </div>
-                  <input type="hidden" id="adc-champion" name="adc">
+                  <button type="button" class="add-alternative-btn" data-role="adc">
+                    <i class="fas fa-plus"></i> Ajouter alternative
+                  </button>
                 </div>
                 <select class="player-assign" id="adc-player">
                   <option value="">Joueur...</option>
@@ -898,12 +926,19 @@
                   <i class="fas fa-hand-holding-heart"></i>
                   <h4>Support</h4>
                 </div>
-                <div class="champion-select-wrapper">
-                  <div class="champion-selected" id="support-selected">
-                    <i class="fas fa-plus"></i>
-                    <span>Sélectionner</span>
+                <div class="champion-picks-wrapper">
+                  <div class="champion-picks" id="support-picks">
+                    <div class="champion-pick-slot" data-slot="0">
+                      <div class="champion-selected" id="support-selected-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Sélectionner</span>
+                      </div>
+                      <input type="hidden" id="support-champion-0" name="support-0">
+                    </div>
                   </div>
-                  <input type="hidden" id="support-champion" name="support">
+                  <button type="button" class="add-alternative-btn" data-role="support">
+                    <i class="fas fa-plus"></i> Ajouter alternative
+                  </button>
                 </div>
                 <select class="player-assign" id="support-player">
                   <option value="">Joueur...</option>
